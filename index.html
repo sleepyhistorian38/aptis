@@ -154,6 +154,17 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
   </div>
 </div>
 
+<!-- ============ MÀN ĐĂNG NHẬP (bắt buộc trên bản web) ============ -->
+<div id="login-wall" class="hidden" style="position:fixed;inset:0;background:#fff;z-index:1001;display:flex;align-items:center;justify-content:center">
+  <div style="max-width:390px;width:90%;text-align:center">
+    <div class="logo" style="margin:0 auto 18px;width:26px"><span></span><span></span><span></span><span></span></div>
+    <h2 style="margin-bottom:8px">Aptis Practice</h2>
+    <p class="sub" style="margin-bottom:20px">Đăng nhập để bắt đầu ôn luyện — điểm số, kho câu sai và thống kê của bạn sẽ được lưu theo tài khoản và đồng bộ trên mọi thiết bị.</p>
+    <button class="btn" style="width:100%" onclick="fbLogin()">Đăng nhập bằng Google</button>
+    <div class="reveal-hint" style="margin-top:12px">App chỉ nhận tên + email để định danh — không bao giờ thấy mật khẩu của bạn.</div>
+  </div>
+</div>
+
 <!-- ============ CỔNG MÃ NHÓM ============ -->
 <div id="gate" class="hidden" style="position:fixed;inset:0;background:#fff;z-index:1000;display:flex;align-items:center;justify-content:center">
   <div style="max-width:360px;width:90%;text-align:center">
@@ -437,6 +448,14 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     <button class="btn small secondary" onclick="bankRevealAll(false)">Ẩn tất cả</button>
   </div>
   <div id="bank-list"></div>
+</div>
+
+<!-- ============ QUẢN TRỊ (chỉ admin) ============ -->
+<div id="scr-admin" class="page">
+  <div class="backbar" id="nav-admin"></div>
+  <h1>👑 Quản trị hệ thống</h1>
+  <p class="sub">Danh sách tài khoản đã đăng nhập và hoạt động ôn luyện. Chỉ tài khoản admin nhìn thấy trang này.</p>
+  <div id="admin-body"><div class="note">Đang tải…</div></div>
 </div>
 
 <!-- ============ THỐNG KÊ CÁ NHÂN ============ -->
@@ -11784,7 +11803,7 @@ window.APTIS.listening = {
 "use strict";
 const D = window.APTIS.listening;
 const $ = id => document.getElementById(id);
-const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats"];
+const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin"];
 
 let test = null;          // current full test
 let practice = false;
@@ -12856,16 +12875,32 @@ function bankRevealAll(show){
 /* ================= CỔNG MÃ NHÓM ================= */
 const GROUP_CODE = "aptis2026";   // đổi mã nhóm tại đây rồi build lại web
 function gateOk(){ return loadLS("aptisGate","") === GROUP_CODE; }
-function gateInit(){
+/* Luồng vào app: (bản web) BẮT BUỘC đăng nhập Google trước -> rồi nhập mã nhóm.
+   Bản offline (mở file trực tiếp) không có Firebase nên chỉ hỏi mã nhóm. */
+function authFlow(){
+  const wall = $("login-wall"), gate = $("gate");
+  if(fbReady()){
+    if(!fbUser){
+      wall.classList.remove("hidden");
+      gate.classList.add("hidden");
+      return;
+    }
+    wall.classList.add("hidden");
+  } else {
+    wall.classList.add("hidden");
+  }
   if(!gateOk()){
-    $("gate").classList.remove("hidden");
+    gate.classList.remove("hidden");
     setTimeout(()=>{ try{$("gate-input").focus();}catch(e){} }, 80);
+  } else {
+    gate.classList.add("hidden");
   }
 }
 function gateTry(){
   if($("gate-input").value.trim() === GROUP_CODE){
     saveLS("aptisGate", GROUP_CODE);
     $("gate").classList.add("hidden");
+    cloudScheduleSave();   // lưu cờ "đã qua cổng" vào hồ sơ mây -> thiết bị khác khỏi nhập lại
   } else {
     $("gate-err").classList.remove("hidden");
     $("gate-input").select();
@@ -12891,6 +12926,7 @@ function fbInit(){
     firebase.auth().onAuthStateChanged(u=>{
       fbUser = u;
       renderAuthBox();
+      authFlow();
       if(u) cloudPull();
     });
   }catch(e){ console.warn("fbInit", e); }
@@ -12913,15 +12949,20 @@ function renderAuthBox(){
     const cloud = cloudState==="synced" ? "☁️✓" : cloudState==="saving" ? "☁️…" : cloudState==="error" ? "☁️⚠" : "☁️";
     el.innerHTML = `<span title="Trạng thái đồng bộ" style="font-size:13px;color:var(--muted)">${cloud}</span>
       <b style="font-size:14px;margin:0 2px">${escapeHtml(name)}</b>
+      ${isAdmin() ? '<button class="home-link" title="Trang quản trị" onclick="openAdmin()">👑</button>' : ""}
       <button class="home-link" style="font-weight:400" onclick="fbLogout()">Thoát</button>`;
   } else {
     el.innerHTML = `<button class="home-link" onclick="fbLogin()" title="Đăng nhập Google để đồng bộ lịch sử điểm giữa các thiết bị">🔑 Đăng nhập</button>`;
   }
 }
+let profileCreatedAt = null;
 function profileBlob(){
   return {history: loadLS("aptisHistory", []), wrong: loadLS("aptisWrong", {}),
           mastered: loadLS("aptisMastered", 0), updatedAt: Date.now(),
-          name: (fbUser && fbUser.displayName) || ""};
+          name: (fbUser && fbUser.displayName) || "",
+          email: (fbUser && fbUser.email) || "",
+          gate: gateOk(),
+          createdAt: profileCreatedAt || Date.now()};
 }
 function cloudScheduleSave(){
   if(!fbUser || !fbDb) return;
@@ -12939,6 +12980,8 @@ function cloudPull(){
   fbDb.collection("users").doc(fbUser.uid).get().then(snap=>{
     if(snap.exists){
       const c = snap.data() || {};
+      profileCreatedAt = c.createdAt || null;
+      if(c.gate) saveLS("aptisGate", GROUP_CODE);   // đã qua cổng ở thiết bị khác
       // gộp lịch sử: hợp nhất 2 nguồn, bỏ trùng theo (thời điểm, bài, điểm)
       const seen = new Set(), merged = [];
       [...(c.history||[]), ...loadLS("aptisHistory", [])].forEach(r=>{
@@ -12958,9 +13001,74 @@ function cloudPull(){
       saveLS("aptisWrong", wrong);
       saveLS("aptisMastered", Math.max(loadLS("aptisMastered", 0), c.mastered || 0));
     }
+    authFlow();      // có thể vừa nhận cờ mã nhóm từ mây
     cloudPush();
     renderHistory();
   }).catch(e=>console.warn("cloudPull", e));
+}
+
+/* ================= QUẢN TRỊ (chỉ admin) ================= */
+const ADMIN_EMAIL = "sleepyhistorian38@gmail.com";
+function isAdmin(){ return !!fbUser && (fbUser.email || "").toLowerCase() === ADMIN_EMAIL; }
+function openAdmin(){
+  if(!isAdmin()) return;
+  setNav("nav-admin", ["Listening","Quản trị hệ thống"], "Trang chủ", "goRoot()");
+  showScreen("scr-admin");
+  $("admin-body").innerHTML = '<div class="note">Đang tải dữ liệu thành viên…</div>';
+  fbDb.collection("users").get().then(qs=>{
+    const rows = [];
+    qs.forEach(doc=>{
+      const d = doc.data() || {};
+      const h = d.history || [];
+      const scores = h.map(r=>Math.round(r.g/r.tt*50));
+      rows.push({
+        name: d.name || "(chưa có tên)",
+        email: d.email || "",
+        n: h.length,
+        best: scores.length ? Math.max(...scores) : null,
+        last: scores.length ? scores[scores.length-1] : null,
+        mastered: d.mastered || 0,
+        wrong: Object.keys(d.wrong || {}).length,
+        active: d.updatedAt || 0,
+        created: d.createdAt || 0
+      });
+    });
+    rows.sort((a,b)=>b.active - a.active);
+    const fmt = t=>{
+      if(!t) return "—";
+      const dd = new Date(t);
+      return dd.toLocaleDateString("vi-VN") + " " + String(dd.getHours()).padStart(2,"0") + ":" + String(dd.getMinutes()).padStart(2,"0");
+    };
+    const week = Date.now() - 7*24*3600*1000;
+    let html = `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px">`
+      + statChip("thành viên", rows.length)
+      + statChip("hoạt động 7 ngày qua", rows.filter(r=>r.active>week).length, "okmark")
+      + statChip("tổng lượt làm bài", rows.reduce((a,r)=>a+r.n, 0))
+      + `</div>`;
+    const TD = 'style="padding:9px 10px;border-top:1px solid var(--border);white-space:nowrap"';
+    html += `<div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:14px">
+      <tr style="text-align:left;color:var(--muted)">
+        <th style="padding:6px 10px">Thành viên</th><th style="padding:6px 10px">Email</th>
+        <th style="padding:6px 10px">Lượt làm</th><th style="padding:6px 10px">Cao nhất</th>
+        <th style="padding:6px 10px">Gần nhất</th><th style="padding:6px 10px">Đã thuộc</th>
+        <th style="padding:6px 10px">Đang sai</th><th style="padding:6px 10px">Hoạt động cuối</th>
+        <th style="padding:6px 10px">Tham gia</th></tr>`
+      + rows.map(r=>`<tr>
+          <td ${TD}><b>${escapeHtml(r.name)}</b>${r.email.toLowerCase()===ADMIN_EMAIL?" 👑":""}</td>
+          <td ${TD}>${escapeHtml(r.email)}</td>
+          <td ${TD}>${r.n}</td>
+          <td ${TD}>${r.best===null?"—":`<b class="okmark">${r.best}/50</b>`}</td>
+          <td ${TD}>${r.last===null?"—":r.last+"/50"}</td>
+          <td ${TD}>${r.mastered}</td>
+          <td ${TD}>${r.wrong}</td>
+          <td ${TD}>${fmt(r.active)}</td>
+          <td ${TD}>${fmt(r.created)}</td></tr>`).join("")
+      + `</table></div>
+      <div class="note" style="margin-top:16px">Thành viên xuất hiện sau khi đăng nhập lần đầu và có hoạt động (hồ sơ được tạo khi app lưu dữ liệu). Quyền admin được thực thi ở tầng cơ sở dữ liệu — tài khoản khác dù sửa code cũng không đọc được dữ liệu người khác.</div>`;
+    $("admin-body").innerHTML = html;
+  }).catch(e=>{
+    $("admin-body").innerHTML = '<div class="note">⚠ Không tải được danh sách: ' + escapeHtml((e && e.message) || e) + '</div>';
+  });
 }
 
 /* ================= THỐNG KÊ CÁ NHÂN ================= */
@@ -13049,8 +13157,8 @@ setNav("nav-home", ["Listening"], "Trang chủ", "goRoot()");
 renderHome();
 renderHistory();
 $("pool-count").textContent = buildQ13Pool().length;
-gateInit();
 fbInit();
+authFlow();
 showScreen("scr-root");
 </script>
 </body>

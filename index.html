@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aptis Listening Practice</title>
@@ -112,8 +115,37 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
 .crumbs{color:var(--muted);font-size:13.5px}
 .crumbs b{color:var(--text)}
 .crumbs .sep{margin:0 6px;color:var(--border)}
-@media (max-width:900px){ .qlist{display:none} .qmain{padding:20px} }
+@media (max-width:900px){
+  .qlist{display:none}
+  .qlist.open{display:block;position:fixed;top:0;left:0;bottom:0;width:min(85vw,340px);
+    background:#fff;z-index:50;box-shadow:4px 0 24px rgba(0,0,0,.18);max-height:100vh;overflow-y:auto}
+  .qmain{padding:20px 16px}
+}
+@media (max-width:640px){
+  .page{padding:22px 14px 80px}
+  h1{font-size:25px}
+  h2{font-size:19px}
+  .timer{top:6px;right:10px;padding:2px 6px}
+  .timer .t{font-size:18px}
+  .timer .lbl{font-size:11px;padding-bottom:3px}
+  .qhead{flex-direction:column;gap:10px}
+  .bookmark-btn{align-self:flex-start;padding:8px 14px;font-size:14px}
+  .qtext{font-size:16.5px}
+  .opt .letter{width:50px;font-size:20px;padding:14px 0}
+  .opt .txt{padding:14px 12px;font-size:15px}
+  .matchrow{flex-direction:column;align-items:stretch;gap:8px}
+  .matchrow select{min-width:0;width:100%}
+  .btn{padding:12px 16px;font-size:15px}
+  .btn.small{padding:8px 12px;font-size:13.5px}
+  .footer{padding:10px 10px}
+  .iconbtn{width:42px;height:42px}
+  .score-big{font-size:42px}
+  .backbar{gap:8px}
+  .crumbs{display:none}
+}
 </style>
+</head>
+<body>
 <div class="topbar">
   <div class="logo" onclick="goRoot()"><span></span><span></span><span></span><span></span></div>
   <button class="home-link" onclick="goRoot()">Trang chủ</button>
@@ -12060,9 +12092,17 @@ function renderQList(){
   });
   $("qlist").innerHTML = html || '<div class="note">Chưa bookmark câu nào.</div>';
 }
-function toggleQList(){ $("qlist-panel").style.display = $("qlist-panel").style.display==="none"?"":"none"; }
+function toggleQList(){
+  const el = $("qlist-panel");
+  if(window.innerWidth <= 900) el.classList.toggle("open");
+  else el.style.display = el.style.display==="none" ? "" : "none";
+}
 function setFilter(f){ filter=f; renderQList(); }
-function jump(i){ stopAudio(); cur=i; renderExam(); }
+function jump(i){
+  stopAudio(); cur=i;
+  $("qlist-panel").classList.remove("open");   // đóng panel trên điện thoại
+  renderExam();
+}
 function nav(d){
   stopAudio();
   if(cur+d < 0) return;
@@ -12773,3 +12813,5 @@ renderHistory();
 $("pool-count").textContent = buildQ13Pool().length;
 showScreen("scr-root");
 </script>
+</body>
+</html>

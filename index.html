@@ -196,10 +196,11 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <div class="meta">5 phần · ~35 phút · tủ Update 01.07.2026</div>
       <div class="meta">Điền từ, xếp câu, nối người–câu hỏi, chọn tiêu đề · thi thử + luyện + ôn tủ</div>
     </div>
-    <div class="card" style="opacity:.65">
-      <span class="tag key">SẮP CÓ</span>
+    <div class="card" style="cursor:pointer;border-color:var(--purple-light)" onclick="goGrammar()">
+      <span class="tag sim">SẴN SÀNG</span>
       <h3>✏️ Grammar & Vocabulary</h3>
-      <div class="meta">Tài liệu đã có: 9 file ngữ pháp</div>
+      <div class="meta">8 đề tủ · 200 câu ngữ pháp + ~195 ý từ vựng · 25 phút</div>
+      <div class="meta">Điểm G&V quyết định khi điểm kỹ năng sát biên CEFR</div>
     </div>
     <div class="card" style="opacity:.65">
       <span class="tag key">SẮP CÓ</span>
@@ -451,6 +452,49 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     <button class="btn small secondary" onclick="bankRevealAll(false)">Ẩn tất cả</button>
   </div>
   <div id="bank-list"></div>
+</div>
+
+<!-- ============ GRAMMAR HOME ============ -->
+<div id="scr-ghome" class="page">
+  <div class="backbar" id="nav-ghome"></div>
+  <h1>✏️ Grammar & Vocabulary</h1>
+  <p class="sub">Ôn tủ Core với 8 đề đáp án — phần điểm dùng để xét nâng band khi kỹ năng sát biên CEFR.</p>
+
+  <h2 style="margin-bottom:14px" id="gsec-sim">🎧 Thi mô phỏng</h2>
+  <div class="grid">
+    <div class="card" style="cursor:pointer;border-color:var(--purple-light)" onclick="openGrammarPreview()">
+      <span class="tag sim">🎲 THI THỬ CORE</span>
+      <h3>Rút ngẫu nhiên 1 đề tủ</h3>
+      <div class="meta">25 câu ngữ pháp + toàn bộ từ vựng của đề đó (~45 ý) · 25 phút · chấm /50</div>
+    </div>
+  </div>
+
+  <h2 style="margin:30px 0 14px" id="gsec-quiz">🎯 Luyện dạng thi</h2>
+  <div class="grid">
+    <div class="card" style="cursor:pointer" onclick="quizGAll()">
+      <span class="tag sim">NGỮ PHÁP</span>
+      <h3>Toàn bộ 200 câu (8 đề)</h3>
+      <div class="meta">Mỗi câu chọn 1/3 — phương án nhiễu là đáp án khác trong cùng đề (dấu *)</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="quizGVocab()">
+      <span class="tag sim">TỪ VỰNG</span>
+      <h3>Đồng nghĩa · điền từ · collocation</h3>
+      <div class="meta">Toàn bộ nhóm từ vựng của 8 đề, trộn thứ tự lựa chọn</div>
+    </div>
+  </div>
+
+  <h2 style="margin:30px 0 14px" id="gsec-key">📝 Ôn tủ (8 đề)</h2>
+  <div class="grid" id="gset-list"></div>
+</div>
+
+<!-- ============ GRAMMAR VIEWER ============ -->
+<div id="scr-gview" class="page">
+  <div class="backbar" id="nav-gview"></div>
+  <h1 id="gview-title"></h1>
+  <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
+    <button class="btn small" id="gview-quiz-btn">🎧 Luyện dạng thi đề này</button>
+  </div>
+  <div id="gview-body"></div>
 </div>
 
 <!-- ============ READING HOME ============ -->
@@ -12540,10 +12584,1311 @@ window.APTIS.reading = {
 
 </script>
 <script>
+window.APTIS = window.APTIS || {};
+window.APTIS.grammar = {
+ "source": "8 file docx trong thư mục Grammar (đáp án tủ Ngữ pháp & Từ vựng)",
+ "sets": [
+  {
+   "title": "Ngữ pháp 4",
+   "grammar": [
+    "Why",
+    "had",
+    "did",
+    "How",
+    "Have",
+    "will",
+    "was not",
+    "had studied",
+    "all of which",
+    "didn’t",
+    "I’d have gone",
+    "hasn’t",
+    "Although",
+    "ought",
+    "Apparently",
+    "the bank was",
+    "because",
+    "would",
+    "never",
+    "eat",
+    "Experience",
+    "Does",
+    "had had",
+    "must",
+    "were"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "brilliant",
+       "b": "great"
+      },
+      {
+       "a": "brief",
+       "b": "short"
+      },
+      {
+       "a": "close",
+       "b": "near"
+      },
+      {
+       "a": "definite",
+       "b": "certain"
+      },
+      {
+       "a": "hard",
+       "b": "difficult"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "To answer is to",
+       "answer": "respond"
+      },
+      {
+       "text": "To link things",
+       "answer": "connect"
+      },
+      {
+       "text": "To tell someone",
+       "answer": "advise"
+      },
+      {
+       "text": "To surprise",
+       "answer": "amaze"
+      },
+      {
+       "text": "To change",
+       "answer": "alter"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "A warm",
+       "answer": "climate"
+      },
+      {
+       "text": "All letters",
+       "answer": "envelope"
+      },
+      {
+       "text": "All this noise",
+       "answer": "headache"
+      },
+      {
+       "text": "Collecting stamps",
+       "answer": "hobby"
+      },
+      {
+       "text": "You’ll need",
+       "answer": "mechanic"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "amuse",
+       "b": "entertain"
+      },
+      {
+       "a": "brake",
+       "b": "stop"
+      },
+      {
+       "a": "anger",
+       "b": "annoy"
+      },
+      {
+       "a": "wound",
+       "b": "hurt"
+      },
+      {
+       "a": "whack",
+       "b": "smash"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "Bunk",
+       "b": "bed"
+      },
+      {
+       "a": "Cardinal",
+       "b": "rush"
+      },
+      {
+       "a": "Fountain",
+       "b": "pen"
+      },
+      {
+       "a": "House",
+       "b": "arrest"
+      },
+      {
+       "a": "Baby",
+       "b": "sitting"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp 5",
+   "grammar": [
+    "Although",
+    "hadn’t spoken",
+    "Have",
+    "haven’t",
+    "had",
+    "less",
+    "whom",
+    "has",
+    "had paid",
+    "must",
+    "used",
+    "in spite",
+    "wish",
+    "is",
+    "had won",
+    "What",
+    "Did they",
+    "call",
+    "Had been",
+    "Despite",
+    "ought",
+    "did",
+    "to put it frankly",
+    "go",
+    "after"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "educate",
+       "b": "tecach"
+      },
+      {
+       "a": "finish",
+       "b": "end"
+      },
+      {
+       "a": "start",
+       "b": "begin"
+      },
+      {
+       "a": "select",
+       "b": "choose"
+      },
+      {
+       "a": "unite",
+       "b": "bring  together"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "To go",
+       "answer": "advance"
+      },
+      {
+       "text": "To help",
+       "answer": "assist"
+      },
+      {
+       "text": "To allow",
+       "answer": "permit"
+      },
+      {
+       "text": "To heve",
+       "answer": "relax"
+      },
+      {
+       "text": "To travel",
+       "answer": "Sail"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "Occupation",
+       "b": "jod"
+      },
+      {
+       "a": "Paperwork",
+       "b": "documents"
+      },
+      {
+       "a": "Welfare",
+       "b": "health"
+      },
+      {
+       "a": "Shelfter",
+       "b": "protection"
+      },
+      {
+       "a": "Sketch",
+       "b": "drawing"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "fond",
+       "b": "… memory"
+      },
+      {
+       "a": "foreseeable",
+       "b": "… future"
+      },
+      {
+       "a": "aggressive",
+       "b": "… behavior"
+      },
+      {
+       "a": "aerial",
+       "b": "… photography"
+      },
+      {
+       "a": "disposable",
+       "b": "… income"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "I always wear",
+       "answer": "apron"
+      },
+      {
+       "text": "The ship’s",
+       "answer": "anchor"
+      },
+      {
+       "text": "I wanched",
+       "answer": "episode"
+      },
+      {
+       "text": "The kidnappers",
+       "answer": "hostage"
+      },
+      {
+       "text": "They didn’t",
+       "answer": "ashtray"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp 6",
+   "grammar": [
+    "pass",
+    "after",
+    "Therefore",
+    "used to keep",
+    "because",
+    "would ride",
+    "must",
+    "hadn't fixed",
+    "Would",
+    "trust",
+    "was delivered",
+    "astonishing",
+    "cost",
+    "had been hesitating",
+    "drew",
+    "aren't",
+    "wouldn't",
+    "the beauty of nature",
+    "Whose",
+    "Is",
+    "could had",
+    "think",
+    "whose",
+    "much",
+    "Perhaps"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "Big",
+       "b": "Large"
+      },
+      {
+       "a": "Sick",
+       "b": "Not well"
+      },
+      {
+       "a": "Unusual",
+       "b": "odd"
+      },
+      {
+       "a": "Correct",
+       "b": "night"
+      },
+      {
+       "a": "Expensive",
+       "b": "pricey"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "To cut into two is to",
+       "answer": "split"
+      },
+      {
+       "text": "To break into small pieces is to",
+       "answer": "Smash"
+      },
+      {
+       "text": "To go quickly is to",
+       "answer": "rush"
+      },
+      {
+       "text": "To disagree is to",
+       "answer": "object"
+      },
+      {
+       "text": "To rest is to",
+       "answer": "stop"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "Ache",
+       "b": "pain"
+      },
+      {
+       "a": "Climate",
+       "b": "weather"
+      },
+      {
+       "a": "Dialect",
+       "b": "accent"
+      },
+      {
+       "a": "Inn",
+       "b": "hotel"
+      },
+      {
+       "a": "Military",
+       "b": "army"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "I've always had",
+       "answer": "Ancient"
+      },
+      {
+       "text": "Why not wear",
+       "answer": "casual"
+      },
+      {
+       "text": "We need to get",
+       "answer": "rotten"
+      },
+      {
+       "text": "He was very",
+       "answer": "enthusiastic"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "cabin",
+       "b": "crew"
+      },
+      {
+       "a": "crossword",
+       "b": "puzzle"
+      },
+      {
+       "a": "dairy",
+       "b": "products"
+      },
+      {
+       "a": "detention",
+       "b": "center"
+      },
+      {
+       "a": "junk",
+       "b": "mail"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp 7",
+   "grammar": [
+    "did",
+    "have been",
+    "Were you",
+    "have finished",
+    "seeing",
+    "had",
+    "made",
+    "can't",
+    "would",
+    "will",
+    "had",
+    "much",
+    "should",
+    "extremely",
+    "exciting",
+    "don't",
+    "was",
+    "your",
+    "Therefore",
+    "have",
+    "call",
+    "heavy",
+    "much",
+    "several",
+    "had"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "Brilliant",
+       "b": "great"
+      },
+      {
+       "a": "Basic",
+       "b": "simple"
+      },
+      {
+       "a": "Obvious",
+       "b": "clear"
+      },
+      {
+       "a": "Normal",
+       "b": "usual"
+      },
+      {
+       "a": "Correct",
+       "b": "right"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "She heard the",
+       "answer": "alarm"
+      },
+      {
+       "text": "I go ta big",
+       "answer": "discount"
+      },
+      {
+       "text": "Her picture was",
+       "answer": "magazine"
+      },
+      {
+       "text": "I can't find this",
+       "answer": "dictionary"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "He drew a/an",
+       "answer": "sketch"
+      },
+      {
+       "text": "Today my parents are",
+       "answer": "anniversary"
+      },
+      {
+       "text": "I want to stops",
+       "answer": "habit"
+      },
+      {
+       "text": "There was a problem",
+       "answer": "plumber"
+      },
+      {
+       "text": "The train to Manchester",
+       "answer": "platform"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "leisure",
+       "b": "services"
+      },
+      {
+       "a": "pond",
+       "b": "water"
+      },
+      {
+       "a": "rabbit",
+       "b": "hole"
+      },
+      {
+       "a": "oak",
+       "b": "door"
+      },
+      {
+       "a": "bargain",
+       "b": "price"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "civic",
+       "b": "centre"
+      },
+      {
+       "a": "drastic",
+       "b": "change"
+      },
+      {
+       "a": "widespread",
+       "b": "use"
+      },
+      {
+       "a": "stereo",
+       "b": "sound"
+      },
+      {
+       "a": "lethal",
+       "b": "weapon"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp 8",
+   "grammar": [
+    "never",
+    "going",
+    "I'd buy",
+    "cost",
+    "beyond",
+    "claimed",
+    "on",
+    "actually",
+    "written",
+    "should",
+    "reading",
+    "hard",
+    "your",
+    "His",
+    "but",
+    "must",
+    "had left",
+    "have",
+    "ought",
+    "to seven",
+    "since",
+    "‘ll have been living",
+    "Wonder",
+    "love",
+    "can't"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "close",
+       "b": "near"
+      },
+      {
+       "a": "whole",
+       "b": "complete"
+      },
+      {
+       "a": "usual",
+       "b": "normal"
+      },
+      {
+       "a": "terrible",
+       "b": "awful"
+      },
+      {
+       "a": "sure",
+       "b": "certain"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "I was late this morning",
+       "answer": "alarm"
+      },
+      {
+       "text": "She had a very successful",
+       "answer": "career"
+      },
+      {
+       "text": "His is",
+       "answer": "goal"
+      },
+      {
+       "text": "They tried to jump",
+       "answer": "fence"
+      },
+      {
+       "text": "The had a very beautiful",
+       "answer": "carpet"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "Walk down the",
+       "answer": "corridor"
+      },
+      {
+       "text": "We're staying in a five star",
+       "answer": "resort"
+      },
+      {
+       "text": "Did you have to wear a",
+       "answer": "uniform"
+      },
+      {
+       "text": "Can I borrow a",
+       "answer": "towel"
+      },
+      {
+       "text": "The car won't",
+       "answer": "mechanic"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "retail",
+       "b": "sales"
+      },
+      {
+       "a": "satellite",
+       "b": "moon"
+      },
+      {
+       "a": "border",
+       "b": "line"
+      },
+      {
+       "a": "harvest",
+       "b": "scenery"
+      },
+      {
+       "a": "litter",
+       "b": "bin"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "It's a bit small",
+       "answer": "zoom"
+      },
+      {
+       "text": "If you feel tired",
+       "answer": "yawn"
+      },
+      {
+       "text": "We need to",
+       "answer": "rectify"
+      },
+      {
+       "text": "You should always",
+       "answer": "obey"
+      },
+      {
+       "text": "He sometimes",
+       "answer": "contradict"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp tài liệu ôn tập 1",
+   "grammar": [
+    "across",
+    "as",
+    "hoping",
+    "fell",
+    "am",
+    "use",
+    "However",
+    "can't",
+    "absolutely",
+    "I'll be lying",
+    "off",
+    "had",
+    "short",
+    "wouldn't",
+    "enough",
+    "seen",
+    "many",
+    "that",
+    "delighted",
+    "be",
+    "Where",
+    "shouldn't",
+    "Consequently",
+    "will",
+    "needn't"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "agree",
+       "b": "say yes"
+      },
+      {
+       "a": "hate",
+       "b": "not like"
+      },
+      {
+       "a": "lock",
+       "b": "close"
+      },
+      {
+       "a": "realise",
+       "b": "understand"
+      },
+      {
+       "a": "mention",
+       "b": "speak about"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "You wear your",
+       "answer": "socks"
+      },
+      {
+       "text": "You use",
+       "answer": "bricks"
+      },
+      {
+       "text": "I opened the",
+       "answer": "curtains"
+      },
+      {
+       "text": "Green",
+       "answer": "beans"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "He discovered a new species of",
+       "answer": "insect"
+      },
+      {
+       "text": "There was a light",
+       "answer": "mist"
+      },
+      {
+       "text": "She wore a matching red",
+       "answer": "outfit"
+      },
+      {
+       "text": "We were woken a police car's",
+       "answer": "siren"
+      },
+      {
+       "text": "just put these flowers in a",
+       "answer": "vase"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "segregate",
+       "b": "divide"
+      },
+      {
+       "a": "expel",
+       "b": "get rid of"
+      },
+      {
+       "a": "dismantle",
+       "b": "take apart"
+      },
+      {
+       "a": "fasten",
+       "b": "close"
+      },
+      {
+       "a": "embark",
+       "b": "leave"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "greasy",
+       "b": "hair"
+      },
+      {
+       "a": "medieval",
+       "b": "town"
+      },
+      {
+       "a": "timid",
+       "b": "child"
+      },
+      {
+       "a": "unanimous",
+       "b": "decision"
+      },
+      {
+       "a": "sour",
+       "b": "smell"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp tài liệu ôn tập 2",
+   "grammar": [
+    "Have",
+    "gone",
+    "had",
+    "impossible",
+    "left",
+    "consequently",
+    "will",
+    "the time",
+    "would",
+    "thinking",
+    "after",
+    "is",
+    "there",
+    "the life",
+    "Whose",
+    "on",
+    "because",
+    "not",
+    "By",
+    "up",
+    "in spite of",
+    "could",
+    "borrowing",
+    "written",
+    "go"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "Chance",
+       "b": "opportunity"
+      },
+      {
+       "a": "Community",
+       "b": "group"
+      },
+      {
+       "a": "Expense",
+       "b": "cost"
+      },
+      {
+       "a": "Figure",
+       "b": "number"
+      },
+      {
+       "a": "Project",
+       "b": "plan"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "All the time",
+       "b": "permanent"
+      },
+      {
+       "a": "More than usual or normal is",
+       "b": "general"
+      },
+      {
+       "a": "Clean of perfect is",
+       "b": "pure"
+      },
+      {
+       "a": "Strong and difficult to break is",
+       "b": "tough"
+      },
+      {
+       "a": "Very, very big is",
+       "b": "enormous"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "Aerial",
+       "b": "photography"
+      },
+      {
+       "a": "Cardboard",
+       "b": "box"
+      },
+      {
+       "a": "Eldest",
+       "b": "son"
+      },
+      {
+       "a": "Manual",
+       "b": "system"
+      },
+      {
+       "a": "Prominent",
+       "b": "part"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "Vacant",
+       "b": "unusual"
+      },
+      {
+       "a": "Taboo",
+       "b": "forbidden"
+      },
+      {
+       "a": "Outgoing",
+       "b": "sociable"
+      },
+      {
+       "a": "Lethal",
+       "b": "fatal"
+      },
+      {
+       "a": "Immaculate",
+       "b": "perfect"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "His remarks were rather",
+       "answer": "ambiguous"
+      },
+      {
+       "text": "The princess was held",
+       "answer": "captive"
+      },
+      {
+       "text": "He never laughs and so seems rather",
+       "answer": "earnest"
+      },
+      {
+       "text": "We all laughed at his",
+       "answer": "hilarious"
+      },
+      {
+       "text": "The show was cheap and rather",
+       "answer": "negligent"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  },
+  {
+   "title": "Ngữ pháp tài liệu ôn tập 3",
+   "grammar": [
+    "ask",
+    "was",
+    "to eat",
+    "On",
+    "many",
+    "could",
+    "Did you",
+    "have to",
+    "doesn’t make",
+    "Used",
+    "do",
+    "Interested",
+    "had read",
+    "Would go",
+    "Has visited",
+    "Gone",
+    "The big",
+    "would",
+    "Should have",
+    "Living",
+    "had been completed",
+    "Have been",
+    "Which",
+    "Have known",
+    "Backs up"
+   ],
+   "vocab": [
+    {
+     "n": 26,
+     "kind": "syn",
+     "pairs": [
+      {
+       "a": "argue",
+       "b": "debate"
+      },
+      {
+       "a": "suggest",
+       "b": "propose"
+      },
+      {
+       "a": "grant",
+       "b": "allow"
+      },
+      {
+       "a": "operate",
+       "b": "function"
+      },
+      {
+       "a": "inform",
+       "b": "tell"
+      }
+     ]
+    },
+    {
+     "n": 27,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "We can",
+       "answer": "invite"
+      },
+      {
+       "text": "Would you",
+       "answer": "prefer"
+      },
+      {
+       "text": "I neve",
+       "answer": "quote"
+      },
+      {
+       "text": "We can’t",
+       "answer": "hire"
+      },
+      {
+       "text": "To get to work today I had to t",
+       "answer": "struggle"
+      }
+     ]
+    },
+    {
+     "n": 28,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "You press the keys to play the",
+       "answer": "piano"
+      },
+      {
+       "text": "I you go climbing you will need some",
+       "answer": "rope"
+      },
+      {
+       "text": "It’s cold and that building will provide a/an",
+       "answer": "shelter"
+      },
+      {
+       "text": "In the middle of the arm is the",
+       "answer": "elbow"
+      },
+      {
+       "text": "We keep our cows in a/an",
+       "answer": "barn"
+      }
+     ]
+    },
+    {
+     "n": 29,
+     "kind": "sent",
+     "items": [
+      {
+       "text": "Written works that are lasting significance",
+       "answer": "literature"
+      },
+      {
+       "text": "The point or place is created",
+       "answer": "origin"
+      },
+      {
+       "text": "Something people give breaking a rule or law",
+       "answer": "penalty"
+      },
+      {
+       "text": "The central part of something",
+       "answer": "core"
+      },
+      {
+       "text": "Some thing price",
+       "answer": "bargain"
+      }
+     ]
+    },
+    {
+     "n": 30,
+     "kind": "col",
+     "pairs": [
+      {
+       "a": "thermal",
+       "b": "…energy"
+      },
+      {
+       "a": "solo",
+       "b": "…artist"
+      },
+      {
+       "a": "glossy",
+       "b": "…smile"
+      },
+      {
+       "a": "humble",
+       "b": "…beginnings"
+      },
+      {
+       "a": "furious",
+       "b": "…steam"
+      }
+     ]
+    }
+   ],
+   "missing": []
+  }
+ ]
+};
+
+</script>
+<script>
 "use strict";
 const D = window.APTIS.listening;
 const $ = id => document.getElementById(id);
-const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview"];
+const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview"];
 
 let test = null;          // current full test
 let practice = false;
@@ -12653,7 +13998,16 @@ function openRandomPreview(){
 }
 function startInstructions(){
   practice = $("pv-practice").checked;
-  if(pvIndex===-3){
+  if(pvIndex===-4){
+    $("ins-title").textContent = "Aptis Grammar & Vocabulary Instructions";
+    $("ins-body").innerHTML = `
+      <p style="font-weight:700;margin-bottom:14px">Grammar and Vocabulary</p>
+      <p style="margin-bottom:12px">The first section tests grammar; the second section tests vocabulary (synonyms, gap-fill and collocations).</p>
+      <p style="margin-bottom:12px">Answer every question — there is no penalty for guessing.</p>
+      <p style="margin-bottom:12px">You have 25 minutes to complete the test.</p>`;
+    setNav("nav-instr", ["Grammar","Thi thử Core", "Instructions"], "Màn giới thiệu đề", "retake()");
+  }
+  else if(pvIndex===-3){
     $("ins-title").textContent = "Aptis General Reading Instructions";
     $("ins-body").innerHTML = `
       <p style="font-weight:700;margin-bottom:14px">Reading</p>
@@ -12833,6 +14187,7 @@ function startExam(){
        questions: [...sample(buildQ13Pool(), 13), buildRandomQ14(), buildRandomQ15(), ...buildRandomQ1617()]}
     : pvIndex===-2 ? buildDeckTest(deckIdx)
     : pvIndex===-3 ? buildReadingTest()
+    : pvIndex===-4 ? buildGrammarTest()
     : D.fullTests[pvIndex];
   cur = 0;
   answers = test.questions.map(q=>{
@@ -13090,6 +14445,8 @@ function submitExam(auto){
   const parts = pvIndex===-3
     ? {mcq:{label:"Part 1 · điền từ",g:0,t:0}, order:{label:"Part 2&3 · xếp câu",g:0,t:0},
        pick:{label:"Part 4&5 · nối",g:0,t:0}}
+    : pvIndex===-4
+    ? {mcq:{label:"Trắc nghiệm (ngữ pháp + điền từ)",g:0,t:0}, pick:{label:"Nối từ vựng",g:0,t:0}}
     : {mcq:{label:"Câu 1–13",g:0,t:0}, match:{label:"Câu 14",g:0,t:0},
        mwb:{label:"Câu 15",g:0,t:0}, multi2:{label:"Câu 16–17",g:0,t:0}};
   test.questions.forEach((q,i)=>{
@@ -13122,6 +14479,9 @@ function submitExam(auto){
   else if(pvIndex===-3)
     setNav("nav-results", ["Reading","Thi thử", "Kết quả"],
            "Về mục Reading", "goReading()");
+  else if(pvIndex===-4)
+    setNav("nav-results", ["Grammar","Thi thử Core", "Kết quả"],
+           "Về mục Grammar", "goGrammar()");
   else
     setNav("nav-results", ["Listening","Thi mô phỏng", test.title, "Kết quả"],
            "Thi mô phỏng", "goHome('sec-sim')");
@@ -13222,6 +14582,7 @@ function retake(){
   if(pvIndex===-1) openRandomPreview();
   else if(pvIndex===-2) openDeckPreview(deckIdx);
   else if(pvIndex===-3) openReadingPreview();
+  else if(pvIndex===-4) openGrammarPreview();
   else openPreview(pvIndex);
 }
 
@@ -13404,7 +14765,7 @@ function quizItemDone(it, p){
 function startQuiz(title, items, back){
   if(!items.length){ alert("Nguồn này chưa có câu nào ở dạng thi."); return; }
   quiz = {title, items, cur: 0, picked: items.map(quizBlank), back};
-  const root = /^Reading/.test(title) ? "Reading" : "Listening";
+  const root = /^Reading/.test(title) ? "Reading" : /^Grammar/.test(title) ? "Grammar" : "Listening";
   setNav("nav-quiz", [root,"Luyện dạng thi", title.replace(/^Luyện[^·]*·\s*/,"")],
          "Quay lại", "quizExit()");
   const hd = document.querySelector("#scr-quiz .part");
@@ -13642,7 +15003,7 @@ function quizFinish(){
     const attempted = Array.isArray(p) ? p.some(x=>x!==null) : p!==null;
     recordWrong(it.type ? it : {...it, type:"mcq"}, rs[i], attempted);
   });
-  setNav("nav-quizres", [/^Reading/.test(quiz.title) ? "Reading" : "Listening","Luyện dạng thi","Kết quả"],
+  setNav("nav-quizres", [/^Reading/.test(quiz.title) ? "Reading" : /^Grammar/.test(quiz.title) ? "Grammar" : "Listening","Luyện dạng thi","Kết quả"],
          "Chọn phần khác", "quiz.back()");
   $("qr-title").textContent = quiz.title;
   $("qr-score").textContent = `${got}/${total} ý`;
@@ -13771,6 +15132,117 @@ function bankRevealAll(show){
   document.querySelectorAll("#bank-list .ans, #bank-list .ansblock").forEach(el=>{
     if(!el.dataset.noblur) el.classList.toggle("blur", !show);
   });
+}
+
+/* ================= GRAMMAR & VOCABULARY (8 đề tủ) ================= */
+const GV = (window.APTIS && window.APTIS.grammar) || {sets: []};
+function goGrammar(sec){
+  if(!confirmLeave()) return;
+  stopTimer(); stopAudio();
+  setNav("nav-ghome", ["Grammar"], "Trang chủ", "goRoot()");
+  $("gset-list").innerHTML = GV.sets.map((s,i)=>`
+    <div class="card" style="cursor:pointer" onclick="openGView(${i})">
+      <span class="tag key">ÔN TỦ</span>
+      <h3>${escapeHtml(s.title)}</h3>
+      <div class="meta">25 câu ngữ pháp · ${s.vocab.length} nhóm từ vựng</div>
+    </div>`).join("");
+  showScreen("scr-ghome");
+  if(sec && $(sec)) $(sec).scrollIntoView({behavior:"smooth"});
+}
+/* --- builders --- */
+function gGramItems(s){
+  return s.grammar.map((ans,i)=>{
+    const others = sample(s.grammar.filter(a=>a && a.toLowerCase()!==ans.toLowerCase()), 2);
+    const pos = Math.floor(Math.random()*3);
+    const options=[], made=[];
+    let di=0;
+    for(let k=0;k<3;k++){
+      if(k===pos){ options.push(ans); made.push(false); }
+      else { options.push(others[di++]); made.push(true); }
+    }
+    return {type:"mcq", kid:"g|"+s.title+"|"+i,
+      q: `Câu ${i+1} — đáp án đúng của đề này là gì?`,
+      vn: "Phương án nhiễu (*) là đáp án của câu khác trong cùng đề",
+      options, answer: pos, made, qMade: false, src: s.title, audio: null};
+  });
+}
+function gVocabItems(s){
+  const items = [];
+  s.vocab.forEach(g=>{
+    if(g.kind==="syn" || g.kind==="col"){
+      const perm = sample([...Array(g.pairs.length).keys()], g.pairs.length);
+      items.push({type:"pick", kid:"gv|"+s.title+"|"+g.n,
+        topic: (g.kind==="syn" ? "Nối từ đồng nghĩa" : "Ghép collocation") + ` (câu ${g.n} · ${s.title})`,
+        intro: g.kind==="syn" ? "Chọn từ/cụm ĐỒNG NGHĨA cho mỗi từ." : "Chọn từ đi kèm (collocation) đúng cho mỗi từ.",
+        choices: perm.map(pi=>g.pairs[pi].b),
+        rows: g.pairs.map((p,i)=>({t: p.a, a: perm.indexOf(i)})),
+        src: s.title, audio: null});
+    } else if(g.kind==="sent"){
+      const answers = g.items.map(x=>x.answer);
+      g.items.forEach((x,xi)=>{
+        const others = sample(answers.filter(a=>a.toLowerCase()!==x.answer.toLowerCase()), 2);
+        while(others.length<2) others.push("—");
+        const pos = Math.floor(Math.random()*3);
+        const options=[], made=[];
+        let di=0;
+        for(let k=0;k<3;k++){
+          if(k===pos){ options.push(x.answer); made.push(false); }
+          else { options.push(others[di++]); made.push(true); }
+        }
+        items.push({type:"mcq", kid:"gs|"+s.title+"|"+g.n+"|"+xi,
+          q: x.text, vn: "Điền từ (câu "+g.n+")", options, answer: pos, made, qMade:false,
+          src: s.title, audio: null});
+      });
+    }
+  });
+  return items;
+}
+/* --- luyện --- */
+function quizGAll(){ startQuiz("Grammar — 200 câu ngữ pháp (8 đề)", GV.sets.flatMap(gGramItems), ()=>goGrammar('gsec-quiz')); }
+function quizGVocab(){ startQuiz("Grammar — từ vựng (8 đề)", GV.sets.flatMap(gVocabItems), ()=>goGrammar('gsec-quiz')); }
+function quizGSet(i){
+  const s = GV.sets[i];
+  startQuiz("Grammar — " + s.title + " (trọn đề)", [...gGramItems(s), ...gVocabItems(s)], ()=>openGView(i));
+}
+/* --- thi thử Core --- */
+function buildGrammarTest(){
+  const s = sample(GV.sets, 1)[0];
+  return {id:"grammar", title:"Thi thử Grammar & Vocabulary — " + s.title, timeMin:25,
+          questions: [...gGramItems(s), ...gVocabItems(s)]};
+}
+function openGrammarPreview(){
+  pvIndex = -4;
+  pvQCount = buildGrammarTest().questions.length;
+  $("pv-title").textContent = "Thi thử Grammar & Vocabulary";
+  $("pv-nq").textContent = String(pvQCount);
+  $("pv-time").textContent = "25 min";
+  $("pv-random-note").classList.remove("hidden");
+  $("pv-random-note").innerHTML = `✏️ Mỗi lần thi rút ngẫu nhiên 1 trong 8 đề tủ: 25 câu ngữ pháp
+    (chọn đáp án đúng — nhiễu là đáp án câu khác cùng đề, có dấu *) + toàn bộ từ vựng của đề
+    (nối đồng nghĩa, điền từ, collocation). Thi thật phần Core cũng 25 phút.`;
+  setNav("nav-preview", ["Grammar","Thi thử Core"], "Về mục Grammar", "goGrammar('gsec-sim')");
+  showScreen("scr-preview");
+}
+/* --- ôn tủ viewer --- */
+function openGView(i){
+  const s = GV.sets[i];
+  $("gview-title").textContent = "✏️ " + s.title;
+  $("gview-quiz-btn").onclick = ()=>quizGSet(i);
+  setNav("nav-gview", ["Grammar","Ôn tủ", s.title], "Về mục Grammar", "goGrammar('gsec-key')");
+  let html = `<div class="kitem"><div class="qline"><b>Ngữ pháp — 25 đáp án theo thứ tự</b></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px">` +
+    s.grammar.map((a,ai)=>`<div style="border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:14px">
+      <b style="color:var(--purple)">${ai+1}.</b> ${escapeHtml(a)}</div>`).join("") + `</div></div>`;
+  s.vocab.forEach(g=>{
+    const kindName = g.kind==="syn" ? "Từ đồng nghĩa" : g.kind==="col" ? "Collocation (từ đi kèm)" : "Điền từ vào câu";
+    html += `<div class="kitem"><div class="qline"><b>Câu ${g.n} — ${kindName}</b></div>
+      <div style="line-height:1.9;margin-top:6px">`;
+    if(g.pairs) html += g.pairs.map(p=>`<div>${escapeHtml(p.a)} <span style="color:var(--muted)">${g.kind==="col"?"+":"="}</span> <b class="okmark">${escapeHtml(p.b)}</b></div>`).join("");
+    if(g.items) html += g.items.map(x=>`<div>${escapeHtml(x.text.replace("____","______"))} → <b class="okmark">${escapeHtml(x.answer)}</b></div>`).join("");
+    html += `</div></div>`;
+  });
+  $("gview-body").innerHTML = html;
+  showScreen("scr-gview");
 }
 
 /* ================= READING (tủ Update 01.07.2026) ================= */

@@ -190,10 +190,11 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <div class="meta">17 câu · 40 phút · 4 dạng bài</div>
       <div class="meta">Thi mô phỏng, đề ngẫu nhiên, tủ Update 01.08.2026, luyện dạng thi, flashcard 24 đề</div>
     </div>
-    <div class="card" style="opacity:.65">
-      <span class="tag key">SẮP CÓ</span>
+    <div class="card" style="cursor:pointer;border-color:var(--purple-light)" onclick="goReading()">
+      <span class="tag sim">SẴN SÀNG</span>
       <h3>📖 Reading</h3>
-      <div class="meta">Tài liệu đã có: Reading 01.07.2026.pdf</div>
+      <div class="meta">5 phần · ~35 phút · tủ Update 01.07.2026</div>
+      <div class="meta">Điền từ, xếp câu, nối người–câu hỏi, chọn tiêu đề · thi thử + luyện + ôn tủ</div>
     </div>
     <div class="card" style="opacity:.65">
       <span class="tag key">SẮP CÓ</span>
@@ -319,12 +320,14 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
 <div id="scr-instr" class="exam-wrap">
   <div class="page" style="flex:1">
     <div class="backbar" id="nav-instr"></div>
-    <h2 style="margin-bottom:18px">Aptis General Listening Instructions</h2>
+    <h2 style="margin-bottom:18px" id="ins-title">Aptis General Listening Instructions</h2>
+    <div id="ins-body">
     <p style="font-weight:700;margin-bottom:14px">Listening</p>
     <p style="margin-bottom:12px">You will listen to <span id="ins-nq">seventeen</span> recordings.</p>
     <p style="margin-bottom:12px">Click on the PLAY button to listen to each recording.</p>
     <p style="margin-bottom:12px">You can listen to each recording TWO TIMES ONLY.</p>
     <p style="margin-bottom:12px">You have <span id="ins-time">40</span> minutes to complete the test.</p>
+    </div>
     <p style="margin-top:34px">When you click on the 'Next' button, the test will begin.</p>
   </div>
   <div class="footer">
@@ -448,6 +451,80 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     <button class="btn small secondary" onclick="bankRevealAll(false)">Ẩn tất cả</button>
   </div>
   <div id="bank-list"></div>
+</div>
+
+<!-- ============ READING HOME ============ -->
+<div id="scr-rhome" class="page">
+  <div class="backbar" id="nav-rhome"></div>
+  <h1>📖 Aptis Reading</h1>
+  <p class="sub">Ôn luyện Reading với tủ Update 01.07.2026 — 5 phần đúng cấu trúc thi thật.</p>
+
+  <h2 style="margin-bottom:14px" id="rsec-sim">🎧 Thi mô phỏng</h2>
+  <div class="grid">
+    <div class="card" style="cursor:pointer;border-color:var(--purple-light)" onclick="openReadingPreview()">
+      <span class="tag sim">🎲 THI THỬ READING</span>
+      <h3>Đề trộn ngẫu nhiên đủ 5 phần</h3>
+      <div class="meta">Part 1 điền từ (5 câu) + Part 2&3 xếp câu (2 bài) + Part 4 nối người (7 câu) + Part 5 tiêu đề (7 đoạn)</div>
+      <div class="meta">~29 ý · 35 phút · chấm điểm /50</div>
+    </div>
+  </div>
+
+  <h2 style="margin:30px 0 14px" id="rsec-quiz">🎯 Luyện dạng thi từng phần</h2>
+  <div class="grid">
+    <div class="card" style="cursor:pointer" onclick="quizR1()">
+      <span class="tag sim">PART 1</span>
+      <h3>Điền từ vào chỗ trống</h3>
+      <div class="meta">20 câu từ 4 đề — chọn 1 trong 3 từ, khóa khi chọn, báo đúng/sai ngay</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="quizR23()">
+      <span class="tag sim">PART 2 & 3</span>
+      <h3>Sắp xếp câu thành đoạn văn</h3>
+      <div class="meta">10 bài — bấm các câu theo đúng thứ tự, chấm từng vị trí</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="quizR4()">
+      <span class="tag sim">PART 4</span>
+      <h3>Nối câu hỏi với đoạn văn</h3>
+      <div class="meta">5 đề × 7 câu hỏi — chọn đoạn (theo keyword) cho từng câu hỏi</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="quizR5()">
+      <span class="tag sim">PART 5</span>
+      <h3>Chọn tiêu đề cho đoạn văn</h3>
+      <div class="meta">3 đề × 7 đoạn — nhớ đúng tiêu đề theo thứ tự đoạn</div>
+    </div>
+  </div>
+
+  <h2 style="margin:30px 0 14px" id="rsec-key">📝 Ôn tủ (xem đầy đủ nội dung)</h2>
+  <div class="grid">
+    <div class="card" style="cursor:pointer" onclick="openRView('p1')">
+      <span class="tag key">PART 1</span><h3>4 đề điền từ</h3>
+      <div class="meta">Nguyên văn thư + đáp án + câu thần chú mẹo nhớ</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="openRView('p23')">
+      <span class="tag key">PART 2 & 3</span><h3>10 bài xếp câu</h3>
+      <div class="meta">Các câu theo đúng thứ tự chuẩn — học thuộc mạch bài</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="openRView('p4')">
+      <span class="tag key">PART 4</span><h3>5 đề nối người</h3>
+      <div class="meta">Keyword từng đoạn + câu hỏi gắn liền — đúng cách tài liệu hướng dẫn học</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="openRView('p5')">
+      <span class="tag key">PART 5</span><h3>3 đề tiêu đề</h3>
+      <div class="meta">7 tiêu đề đúng thứ tự + tóm tắt mẹo nhớ + cảnh báo câu lừa</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ READING VIEWER (ôn tủ) ============ -->
+<div id="scr-rview" class="page">
+  <div class="backbar" id="nav-rview"></div>
+  <h1 id="rview-title"></h1>
+  <div class="pillbar" style="margin-bottom:16px">
+    <button class="pill" id="rv-p1" onclick="openRView('p1')">Part 1</button>
+    <button class="pill" id="rv-p23" onclick="openRView('p23')">Part 2 & 3</button>
+    <button class="pill" id="rv-p4" onclick="openRView('p4')">Part 4</button>
+    <button class="pill" id="rv-p5" onclick="openRView('p5')">Part 5</button>
+  </div>
+  <div id="rview-list"></div>
 </div>
 
 <!-- ============ QUẢN TRỊ (chỉ admin) ============ -->
@@ -11800,10 +11877,673 @@ window.APTIS.listening = {
 
 </script>
 <script>
+window.APTIS = window.APTIS || {};
+window.APTIS.reading = {
+ "source": "Reading 01.07.2026.pdf (bản cập nhật mới nhất trong tài liệu)",
+ "part1": [
+  {
+   "title": "Đề 1 — Cycling to work (thư gửi Jane)",
+   "mnemonic": "Buổi sáng (morning) bạn (friends) nên dời đi (leave), tốt (good) nhất là mang theo đồ ăn (food)",
+   "intro": "Dear Jane, I want to be healthier, so I exercise regularly. (Example)",
+   "items": [
+    {
+     "text": "In the ____, I cycle to work.",
+     "options": [
+      "sun",
+      "morning",
+      "market"
+     ],
+     "answer": 1,
+     "vn": "Vào buổi sáng, tớ đạp xe đi làm",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "My ____ cycle to work with me.",
+     "options": [
+      "friends",
+      "house",
+      "car"
+     ],
+     "answer": 0,
+     "vn": "Bạn tớ đạp xe đi làm cùng tớ",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "Therefore, I ____ my car at my house.",
+     "options": [
+      "stay",
+      "burn",
+      "leave"
+     ],
+     "answer": 2,
+     "vn": "Do vậy, tớ để ô tô ở nhà",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "I feel ____ after cycling to work.",
+     "options": [
+      "big",
+      "good",
+      "beautiful"
+     ],
+     "answer": 1,
+     "vn": "Tớ cảm thấy khỏe sau khi đạp xe đi làm",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "Then, I drink water and eat healthy ____.",
+     "options": [
+      "sugar",
+      "beer",
+      "food"
+     ],
+     "answer": 2,
+     "vn": "Sau đó, tớ uống nước và ăn thức ăn tốt cho sức khỏe",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 2 — Directions to my house (thư gửi Tom)",
+   "mnemonic": "Nhà ga dừng lại trước đèn xanh để khách ăn tối và xem phim",
+   "intro": "Dear Tom, ... Talk to you soon! Anna.",
+   "items": [
+    {
+     "text": "When you are at the train ____, go to the main gate.",
+     "options": [
+      "school",
+      "station",
+      "river"
+     ],
+     "answer": 1,
+     "vn": "Khi bạn đến nhà ga xe lửa, đi đến chỗ cổng chính",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "The bus ____ are near.",
+     "options": [
+      "stops",
+      "towns",
+      "places"
+     ],
+     "answer": 0,
+     "vn": "Điểm dừng xe bus ở gần đó",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "My house is on Parkon Street. It's ____, so you can not miss it.",
+     "options": [
+      "tired",
+      "color",
+      "green"
+     ],
+     "answer": 2,
+     "vn": "Nhà mình trên phố Parkon, màu xanh nên dễ nhận ra",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "After you come, we will have ____.",
+     "options": [
+      "dinner",
+      "food",
+      "eat"
+     ],
+     "answer": 0,
+     "vn": "Sau khi bạn đến, chúng ta sẽ ăn bữa tối",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "In the evening, we can watch some ____ together.",
+     "options": [
+      "animals",
+      "films",
+      "bread"
+     ],
+     "answer": 1,
+     "vn": "Vào buổi tối chúng ta sẽ xem phim cùng nhau",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 3 — My new apartment (thư gửi Alex)",
+   "mnemonic": "Tình yêu (love) nhỏ bé (small) thì mua được (shop) nhiều người (people) đến thăm (visit)",
+   "intro": "Hi Alex, I'm living in a new department now. (Example) ... Write soon, Lisa",
+   "items": [
+    {
+     "text": "I ____ the area where I live now.",
+     "options": [
+      "love",
+      "run",
+      "should"
+     ],
+     "answer": 0,
+     "vn": "Tớ rất yêu nơi tớ sống",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "My house has a kitchen but it is very ____.",
+     "options": [
+      "small",
+      "tall",
+      "short"
+     ],
+     "answer": 0,
+     "vn": "Nhà tớ có một căn bếp nhưng nó rất nhỏ",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "I work at a ____ and I sell clothes.",
+     "options": [
+      "car",
+      "shop",
+      "window"
+     ],
+     "answer": 1,
+     "vn": "Tớ làm việc ở một cửa hàng, bán quần áo",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "Everyday I talk to many ____.",
+     "options": [
+      "animals",
+      "trees",
+      "people"
+     ],
+     "answer": 2,
+     "vn": "Hàng ngày tớ nói chuyện với nhiều người",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    },
+    {
+     "text": "I am on my holiday and I'm excited that I can ____ you soon.",
+     "options": [
+      "show",
+      "visit",
+      "play"
+     ],
+     "answer": 1,
+     "vn": "Tớ đang kì nghỉ, háo hức sớm đến thăm bạn",
+     "made": [
+      false,
+      false,
+      false
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 4 — Family vacation (thư gửi Alex) — tài liệu chỉ có đáp án, 2 phương án nhiễu do app tự thêm (*)",
+   "mnemonic": "staying – garden – children – visit – old (lưu trú, làm vườn, trẻ em, thăm, người già)",
+   "intro": "Hi Alex, Our family is going on a vacation. ... Love, Anna",
+   "items": [
+    {
+     "text": "We are ____ in a small house in the village.",
+     "options": [
+      "staying",
+      "cooking",
+      "running"
+     ],
+     "answer": 0,
+     "vn": "Chúng tôi ở trong một ngôi nhà nhỏ trong làng",
+     "made": [
+      false,
+      true,
+      true
+     ]
+    },
+    {
+     "text": "There are a lot of trees in the ____.",
+     "options": [
+      "kitchen",
+      "garden",
+      "market"
+     ],
+     "answer": 1,
+     "vn": "Có rất nhiều cây ở trong vườn",
+     "made": [
+      true,
+      false,
+      true
+     ]
+    },
+    {
+     "text": "We go fishing with our ____.",
+     "options": [
+      "children",
+      "neighbors",
+      "teachers"
+     ],
+     "answer": 0,
+     "vn": "Chúng tôi đi câu cá cùng các con",
+     "made": [
+      false,
+      true,
+      true
+     ]
+    },
+    {
+     "text": "Today, we are going to ____ the town by bus.",
+     "options": [
+      "clean",
+      "visit",
+      "build"
+     ],
+     "answer": 1,
+     "vn": "Hôm nay chúng mình sẽ đi thăm thị trấn bằng xe bus",
+     "made": [
+      true,
+      false,
+      true
+     ]
+    },
+    {
+     "text": "There are some ____ buildings there.",
+     "options": [
+      "old",
+      "funny",
+      "delicious"
+     ],
+     "answer": 0,
+     "vn": "Có một số tòa nhà cổ ở đó",
+     "made": [
+      false,
+      true,
+      true
+     ]
+    }
+   ]
+  }
+ ],
+ "part23": [
+  {
+   "title": "Đề 1 — A singer (Một ca sĩ)",
+   "topic": "A singer (Một ca sĩ)",
+   "sentences": [
+    "Before becoming famous at a young age, he studied art and music at high school",
+    "During this education, he started to perform on stage.",
+    "During his performances on stage, he likes to wear colorful clothes and paint his face.",
+    "This strange ways of dressing and his songs attracted people's attention",
+    "They started to follow him on social media and he is now very famous"
+   ]
+  },
+  {
+   "title": "Đề 2 — Family Sport Day (Ngày hội thể thao gia đình)",
+   "topic": "Family Sport Day (Ngày hội thể thao gia đình)",
+   "sentences": [
+    "It started early on Saturday morning with a ten-mile race for adults.",
+    "Sixty men and women ran in this, and Ms Kamur won with a very fast time",
+    "After receiving the prize, the children's activities and competetions began.",
+    "These activities included football, jumping, and swimming, and they had lots of fun.",
+    "They were all very hungry after all these, so they enjoyed tasty food and drinks with their parents"
+   ]
+  },
+  {
+   "title": "Đề 3 — NEW CAFE IN TOWN (QUÁN CÀ PHÊ MỚI TRONG THỊ",
+   "topic": "NEW CAFE IN TOWN (QUÁN CÀ PHÊ MỚI TRONG THỊ",
+   "sentences": [
+    "It was FULL OF PEOPLE, and the staff were working hard on their Ist day",
+    "DESPITE THE CROWD, they found me a nice table and brought me a menu",
+    "When I first look at the menu, I was disaapointed since I hoped to see a variety of dishes",
+    "I had to choose one of those so I decided to choose the MOST EXPENSIVE sandwiches",
+    "It was really good with CHEESE TOPPING and I would come back to this place"
+   ]
+  },
+  {
+   "title": "Đề 4 — End Term projects (Dự án cuối kỳ)",
+   "topic": "End Term projects (Dự án cuối kỳ)",
+   "sentences": [
+    "For end of term project, you need to choose at least 2 of these",
+    "It needs to include relevant images and your own text about the topic",
+    "Then you need to use images and written work to create a presentation",
+    "Your presentation offer your key points and you have around 5 minutes to talk",
+    "After this time, other students are able to ask questions and you need to answer them"
+   ]
+  },
+  {
+   "title": "Đề 5 — College Welcoming Day (Ngày chào đón đại học)",
+   "topic": "College Welcoming Day (Ngày chào đón đại học)",
+   "sentences": [
+    "The day will begin at 10 a.m in the morning with a short presentation.",
+    "At the end of this talk, you will meet the heads of departments and teachers.",
+    "These staff members will give you a guided tour in the buildings and our sport facilities in small groups",
+    "During this visit, you will need to stay with these students untill lunch break.",
+    "This meal will be provided on the second floor of the engineering building"
+   ]
+  },
+  {
+   "title": "Đề 6 — The first American woman in space (Người phụ nữ",
+   "topic": "The first American woman in space (Người phụ nữ",
+   "sentences": [
+    "With the support from her parents, she went to university to study science",
+    "Her degree enabled her to get a place on the training course in USA",
+    "This is about space, and it helps Mae to become a member of a research team",
+    "As part of this group, she travelled to space and did a lot of experiments",
+    "Some of those were about growing plants and some animals in a spaceship"
+   ]
+  },
+  {
+   "title": "Đề 7 — Music show at the park (Chương trình âm nhạc tại",
+   "topic": "Music show at the park (Chương trình âm nhạc tại",
+   "sentences": [
+    "The local authority planned, sponsored, and paid for everything.",
+    "Because of this, it was free and five thousand people attended it.",
+    "Many of them arrived early and visited nearby shops while they were waiting for it to begin.",
+    "The staff there had a busy day, but they were able to close early and watch the famous singer perform.",
+    "He performed for two hours and everyone had great fun"
+   ]
+  },
+  {
+   "title": "Đề 8 — Making films (Làm phim)",
+   "topic": "Making films (Làm phim)",
+   "sentences": [
+    "The films in that period were different from the films of today.",
+    "This is because they were black and white, and there was no sound.",
+    "In addition to these technical limitations, film producers also had a very low budget",
+    "This lack of money mostly affected actors, and they didn't earn much",
+    "Things have changed over time, and some of them have earned millions of dollars after appearing in films"
+   ]
+  },
+  {
+   "title": "Đề 9 — History of travel (Lịch sử du lịch)",
+   "topic": "History of travel (Lịch sử du lịch)",
+   "sentences": [
+    "In the past, only very rich people could afford to travel long distances.",
+    "The invention of cars and trains had changed everything and made travelling cheaper.",
+    "After these two means of transport, travelling becomes even easier with aeroplanes.",
+    "Because flying with them is so fast, more people now go abroad for holiday and business.",
+    "It is more convenient to travel to other part of the world due to the"
+   ]
+  },
+  {
+   "title": "Đề 10 — Writing about a place/ Homework next week( Viết về",
+   "topic": "Writing about a place/ Homework next week( Viết về",
+   "sentences": [
+    "Before starting writing, you should do research on many details of that place.",
+    "These must include data on its people, language, and history",
+    "While giving information about three areas, you will also compare it with your own country",
+    "This comparison will understand the similarities between the two countries.",
+    "There may not be many of those, but still you will see some common areas."
+   ]
+  }
+ ],
+ "part4": [
+  {
+   "title": "Đề 1 — Music Festival ( Lễ hội âm nhạc)",
+   "topic": "Music Festival ( Lễ hội âm nhạc)",
+   "groups": [
+    {
+     "key": "\"This is my first...\" \"Đây là lần đầu tiên của tôi...\" Tụ",
+     "questions": [
+      "Who is disappointed with the weather",
+      "Who enjoyed the final day of the music event"
+     ]
+    },
+    {
+     "key": "\"I attend music festivals every year...\"",
+     "questions": [
+      "Who was not impressed by the event overall"
+     ]
+    },
+    {
+     "key": "\"I don't like one particular kind of music...\"",
+     "questions": [
+      "Who enjoyed all the music at the music event",
+      "Who thought the event was expensive"
+     ]
+    },
+    {
+     "key": "\"My band and I went to the music festival...\"",
+     "questions": [
+      "Who likes meeting old friends",
+      "Who thought the location was not good"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 2 — Career (sự nghiệp)",
+   "topic": "Career (sự nghiệp)",
+   "groups": [
+    {
+     "key": "When I finished school",
+     "questions": [
+      "Who benefited from working for free"
+     ]
+    },
+    {
+     "key": "I went straight to university",
+     "questions": [
+      "Who did not want to change to other careers",
+      "Who enjoyed working when training"
+     ]
+    },
+    {
+     "key": "As a child (Khi còn nhỏ)",
+     "questions": [
+      "Who enjoyed doing things with their hands",
+      "Who thinks their training was too long"
+     ]
+    },
+    {
+     "key": "After school, (Sau giờ học)",
+     "questions": [
+      "Who enjoyed working in a flexible work environment",
+      "Who thinks it was hard to get the first job"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 3 — Childhood Activities ( Hoạt động tuổi thơ)",
+   "topic": "Childhood Activities ( Hoạt động tuổi thơ)",
+   "groups": [
+    {
+     "key": "\"As a child, I played board games...\"",
+     "questions": [
+      "Who enjoyed playing games with their children",
+      "Who thought childhood games were much simpler"
+     ]
+    },
+    {
+     "key": "\"I preferred....\" \"Tôi thích....\"",
+     "questions": [
+      "Who enjoyed playing with other children as a child"
+     ]
+    },
+    {
+     "key": "\"I wasn't able to move much...\"",
+     "questions": [
+      "Who preferred reading books as a child",
+      "Who enjoyed playing modern games"
+     ]
+    },
+    {
+     "key": "\"I enjoyed playing outdoors...\"",
+     "questions": [
+      "Who enjoyed doing arts as a child",
+      "Who wished they could spend more time outdoors"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 4 — Volunteering ( Tình nguyện)",
+   "topic": "Volunteering ( Tình nguyện)",
+   "groups": [
+    {
+     "key": "Some people enjoy volunteering abroad, but honestly, I feel most people",
+     "questions": [
+      "Who thinks it should help local community",
+      "Who thinks it can improve knowledge about culture"
+     ]
+    },
+    {
+     "key": "My mother told me to do local volunteering because she is part of that",
+     "questions": [
+      "Who wants to enhance future career",
+      "Who wants to make new friends"
+     ]
+    },
+    {
+     "key": "I'm too busy and rarely have any free time to do anything, so spending",
+     "questions": [
+      "Who helps support charity work with money"
+     ]
+    },
+    {
+     "key": "I believe there are many ways we can show kindness through",
+     "questions": [
+      "Who thinks it is a way to travel",
+      "Who thinks volunteering helps improve physical health"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Đề 5 — Topic: Extreme sport (Thể thao mạo hiểm)",
+   "topic": "Topic: Extreme sport (Thể thao mạo hiểm)",
+   "groups": [
+    {
+     "key": "I don't usually like sports. Before trying any extreme sport, I",
+     "questions": [
+      "Who enjoy playing extreme sports after first attempt",
+      "Who think training is important before doing extreme sports"
+     ]
+    },
+    {
+     "key": "Some people like jumping out of aero planes. I’ve always been more",
+     "questions": [
+      "Who think extreme sports are not necessary for them",
+      "Who prefer traditional sports"
+     ]
+    },
+    {
+     "key": "Doing free-diving requires....What I love most about extreme sports is",
+     "questions": [
+      "Who enjoys the nature while doing sports",
+      "Who wishes they are able to do extreme sports more often"
+     ]
+    },
+    {
+     "key": "As a child, I used to do extreme sports. I know some people find",
+     "questions": [
+      "Who avoid doing any sports"
+     ]
+    }
+   ]
+  }
+ ],
+ "part5": [
+  {
+   "title": "Đề 1 — The arrival of four-day week (Sự xuất hiện của tuần lễ",
+   "topic": "The arrival of four-day week (Sự xuất hiện của tuần lễ",
+   "headings": [
+    "A way of life now out of date",
+    "Benefits for employees",
+    "Undesirable financial consequences",
+    "Unforeseen challenges for employees",
+    "Difficult to give up old habits",
+    "An unfair plan for some people",
+    "Alternative solutions worth considering"
+   ],
+   "mnemonic": "Tóm tắt : Cách sống mới ( way of life) dù có ko lợi ( benefits), dù tài chính (",
+   "note": ""
+  },
+  {
+   "title": "Đề 2 — Mountain Summits (Đỉnh núi) ( đề này thi vào liên tục,",
+   "topic": "Mountain Summits (Đỉnh núi) ( đề này thi vào liên tục,",
+   "headings": [
+    "Our changing definition of mountains",
+    "A unique sense of achievement",
+    "Publicising one's achievements",
+    "The wrong priority",
+    "A disturbing revelation",
+    "A focus on sustainability",
+    "A more intimate relationship"
+   ],
+   "mnemonic": "Tóm tắt: Thay đổi ( changing) cảm nhận ( sense), công khai ( publicising),",
+   "note": ""
+  },
+  {
+   "title": "Đề 3 — Woman Mathematics (Toán học nữ)",
+   "topic": "Woman Mathematics (Toán học nữ)",
+   "headings": [
+    "Gender obscure achievements",
+    "Acknowledging achievement of a pioneer",
+    "Men unfairly credited",
+    "A long career showing exceptional ability",
+    "Labels can change perspective on people",
+    "Attempting to create a gender balance",
+    "Uniformity is not always beneficial"
+   ],
+   "mnemonic": "Tóm tắt: Không rõ (obscure) người tiên phong (pioneer) là nam (man) hay",
+   "note": "Lưu ý: Trong đề chọn 7/8 ý, trong đó có 1 câu lừa là Men and women…=>"
+  }
+ ]
+};
+
+</script>
+<script>
 "use strict";
 const D = window.APTIS.listening;
 const $ = id => document.getElementById(id);
-const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin"];
+const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview"];
 
 let test = null;          // current full test
 let practice = false;
@@ -11913,11 +12653,26 @@ function openRandomPreview(){
 }
 function startInstructions(){
   practice = $("pv-practice").checked;
-  $("ins-nq").textContent = pvQCount===17 ? "seventeen" : String(pvQCount);
-  $("ins-time").textContent = "40";
-  const t = pvIndex===-1 ? "Đề ngẫu nhiên" : pvIndex===-2 ? D.keyTests[deckIdx].title : D.fullTests[pvIndex].title;
-  setNav("nav-instr", ["Listening","Thi mô phỏng", t, "Instructions"],
-         "Màn giới thiệu đề", "retake()");
+  if(pvIndex===-3){
+    $("ins-title").textContent = "Aptis General Reading Instructions";
+    $("ins-body").innerHTML = `
+      <p style="font-weight:700;margin-bottom:14px">Reading</p>
+      <p style="margin-bottom:12px">The test has five parts: gap-fill, two sentence-ordering tasks, matching questions to people, and matching headings to paragraphs.</p>
+      <p style="margin-bottom:12px">Answer every question — there is no penalty for guessing.</p>
+      <p style="margin-bottom:12px">You have 35 minutes to complete the test.</p>`;
+    setNav("nav-instr", ["Reading","Thi thử", "Instructions"], "Màn giới thiệu đề", "retake()");
+  } else {
+    $("ins-title").textContent = "Aptis General Listening Instructions";
+    $("ins-body").innerHTML = `
+      <p style="font-weight:700;margin-bottom:14px">Listening</p>
+      <p style="margin-bottom:12px">You will listen to ${pvQCount===17?"seventeen":pvQCount} recordings.</p>
+      <p style="margin-bottom:12px">Click on the PLAY button to listen to each recording.</p>
+      <p style="margin-bottom:12px">You can listen to each recording TWO TIMES ONLY.</p>
+      <p style="margin-bottom:12px">You have 40 minutes to complete the test.</p>`;
+    const t = pvIndex===-1 ? "Đề ngẫu nhiên" : pvIndex===-2 ? D.keyTests[deckIdx].title : D.fullTests[pvIndex].title;
+    setNav("nav-instr", ["Listening","Thi mô phỏng", t, "Instructions"],
+           "Màn giới thiệu đề", "retake()");
+  }
   showScreen("scr-instr");
 }
 
@@ -12077,6 +12832,7 @@ function startExam(){
     ? {id: "random", title: "Đề ngẫu nhiên 17 câu", timeMin: 40,
        questions: [...sample(buildQ13Pool(), 13), buildRandomQ14(), buildRandomQ15(), ...buildRandomQ1617()]}
     : pvIndex===-2 ? buildDeckTest(deckIdx)
+    : pvIndex===-3 ? buildReadingTest()
     : D.fullTests[pvIndex];
   cur = 0;
   answers = test.questions.map(q=>{
@@ -12084,6 +12840,8 @@ function startExam(){
     if(q.type==="match") return [null,null,null,null];
     if(q.type==="mwb") return [null,null,null,null];
     if(q.type==="multi2") return [null,null];
+    if(q.type==="order") return [];
+    if(q.type==="pick") return q.rows.map(()=>null);
   });
   seen = test.questions.map(()=>false);
   bookmarked = test.questions.map(()=>false);
@@ -12262,10 +13020,59 @@ function renderQuestion(){
     if(q.note) html += `<div class="note">${q.note}</div>`;
   }
 
+  if(q.type==="order"){
+    const seq = answers[cur];                       // các chỉ số hiển thị đã chọn
+    const n = q.sentences.length;
+    html += `<div class="qtext">${escapeHtml(q.intro||"Sắp xếp các câu theo đúng thứ tự.")}</div>
+      <div class="qvn">Topic: ${escapeHtml(q.topic||"")}${q.src?` · <i>${escapeHtml(q.src)}</i>`:""}</div>`;
+    if(q.first) html += `<div class="note" style="margin:10px 0"><b>Câu mở đầu (cố định):</b> ${escapeHtml(q.first)}</div>`;
+    html += `<div style="margin:12px 0 6px;font-weight:700">Thứ tự bạn xếp (${seq.length}/${n}):</div>`;
+    html += seq.length ? seq.map((di,k)=>{
+      let cls = "";
+      if(practice && seq.length===n) cls = q.disp[di]===k ? "correct-hl" : "wrong-hl";
+      return `<div class="opt ${cls}" style="cursor:default"><div class="letter" style="width:52px;font-size:17px">${k+1}</div>
+        <div class="txt" style="font-size:15px">${escapeHtml(q.sentences[q.disp[di]])}</div></div>`;
+    }).join("") : `<div class="qvn">— chưa chọn câu nào —</div>`;
+    const remain = [...Array(n).keys()].filter(di=>!seq.includes(di));
+    if(remain.length){
+      html += `<div style="margin:16px 0 6px;font-weight:700">Bấm chọn câu tiếp theo:</div>`;
+      html += remain.map(di=>`<div class="opt" onclick="examOrderPick(${di})">
+        <div class="letter" style="width:52px;font-size:17px">＋</div>
+        <div class="txt" style="font-size:15px">${escapeHtml(q.sentences[q.disp[di]])}</div></div>`).join("");
+    }
+    html += `<div style="margin-top:14px"><button class="btn small secondary" onclick="examOrderReset()">↺ Xếp lại từ đầu</button></div>`;
+    if(practice && seq.length===n){
+      const r = gradeQuestion(q, seq);
+      html += `<div class="fb ${r.got===r.total?'ok':'no'}">${r.got}/${r.total} vị trí đúng${r.got<r.total?' — xem thứ tự chuẩn ở phần kết quả hoặc mục Ôn tủ':''}</div>`;
+    }
+  }
+  else if(q.type==="pick"){
+    html += `<div class="qtext">${escapeHtml(q.intro||"Chọn đáp án cho từng dòng.")}</div>
+      <div class="qvn">Topic: ${escapeHtml(q.topic||"")}${q.src?` · <i>${escapeHtml(q.src)}</i>`:""}</div>`;
+    if(q.legend) html += `<div class="note" style="margin:10px 0">${q.legend}</div>`;
+    q.rows.forEach((row,ri)=>{
+      let cls="";
+      if(practice && answers[cur][ri]!==null)
+        cls = answers[cur][ri]===row.a ? "correct-hl" : "wrong-hl";
+      html += `<div class="matchrow ${cls}"><div class="lab">${escapeHtml(row.t)}</div>
+        <select onchange="pickSub(${ri}, this.value===''?null:+this.value)">
+          <option value="">— chọn —</option>
+          ${q.choices.map((c,ci)=>`<option value="${ci}" ${answers[cur][ri]===ci?"selected":""}>${escapeHtml(c.length>70?c.slice(0,70)+"…":c)}</option>`).join("")}
+        </select></div>`;
+    });
+  }
   $("qmain").innerHTML = html;
   $("btn-prev").disabled = cur===0;
   $("btn-next").textContent = cur===test.questions.length-1 ? "Nộp bài ✓" : "Next  →";
   renderQList();
+}
+function examOrderPick(di){
+  answers[cur].push(di);
+  renderQuestion();
+}
+function examOrderReset(){
+  answers[cur] = [];
+  renderQuestion();
 }
 function pickMcq(oi){ answers[cur]=oi; renderQuestion(); }
 function pickSub(si,val){ answers[cur][si]=val; renderQuestion(); }
@@ -12280,8 +13087,11 @@ function submitExam(auto){
   stopTimer(); stopAudio();
   let got=0, total=0, rows="";
   const rs = [];
-  const parts = {mcq:{label:"Câu 1–13",g:0,t:0}, match:{label:"Câu 14",g:0,t:0},
-                 mwb:{label:"Câu 15",g:0,t:0}, multi2:{label:"Câu 16–17",g:0,t:0}};
+  const parts = pvIndex===-3
+    ? {mcq:{label:"Part 1 · điền từ",g:0,t:0}, order:{label:"Part 2&3 · xếp câu",g:0,t:0},
+       pick:{label:"Part 4&5 · nối",g:0,t:0}}
+    : {mcq:{label:"Câu 1–13",g:0,t:0}, match:{label:"Câu 14",g:0,t:0},
+       mwb:{label:"Câu 15",g:0,t:0}, multi2:{label:"Câu 16–17",g:0,t:0}};
   test.questions.forEach((q,i)=>{
     let r = gradeQuestion(q, answers[i]);
     rs.push(r);
@@ -12292,10 +13102,12 @@ function submitExam(auto){
       <span class="${r.got===r.total?'okmark':'nomark'}">${r.got}/${r.total}</span></div>
       <div class="detail">${r.detail}</div></div>`;
   });
-  // lưu lịch sử (kèm điểm từng phần) + ghi nhớ câu sai
-  recordResult(test.title, practice ? "luyện tập" : "thi", got, total, {
-    p13: [parts.mcq.g, parts.mcq.t], p14: [parts.match.g, parts.match.t],
-    p15: [parts.mwb.g, parts.mwb.t], p1617: [parts.multi2.g, parts.multi2.t]});
+  // lưu lịch sử (kèm điểm từng phần với đề Listening) + ghi nhớ câu sai
+  const pp = parts.match
+    ? {p13: [parts.mcq.g, parts.mcq.t], p14: [parts.match.g, parts.match.t],
+       p15: [parts.mwb.g, parts.mwb.t], p1617: [parts.multi2.g, parts.multi2.t]}
+    : null;
+  recordResult(test.title, practice ? "luyện tập" : "thi", got, total, pp);
   test.questions.forEach((q,i)=>recordWrong(q, rs[i], isAttempted(i)));
   // quy đổi thang Aptis 0–50 + ước lượng CEFR
   const scaled = Math.round(got/total*50);
@@ -12307,6 +13119,9 @@ function submitExam(auto){
   if(pvIndex===-2)
     setNav("nav-results", ["Listening","Ôn đáp án nhanh", test.title, "Kết quả"],
            "Về đề " + D.keyTests[deckIdx].title, "openDeck(" + deckIdx + ")");
+  else if(pvIndex===-3)
+    setNav("nav-results", ["Reading","Thi thử", "Kết quả"],
+           "Về mục Reading", "goReading()");
   else
     setNav("nav-results", ["Listening","Thi mô phỏng", test.title, "Kết quả"],
            "Thi mô phỏng", "goHome('sec-sim')");
@@ -12363,6 +13178,33 @@ function gradeQuestion(q, a){
     });
     return {got, total:4, detail: det.join("<br>")};
   }
+  if(q.type==="order"){
+    // a = mảng chỉ số HIỂN THỊ theo thứ tự người dùng xếp; q.disp ánh xạ về thứ tự gốc
+    let got=0, det=[];
+    if(q.topic) det.push(`<b>Topic: ${q.topic}</b>`);
+    const n = q.sentences.length;
+    for(let k=0;k<n;k++){
+      const orig = (a && a[k]!==undefined && a[k]!==null) ? q.disp[a[k]] : null;
+      const ok = orig===k;
+      if(ok) got++;
+      det.push(`${k+1}. ${ok?'<span class="okmark">✔</span>':'<span class="nomark">✘</span>'} ${escapeHtml(q.sentences[k])}` +
+        (ok ? "" : (orig!==null ? ` <span class="nomark">(bạn xếp: "${escapeHtml(q.sentences[orig].slice(0,40))}…")</span>` : ' <span class="nomark">(bỏ trống)</span>')));
+    }
+    det.push('<span style="color:var(--muted)">Danh sách trên là THỨ TỰ ĐÚNG của bài.</span>');
+    return {got, total:n, detail: det.join("<br>")};
+  }
+  if(q.type==="pick"){
+    let got=0, det=[];
+    if(q.topic) det.push(`<b>Topic: ${q.topic}</b>`);
+    q.rows.forEach((row,ri)=>{
+      const ok = a && a[ri]===row.a;
+      if(ok) got++;
+      det.push(`${escapeHtml(row.t)}: ${(a && a[ri]!==null && a[ri]!==undefined) ? escapeHtml(q.choices[a[ri]]) : "—"} ` +
+        (ok ? '<span class="okmark">✔</span>' : `<span class="nomark">✘ → ${escapeHtml(q.choices[row.a])}</span>`));
+    });
+    if(q.note) det.push(`<span style="color:var(--amber)">${escapeHtml(q.note)}</span>`);
+    return {got, total:q.rows.length, detail: det.join("<br>")};
+  }
   if(q.type==="multi2"){
     let got=0, det=[];
     if(q.topic) det.push(`<b>Topic: ${q.topic}</b>`);
@@ -12379,6 +13221,7 @@ function gradeQuestion(q, a){
 function retake(){
   if(pvIndex===-1) openRandomPreview();
   else if(pvIndex===-2) openDeckPreview(deckIdx);
+  else if(pvIndex===-3) openReadingPreview();
   else openPreview(pvIndex);
 }
 
@@ -12550,16 +13393,22 @@ let quiz = null; // {title, items, cur, picked:[], back}
 function quizBlank(it){
   if(it.type==="match" || it.type==="mwb") return [null,null,null,null];
   if(it.type==="multi2") return [null,null];
+  if(it.type==="order") return [];
+  if(it.type==="pick") return it.rows.map(()=>null);
   return null;
 }
 function quizItemDone(it, p){
+  if(it.type==="order") return Array.isArray(p) && p.length === it.sentences.length;
   return Array.isArray(p) ? p.every(x=>x!==null) : p!==null;
 }
 function startQuiz(title, items, back){
   if(!items.length){ alert("Nguồn này chưa có câu nào ở dạng thi."); return; }
   quiz = {title, items, cur: 0, picked: items.map(quizBlank), back};
-  setNav("nav-quiz", ["Listening","Luyện dạng thi", title.replace(/^Luyện[^·]*·\s*/,"")],
+  const root = /^Reading/.test(title) ? "Reading" : "Listening";
+  setNav("nav-quiz", [root,"Luyện dạng thi", title.replace(/^Luyện[^·]*·\s*/,"")],
          "Quay lại", "quizExit()");
+  const hd = document.querySelector("#scr-quiz .part");
+  if(hd) hd.textContent = root + " · Luyện dạng thi";
   showScreen("scr-quiz");
   renderQuiz();
 }
@@ -12677,6 +13526,45 @@ function renderQuiz(){
     if(p.every(x=>x!==null) && it.note) html += `<div class="note">${escapeHtml(it.note)}</div>`;
   }
 
+  if(type==="order"){
+    const n = it.sentences.length;
+    html += `<div class="qtext">${escapeHtml(it.intro||"Bấm các câu theo đúng thứ tự của bài.")}</div>
+      <div class="qvn">Topic: ${escapeHtml(it.topic||"")}</div>`;
+    if(it.first) html += `<div class="note" style="margin:10px 0"><b>Câu mở đầu (cố định):</b> ${escapeHtml(it.first)}</div>`;
+    const done = p.length===n;
+    html += `<div style="margin:12px 0 6px;font-weight:700">Thứ tự bạn xếp (${p.length}/${n}):</div>`;
+    html += p.length ? p.map((di,k)=>{
+      const cls = done ? (it.disp[di]===k ? "correct-hl" : "wrong-hl") : "";
+      return `<div class="opt ${cls}" style="cursor:default"><div class="letter" style="width:52px;font-size:17px">${k+1}</div>
+        <div class="txt" style="font-size:15px">${escapeHtml(it.sentences[it.disp[di]])}</div></div>`;
+    }).join("") : `<div class="qvn">— chưa chọn câu nào —</div>`;
+    const remain = [...Array(n).keys()].filter(di=>!p.includes(di));
+    if(remain.length){
+      html += `<div style="margin:16px 0 6px;font-weight:700">Bấm chọn câu tiếp theo:</div>`;
+      html += remain.map(di=>`<div class="opt" onclick="quizOrderPick(${di})">
+        <div class="letter" style="width:52px;font-size:17px">＋</div>
+        <div class="txt" style="font-size:15px">${escapeHtml(it.sentences[it.disp[di]])}</div></div>`).join("");
+      html += `<div style="margin-top:12px"><button class="btn small secondary" onclick="quizOrderReset()">↺ Xếp lại từ đầu</button></div>`;
+    } else if(done){
+      html += `<div style="margin-top:12px;color:var(--muted);font-size:13.5px">Đã chốt — thứ tự đúng xem ở ô màu (xanh = đúng vị trí).</div>`;
+    }
+  }
+  else if(type==="pick"){
+    html += `<div class="qtext">${escapeHtml(it.intro||"Chọn đáp án cho từng dòng.")}</div>
+      <div class="qvn">Topic: ${escapeHtml(it.topic||"")}</div>`;
+    if(it.legend) html += `<div class="note" style="margin:10px 0">${it.legend}</div>`;
+    it.rows.forEach((row,ri)=>{
+      const done = p[ri]!==null;
+      const ok = done && p[ri]===row.a;
+      html += `<div class="matchrow ${done?(ok?"correct-hl":"wrong-hl"):""}">
+        <div class="lab">${escapeHtml(row.t)}${done&&!ok?` <span class="nomark">✘ → ${escapeHtml(it.choices[row.a].slice(0,60))}</span>`:done?` <span class="okmark">✔</span>`:""}</div>
+        <select ${done?"disabled":""} onchange="quizPickSub(${ri}, this.value===''?null:+this.value)">
+          <option value="">— chọn —</option>
+          ${it.choices.map((c,ci)=>`<option value="${ci}" ${p[ri]===ci?"selected":""}>${escapeHtml(c.length>70?c.slice(0,70)+"…":c)}</option>`).join("")}
+        </select></div>`;
+    });
+  }
+
   if(quizItemDone(it, p) && type!=="mcq")
     html += `<div class="fb ${quizGrade(quiz.cur).got===quizGrade(quiz.cur).total?'ok':'no'}">
       ${quizGrade(quiz.cur).got}/${quizGrade(quiz.cur).total} ý đúng ở câu này</div>`;
@@ -12704,6 +13592,18 @@ function quizPickSub2(si, oi){
   const p = quiz.picked[quiz.cur];
   if(p[si]!==null) return;
   p[si] = oi;
+  renderQuiz();
+}
+function quizOrderPick(di){
+  const it = quiz.items[quiz.cur], p = quiz.picked[quiz.cur];
+  if(p.length >= it.sentences.length || p.includes(di)) return;
+  p.push(di);
+  renderQuiz();
+}
+function quizOrderReset(){
+  const it = quiz.items[quiz.cur], p = quiz.picked[quiz.cur];
+  if(p.length >= it.sentences.length) return;   // đã chốt thì không xếp lại
+  quiz.picked[quiz.cur] = [];
   renderQuiz();
 }
 function quizNav(d){
@@ -12742,7 +13642,7 @@ function quizFinish(){
     const attempted = Array.isArray(p) ? p.some(x=>x!==null) : p!==null;
     recordWrong(it.type ? it : {...it, type:"mcq"}, rs[i], attempted);
   });
-  setNav("nav-quizres", ["Listening","Luyện dạng thi","Kết quả"],
+  setNav("nav-quizres", [/^Reading/.test(quiz.title) ? "Reading" : "Listening","Luyện dạng thi","Kết quả"],
          "Chọn phần khác", "quiz.back()");
   $("qr-title").textContent = quiz.title;
   $("qr-score").textContent = `${got}/${total} ý`;
@@ -12761,6 +13661,7 @@ function quizRestart(){
 function loadLS(k, def){ try{ const v = JSON.parse(localStorage.getItem(k)); return v===null||v===undefined?def:v; }catch(e){ return def; } }
 function saveLS(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 function qKey(q){
+  if(q.kid) return q.kid;
   const t = q.type || "mcq";
   const ans = t==="mcq" ? q.options[q.answer]
             : t==="multi2" ? q.subs.map(s=>s.options[s.answer]).join(";")
@@ -12870,6 +13771,127 @@ function bankRevealAll(show){
   document.querySelectorAll("#bank-list .ans, #bank-list .ansblock").forEach(el=>{
     if(!el.dataset.noblur) el.classList.toggle("blur", !show);
   });
+}
+
+/* ================= READING (tủ Update 01.07.2026) ================= */
+const RD = (window.APTIS && window.APTIS.reading) || {part1:[],part23:[],part4:[],part5:[]};
+function goReading(sec){
+  if(!confirmLeave()) return;
+  stopTimer(); stopAudio();
+  setNav("nav-rhome", ["Reading"], "Trang chủ", "goRoot()");
+  showScreen("scr-rhome");
+  if(sec && $(sec)) $(sec).scrollIntoView({behavior:"smooth"});
+}
+/* --- chuyển đề tủ thành câu hỏi dạng thi --- */
+function rP1Items(d){
+  return d.items.map((s,si)=>({type:"mcq", kid:"r1|"+d.title+"|"+si,
+    q: s.text, vn: s.vn, options: s.options, answer: s.answer,
+    made: s.made || s.options.map(()=>false), qMade: false, src: d.title, audio: null}));
+}
+function rOrderItem(d){
+  const rest = d.sentences.slice(1);          // câu 1 cho sẵn như thi thật
+  const n = rest.length;
+  return {type:"order", kid:"r23|"+d.title, topic: d.topic || d.title,
+    intro: "Bấm các câu theo đúng thứ tự để hoàn thành bài.",
+    first: d.sentences[0],
+    sentences: rest, disp: sample([...Array(n).keys()], n),
+    src: d.title, audio: null};
+}
+function rP4Item(d){
+  const choices = d.groups.map((g,i)=>`Đoạn ${i+1}: “${g.key}”`);
+  const rows = [];
+  d.groups.forEach((g,gi)=>g.questions.forEach(q=>rows.push({t: q.replace(/\s*\?$/,"") + "?", a: gi})));
+  return {type:"pick", kid:"r4|"+d.title, topic: d.topic || d.title,
+    intro: "Mỗi câu hỏi thuộc về một đoạn văn — chọn đoạn (nhận diện qua keyword).",
+    choices, rows: sample(rows, rows.length), src: d.title, audio: null};
+}
+function rP5Item(d){
+  const perm = sample([...Array(d.headings.length).keys()], d.headings.length);
+  const choices = perm.map(i=>d.headings[i]);
+  const rows = d.headings.map((h,i)=>({t: "Đoạn " + (i+1), a: perm.indexOf(i)}));
+  return {type:"pick", kid:"r5|"+d.title, topic: d.topic || d.title,
+    intro: "Chọn tiêu đề đúng cho từng đoạn (tài liệu ghi rõ: thứ tự các đoạn không thay đổi).",
+    choices, rows, note: d.note || null, src: d.title, audio: null};
+}
+/* --- luyện từng phần --- */
+function quizR1(){ startQuiz("Reading Part 1 — điền từ", RD.part1.flatMap(rP1Items), ()=>goReading('rsec-quiz')); }
+function quizR23(){ startQuiz("Reading Part 2&3 — xếp câu", RD.part23.map(rOrderItem), ()=>goReading('rsec-quiz')); }
+function quizR4(){ startQuiz("Reading Part 4 — nối người–câu hỏi", RD.part4.map(rP4Item), ()=>goReading('rsec-quiz')); }
+function quizR5(){ startQuiz("Reading Part 5 — chọn tiêu đề", RD.part5.map(rP5Item), ()=>goReading('rsec-quiz')); }
+/* --- thi thử đủ 5 phần --- */
+function buildReadingTest(){
+  const qs = [];
+  qs.push(...rP1Items(sample(RD.part1, 1)[0]));
+  sample(RD.part23, 2).forEach(d=>qs.push(rOrderItem(d)));
+  qs.push(rP4Item(sample(RD.part4, 1)[0]));
+  qs.push(rP5Item(sample(RD.part5, 1)[0]));
+  return {id: "reading", title: "Thi thử Reading (5 phần)", timeMin: 35, questions: qs};
+}
+function openReadingPreview(){
+  pvIndex = -3;
+  pvQCount = buildReadingTest().questions.length;
+  $("pv-title").textContent = "Thi thử Reading — đủ 5 phần";
+  $("pv-nq").textContent = String(pvQCount);
+  $("pv-time").textContent = "35 min";
+  $("pv-random-note").classList.remove("hidden");
+  $("pv-random-note").innerHTML = `📖 Mỗi lần "Start Assessment" rút ngẫu nhiên từ tủ: 1 đề Part 1 (5 câu điền từ) + 2 bài xếp câu (Part 2&3, câu mở đầu cho sẵn như thi thật) + 1 đề Part 4 (7 câu nối người) + 1 đề Part 5 (7 tiêu đề, lựa chọn đã trộn). Tổng ~29 ý, chấm /50.`;
+  setNav("nav-preview", ["Reading","Thi thử"], "Về mục Reading", "goReading('rsec-sim')");
+  showScreen("scr-preview");
+}
+/* --- ôn tủ: xem đầy đủ --- */
+function openRView(tab){
+  ["p1","p23","p4","p5"].forEach(k=>$("rv-"+k).classList.toggle("active", k===tab));
+  const names = {p1:"Part 1 — Điền từ", p23:"Part 2 & 3 — Xếp câu", p4:"Part 4 — Nối người", p5:"Part 5 — Tiêu đề"};
+  $("rview-title").textContent = "📖 Ôn tủ Reading · " + names[tab];
+  setNav("nav-rview", ["Reading","Ôn tủ", names[tab]], "Về mục Reading", "goReading('rsec-key')");
+  let html = "";
+  if(tab==="p1"){
+    RD.part1.forEach(d=>{
+      html += `<div class="kitem"><div class="qline"><b>${escapeHtml(d.title)}</b></div>
+        <div class="qvn" style="margin:4px 0 8px">🪄 Thần chú: ${escapeHtml(d.mnemonic)}</div>
+        <div class="qvn" style="margin-bottom:8px">${escapeHtml(d.intro)}</div>
+        <div style="line-height:1.9">` +
+        d.items.map((s,si)=>{
+          const parts = s.options.map((o,oi)=>
+            oi===s.answer ? `<b class="okmark">${escapeHtml(o)} ✓</b>`
+            : `${escapeHtml(o)}${s.made && s.made[oi] ? ' <span style="color:var(--amber)">*</span>':""}`).join(" / ");
+          return `<div>${si+1}. ${escapeHtml(s.text)} <span style="color:var(--muted)">(${parts})</span><div class="qvn">${escapeHtml(s.vn)}</div></div>`;
+        }).join("") + `</div></div>`;
+    });
+    html += `<div class="note">(<span style="color:var(--amber)">*</span> = phương án nhiễu do app tự thêm — đề 4 tài liệu gốc chỉ ghi đáp án)</div>`;
+  }
+  else if(tab==="p23"){
+    html += `<div class="note">Học thuộc MẠCH BÀI theo thứ tự — vào thi câu mở đầu được cho sẵn, xếp các câu còn lại.</div>`;
+    RD.part23.forEach(d=>{
+      html += `<div class="kitem"><div class="qline"><b>${escapeHtml(d.title)}</b></div>
+        <div style="line-height:1.8;margin-top:6px">` +
+        d.sentences.map((s,si)=>`<div><b style="color:var(--purple)">${si+1}.</b> ${escapeHtml(s)}</div>`).join("") +
+        `</div></div>`;
+    });
+  }
+  else if(tab==="p4"){
+    html += `<div class="note">Cách học (theo tài liệu): nhớ CÂU HỎI gắn với ĐOẠN (nhận diện qua keyword). Vào thi tìm đoạn ứng với người nào → chọn người đó.</div>`;
+    RD.part4.forEach(d=>{
+      html += `<div class="kitem"><div class="qline"><b>${escapeHtml(d.title)}</b></div>` +
+        d.groups.map((g,gi)=>`<div style="margin-top:10px">
+          <div><b style="color:var(--purple)">Đoạn ${gi+1}:</b> “${escapeHtml(g.key)}”</div>
+          ${g.questions.map(q=>`<div style="margin-left:18px">→ ${escapeHtml(q)}?</div>`).join("")}
+        </div>`).join("") + `</div>`;
+    });
+  }
+  else if(tab==="p5"){
+    html += `<div class="note">Thứ tự các đoạn KHÔNG thay đổi khi thi — thuộc 7 tiêu đề đúng thứ tự là ăn điểm. Trong đề thật có 8 lựa chọn (1 câu lừa).</div>`;
+    RD.part5.forEach(d=>{
+      html += `<div class="kitem"><div class="qline"><b>${escapeHtml(d.title)}</b></div>
+        <div style="line-height:1.8;margin-top:6px">` +
+        d.headings.map((h,hi)=>`<div><b style="color:var(--purple)">${hi+1}.</b> ${escapeHtml(h)}</div>`).join("") + `</div>
+        ${d.mnemonic?`<div class="qvn" style="margin-top:8px">🪄 ${escapeHtml(d.mnemonic)}</div>`:""}
+        ${d.note?`<div class="note" style="margin-top:8px">⚠ ${escapeHtml(d.note)}</div>`:""}
+      </div>`;
+    });
+  }
+  $("rview-list").innerHTML = html;
+  showScreen("scr-rview");
 }
 
 /* ================= CỔNG MÃ NHÓM ================= */

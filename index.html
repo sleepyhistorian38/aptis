@@ -406,6 +406,7 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
 <div id="scr-quiz" class="page" style="max-width:860px">
   <div class="backbar" id="nav-quiz"></div>
   <p class="sub" id="quiz-src" style="margin-bottom:2px"></p>
+  <div class="pillbar" id="quiz-shuf" style="margin:6px 0 12px"></div>
   <div class="qhead">
     <div><div class="part">Listening · Luyện dạng thi</div><h2 id="quiz-progress"></h2></div>
     <div style="text-align:right"><div class="part">Điểm</div><h2 id="quiz-score">0</h2></div>
@@ -14873,7 +14874,8 @@ function buildQ13Pool(){
             src: "Update 01.08.2026", audio: null});
     }
   });
-  return pool;
+  // tráo vị trí đáp án mỗi lần xây kho (đề ngẫu nhiên mỗi lần thi sẽ khác)
+  return pool.map(shuffleMcqItem);
 }
 function sample(arr, n){
   const a = arr.slice();
@@ -15578,14 +15580,48 @@ function quizItemDone(it, p){
   if(it.type==="order") return Array.isArray(p) && p.length === it.sentences.length;
   return Array.isArray(p) ? p.every(x=>x!==null) : p!==null;
 }
-function startQuiz(title, items, back){
+function shuffleMcqItem(it){
+  const n = it.options.length;
+  const perm = sample([...Array(n).keys()], n);
+  return {...it,
+    options: perm.map(i=>it.options[i]),
+    made: it.made ? perm.map(i=>it.made[i]) : it.made,
+    answer: perm.indexOf(it.answer)};
+}
+function quizArrange(){
+  let items = quiz.raw.slice();
+  if(quiz.shuf.q) items = sample(items, items.length);
+  if(quiz.shuf.a) items = items.map(it => (it.type||"mcq")==="mcq" && it.options ? shuffleMcqItem(it) : it);
+  quiz.items = items;
+  quiz.picked = items.map(quizBlank);
+  quiz.cur = 0;
+}
+function renderShufBar(){
+  const el = $("quiz-shuf");
+  if(!el) return;
+  el.innerHTML =
+    `<button class="pill ${quiz.shuf.q?'active':''}" onclick="quizToggleShuf('q')">🔀 Tráo thứ tự câu: ${quiz.shuf.q?"BẬT":"TẮT"}</button>` +
+    (quiz.raw.some(it=>(it.type||"mcq")==="mcq" && it.options)
+      ? `<button class="pill ${quiz.shuf.a?'active':''}" onclick="quizToggleShuf('a')">🎲 Tráo vị trí đáp án: ${quiz.shuf.a?"BẬT":"TẮT"}</button>`
+      : "");
+}
+function quizToggleShuf(k){
+  if(quizInProgress() && !confirm("Đổi chế độ tráo sẽ làm lại phần luyện này từ đầu. Tiếp tục?")) return;
+  quiz.shuf[k] = !quiz.shuf[k];
+  quizArrange();
+  renderShufBar();
+  renderQuiz();
+}
+function startQuiz(title, items, back, shuf){
   if(!items.length){ alert("Nguồn này chưa có câu nào ở dạng thi."); return; }
-  quiz = {title, items, cur: 0, picked: items.map(quizBlank), back};
+  quiz = {title, raw: items, back, shuf: Object.assign({q:false, a:false}, shuf || {})};
+  quizArrange();
   const root = /^Reading/.test(title) ? "Reading" : /^Grammar/.test(title) ? "Grammar" : "Listening";
   setNav("nav-quiz", [root,"Luyện dạng thi", title.replace(/^Luyện[^·]*·\s*/,"")],
          "Quay lại", "quizExit()");
   const hd = document.querySelector("#scr-quiz .part");
   if(hd) hd.textContent = root + " · Luyện dạng thi";
+  renderShufBar();
   showScreen("scr-quiz");
   renderQuiz();
 }
@@ -15595,7 +15631,7 @@ function quizExit(){
 }
 function quizFromDeck(i){
   const items = buildDeckTest(i).questions;
-  startQuiz("Luyện cả đề · " + D.keyTests[i].title, items, ()=>openDeck(i));
+  startQuiz("Luyện cả đề · " + D.keyTests[i].title, items, ()=>openDeck(i), {q:false, a:true});
 }
 function quizFromBank(){
   const items = [];
@@ -15607,12 +15643,12 @@ function quizFromBank(){
       items.push({...it.mcq, n: it.n, src: "Update 01.08.2026"});
     }
   });
-  startQuiz("Luyện 67 câu Update 01.08.2026", items, ()=>openBank('q13'));
+  startQuiz("Luyện 67 câu Update 01.08.2026", items, ()=>openBank('q13'), {q:true, a:true});
 }
 function quizAllDecks(){
   // toàn bộ kho câu 1–13: 22 đề trộn + 2 bản tóm tắt + 67 câu Update, đã bỏ trùng
   const items = buildQ13Pool();
-  startQuiz("Luyện toàn bộ kho câu 1–13 (" + items.length + " câu, đã bỏ trùng)", items, goHome);
+  startQuiz("Luyện toàn bộ kho câu 1–13 (" + items.length + " câu, đã bỏ trùng)", items, goHome, {q:true, a:true});
 }
 function quizGrade(i){
   const it = quiz.items[i];
@@ -15828,8 +15864,8 @@ function quizFinish(){
   showScreen("scr-quizres");
 }
 function quizRestart(){
-  quiz.picked = quiz.items.map(quizBlank);
-  quiz.cur = 0;
+  quizArrange();          // chia bài mới: tráo lại theo chế độ đang bật
+  renderShufBar();
   showScreen("scr-quiz");
   renderQuiz();
 }
@@ -15925,7 +15961,7 @@ function quizWrong(){
     return;
   }
   startQuiz("Luyện lại câu đã sai (" + entries.length + " câu)",
-            entries.map(x=>x.item), ()=>goHome('sec-review'));
+            entries.map(x=>x.item), ()=>goHome('sec-review'), {q:true, a:true});
 }
 function quizCue14(){
   const items = [];
@@ -15941,7 +15977,7 @@ function quizCue14(){
         made: opts.map(()=>false), qMade: false, src: "Tủ câu 14 · Update 01.08.2026"});
     });
   });
-  startQuiz("Câu 14 — nhận biết qua dấu hiệu", sample(items, items.length), ()=>goHome('sec-quiz13'));
+  startQuiz("Câu 14 — nhận biết qua dấu hiệu", items, ()=>goHome('sec-quiz13'), {q:true, a:true});
 }
 
 function bankRevealAll(show){
@@ -16009,11 +16045,11 @@ function gVocabItems(s){
   return items;
 }
 /* --- luyện --- */
-function quizGAll(){ startQuiz("Grammar — 200 câu ngữ pháp (8 đề)", GV.sets.flatMap(gGramItems), ()=>goGrammar('gsec-quiz')); }
-function quizGVocab(){ startQuiz("Grammar — từ vựng (8 đề)", GV.sets.flatMap(gVocabItems), ()=>goGrammar('gsec-quiz')); }
+function quizGAll(){ startQuiz("Grammar — 200 câu ngữ pháp (8 đề)", GV.sets.flatMap(gGramItems), ()=>goGrammar('gsec-quiz'), {q:true, a:true}); }
+function quizGVocab(){ startQuiz("Grammar — từ vựng (8 đề)", GV.sets.flatMap(gVocabItems), ()=>goGrammar('gsec-quiz'), {q:true}); }
 function quizGSet(i){
   const s = GV.sets[i];
-  startQuiz("Grammar — " + s.title + " (trọn đề)", [...gGramItems(s), ...gVocabItems(s)], ()=>openGView(i));
+  startQuiz("Grammar — " + s.title + " (trọn đề)", [...gGramItems(s), ...gVocabItems(s)], ()=>openGView(i), {q:false, a:true});
 }
 /* --- thi thử Core --- */
 function buildGrammarTest(){
@@ -16097,10 +16133,10 @@ function rP5Item(d){
     choices, rows, note: d.note || null, src: d.title, audio: null};
 }
 /* --- luyện từng phần --- */
-function quizR1(){ startQuiz("Reading Part 1 — điền từ", RD.part1.flatMap(rP1Items), ()=>goReading('rsec-quiz')); }
-function quizR23(){ startQuiz("Reading Part 2&3 — xếp câu", RD.part23.map(rOrderItem), ()=>goReading('rsec-quiz')); }
-function quizR4(){ startQuiz("Reading Part 4 — nối người–câu hỏi", RD.part4.map(rP4Item), ()=>goReading('rsec-quiz')); }
-function quizR5(){ startQuiz("Reading Part 5 — chọn tiêu đề", RD.part5.map(rP5Item), ()=>goReading('rsec-quiz')); }
+function quizR1(){ startQuiz("Reading Part 1 — điền từ", RD.part1.flatMap(rP1Items), ()=>goReading('rsec-quiz'), {q:true, a:true}); }
+function quizR23(){ startQuiz("Reading Part 2&3 — xếp câu", RD.part23.map(rOrderItem), ()=>goReading('rsec-quiz'), {q:true}); }
+function quizR4(){ startQuiz("Reading Part 4 — nối người–câu hỏi", RD.part4.map(rP4Item), ()=>goReading('rsec-quiz'), {q:true}); }
+function quizR5(){ startQuiz("Reading Part 5 — chọn tiêu đề", RD.part5.map(rP5Item), ()=>goReading('rsec-quiz'), {q:true}); }
 /* --- thi thử đủ 5 phần --- */
 function buildReadingTest(){
   const qs = [];

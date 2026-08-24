@@ -12913,8 +12913,9 @@ window.APTIS.reading = {
  ],
  "part5": [
   {
-   "title": "Đề 1 — The arrival of four-day week (Sự xuất hiện của tuần lễ",
-   "topic": "The arrival of four-day week (Sự xuất hiện của tuần lễ",
+   "title": "Đề 1 — The arrival of four-day week (Sự xuất hiện của tuần lễ bốn ngày)",
+   "topic": "The arrival of four-day week (Sự xuất hiện của tuần lễ bốn ngày)",
+   "tip": "",
    "headings": [
     "A way of life now out of date",
     "Benefits for employees",
@@ -12924,12 +12925,22 @@ window.APTIS.reading = {
     "An unfair plan for some people",
     "Alternative solutions worth considering"
    ],
-   "mnemonic": "Tóm tắt : Cách sống mới ( way of life) dù có ko lợi ( benefits), dù tài chính (",
+   "headingsVn": [
+    "Một lối sống hiện đã lỗi thời",
+    "Lợi ích cho nhân viên",
+    "Hậu quả tài chính không mong muốn",
+    "Những thách thức không lường trước được đối với nhân viên",
+    "Khó từ bỏ thói quen cũ",
+    "Một kế hoạch không công bằng với một số người",
+    "Các giải pháp thay thế đáng cân nhắc"
+   ],
+   "mnemonic": "Cách sống mới ( way of life) dù có ko lợi ( benefits), dù tài chính ( financial) lại gặp những khó khăn ( challenges) cũ (old), người ta (people) vẫn có giải pháp (solutions).",
    "note": ""
   },
   {
-   "title": "Đề 2 — Mountain Summits (Đỉnh núi) ( đề này thi vào liên tục,",
-   "topic": "Mountain Summits (Đỉnh núi) ( đề này thi vào liên tục,",
+   "title": "Đề 2 — Mountain Summits (Đỉnh núi)",
+   "topic": "Mountain Summits (Đỉnh núi)",
+   "tip": "đề này thi vào liên tục, chọn đúng thứ tự bên dưới này nhé",
    "headings": [
     "Our changing definition of mountains",
     "A unique sense of achievement",
@@ -12939,12 +12950,22 @@ window.APTIS.reading = {
     "A focus on sustainability",
     "A more intimate relationship"
    ],
-   "mnemonic": "Tóm tắt: Thay đổi ( changing) cảm nhận ( sense), công khai ( publicising),",
+   "headingsVn": [
+    "Định nghĩa thay đổi của chúng ta về núi",
+    "Một cảm giác thành tựu độc đáo",
+    "Công bố thành tích của một người",
+    "Ưu tiên sai",
+    "Một tiết lộ đáng lo ngại",
+    "Tập trung vào tính bền vững",
+    "Một mối quan hệ thân mật hơn"
+   ],
+   "mnemonic": "Thay đổi ( changing) cảm nhận ( sense), công khai ( publicising), sai ( wrong), thành tựu dẫn đến phát hiện ( revealation), cần tập trung (focus) vào mối quan hệ ( relationship).",
    "note": ""
   },
   {
    "title": "Đề 3 — Woman Mathematics (Toán học nữ)",
    "topic": "Woman Mathematics (Toán học nữ)",
+   "tip": "",
    "headings": [
     "Gender obscure achievements",
     "Acknowledging achievement of a pioneer",
@@ -12954,8 +12975,17 @@ window.APTIS.reading = {
     "Attempting to create a gender balance",
     "Uniformity is not always beneficial"
    ],
-   "mnemonic": "Tóm tắt: Không rõ (obscure) người tiên phong (pioneer) là nam (man) hay",
-   "note": "Lưu ý: Trong đề chọn 7/8 ý, trong đó có 1 câu lừa là Men and women…=>"
+   "headingsVn": [
+    "Thành tựu không rõ ràng về giới tính",
+    "Ghi nhận thành tựu của người tiên phong",
+    "Người đàn ông được ghi nhận một cách không công bằng",
+    "Một sự nghiệp dài cho thấy khả năng đặc biệt",
+    "Nhãn mác có thể thay đổi quan điểm của mọi người",
+    "Cố gắng tạo ra sự cân bằng giới tính",
+    "Sự đồng nhất không phải lúc nào cũng có lợi"
+   ],
+   "mnemonic": "Không rõ (obscure) người tiên phong (pioneer) là nam (man) hay nữ, nên mất 1 thời gian dài ( long) để mọi người (people) cân bằng (balance) và đồng nhất (uniformity)",
+   "note": "Trong đề chọn 7/8 ý, trong đó có 1 câu lừa là Men and women…=> Không chọn ý này ( dễ nhầm với ý số 3: Men unfairly credited )"
   }
  ]
 };
@@ -15657,9 +15687,11 @@ function renderQuestion(){
       html += `<div class="matchrow ${cls}"><div class="lab">${escapeHtml(row.t)}</div>
         <select onchange="pickSub(${ri}, this.value===''?null:+this.value)">
           <option value="">— chọn —</option>
-          ${q.choices.map((c,ci)=>`<option value="${ci}" ${answers[cur][ri]===ci?"selected":""}>${escapeHtml(c.length>70?c.slice(0,70)+"…":c)}</option>`).join("")}
+          ${pickOpts(q, answers[cur], ri)}
         </select></div>`;
     });
+    // chế độ luyện tập: làm xong thì hiện luôn màn ôn lại
+    if(practice && q.afterHtml && answers[cur].every(x=>x!==null)) html += q.afterHtml;
   }
   $("qmain").innerHTML = html;
   $("btn-prev").disabled = cur===0;
@@ -15808,6 +15840,7 @@ function gradeQuestion(q, a){
         (ok ? '<span class="okmark">✔</span>' : `<span class="nomark">✘ → ${escapeHtml(q.choices[row.a])}</span>`));
     });
     if(q.note) det.push(`<span style="color:var(--amber)">${escapeHtml(q.note)}</span>`);
+    if(q.afterHtml) det.push(q.afterHtml);   // tóm tắt mẹo nhớ hiện luôn ở bảng kết quả
     return {got, total:q.rows.length, detail: det.join("<br>")};
   }
   if(q.type==="multi2"){
@@ -15997,6 +16030,14 @@ function openBank(kind){
 }
 /* ---------------- quiz: luyện dạng thi câu 1-13 ---------------- */
 let quiz = null; // {title, items, cur, picked:[], back}
+/* lựa chọn cho dạng "pick" — nếu item đánh dấu unique thì ghi chú tiêu đề đã dùng */
+function pickOpts(it, p, ri){
+  return it.choices.map((c,ci)=>{
+    const used = it.unique && p.some((v,vi)=>vi!==ri && v===ci);
+    const label = (c.length>70 ? c.slice(0,70)+"…" : c) + (used ? "  ✓ (đã dùng)" : "");
+    return `<option value="${ci}" ${p[ri]===ci?"selected":""}>${escapeHtml(label)}</option>`;
+  }).join("");
+}
 function quizBlank(it){
   if(it.type==="match" || it.type==="mwb") return [null,null,null,null];
   if(it.type==="multi2") return [null,null];
@@ -16201,7 +16242,7 @@ function renderQuiz(){
         <div class="lab">${escapeHtml(row.t)}${done&&!ok?` <span class="nomark">✘ → ${escapeHtml(it.choices[row.a].slice(0,60))}</span>`:done?` <span class="okmark">✔</span>`:""}</div>
         <select ${done?"disabled":""} onchange="quizPickSub(${ri}, this.value===''?null:+this.value)">
           <option value="">— chọn —</option>
-          ${it.choices.map((c,ci)=>`<option value="${ci}" ${p[ri]===ci?"selected":""}>${escapeHtml(c.length>70?c.slice(0,70)+"…":c)}</option>`).join("")}
+          ${pickOpts(it, p, ri)}
         </select></div>`;
     });
   }
@@ -16213,6 +16254,8 @@ function renderQuiz(){
                   (it.subs&&it.subs.some(s=>s.made&&s.made.some(Boolean)));
   if(quizItemDone(it, p) && anyStar)
     html += `<div class="reveal-hint" style="margin-top:8px">(<span style="color:var(--amber)">*</span> = phần do app tự soạn thêm, không có trong tài liệu gốc)</div>`;
+  // màn ôn lại sau khi làm xong (VD Part 5: tóm tắt mẹo nhớ + thứ tự đúng)
+  if(quizItemDone(it, p) && it.afterHtml) html += it.afterHtml;
 
   $("quiz-body").innerHTML = html;
   $("quiz-prev").disabled = quiz.cur===0;
@@ -16557,12 +16600,25 @@ function rP4Item(d){
     legend, choices, rows: sample(rows, rows.length), src: d.title, audio: null};
 }
 function rP5Item(d){
-  const perm = sample([...Array(d.headings.length).keys()], d.headings.length);
+  const n = d.headings.length;
+  const perm = sample([...Array(n).keys()], n);
   const choices = perm.map(i=>d.headings[i]);
   const rows = d.headings.map((h,i)=>({t: "Đoạn " + (i+1), a: perm.indexOf(i)}));
-  return {type:"pick", kid:"r5|"+d.title, topic: d.topic || d.title,
-    intro: "Chọn tiêu đề đúng cho từng đoạn (tài liệu ghi rõ: thứ tự các đoạn không thay đổi).",
-    choices, rows, note: d.note || null, src: d.title, audio: null};
+  // màn "ôn lại" hiện sau khi làm xong: tóm tắt mẹo nhớ + thứ tự đúng + cảnh báo câu lừa
+  const after =
+    `<div class="note" style="background:var(--green-bg);color:var(--text);border:1px solid var(--green)">
+       <div style="font-weight:700;margin-bottom:6px">🪄 Tóm tắt để nhớ lại (mẹo của tài liệu)</div>
+       <div style="line-height:1.65">${escapeHtml(d.mnemonic || "—")}</div>
+     </div>
+     <div class="note" style="background:#fff;border:1px solid var(--border);color:var(--text)">
+       <div style="font-weight:700;margin-bottom:6px">Thứ tự tiêu đề ĐÚNG (1 → ${n})</div>
+       ${d.headings.map((h,i)=>`<div style="line-height:1.7"><b style="color:var(--purple)">${i+1}.</b> ${escapeHtml(h)}${(d.headingsVn&&d.headingsVn[i])?` <span style="color:var(--muted)">— ${escapeHtml(d.headingsVn[i])}</span>`:""}</div>`).join("")}
+     </div>` +
+    (d.note ? `<div class="note" style="background:var(--amber-bg);color:var(--text)">⚠ <b>Lưu ý:</b> ${escapeHtml(d.note)}</div>` : "");
+  return {type:"pick", kid:"r5|"+d.title, topic: d.topic || d.title, unique: true,
+    intro: "Chọn tiêu đề đúng cho từng đoạn — mỗi tiêu đề chỉ dùng MỘT lần (khi thi thứ tự các đoạn không thay đổi).",
+    legend: d.tip ? `📌 Ghi chú của tài liệu: ${escapeHtml(d.tip)}` : null,
+    choices, rows, afterHtml: after, src: d.title, audio: null};
 }
 /* --- luyện từng phần --- */
 function quizR1(){ startQuiz("Reading Part 1 — điền từ", RD.part1.flatMap(rP1Items), ()=>goReading('rsec-quiz'), {q:true, a:true}); }
@@ -16631,13 +16687,15 @@ function openRView(tab){
     });
   }
   else if(tab==="p5"){
+    html += `<div style="margin-bottom:16px"><button class="btn" onclick="quizR5()">🎧 Luyện dạng thi Part 5</button></div>`;
     html += `<div class="note">Thứ tự các đoạn KHÔNG thay đổi khi thi — thuộc 7 tiêu đề đúng thứ tự là ăn điểm. Trong đề thật có 8 lựa chọn (1 câu lừa).</div>`;
     RD.part5.forEach(d=>{
       html += `<div class="kitem"><div class="qline"><b>${escapeHtml(d.title)}</b></div>
-        <div style="line-height:1.8;margin-top:6px">` +
-        d.headings.map((h,hi)=>`<div><b style="color:var(--purple)">${hi+1}.</b> ${escapeHtml(h)}</div>`).join("") + `</div>
-        ${d.mnemonic?`<div class="qvn" style="margin-top:8px">🪄 ${escapeHtml(d.mnemonic)}</div>`:""}
-        ${d.note?`<div class="note" style="margin-top:8px">⚠ ${escapeHtml(d.note)}</div>`:""}
+        ${d.tip?`<div class="qvn" style="margin:4px 0 2px">📌 ${escapeHtml(d.tip)}</div>`:""}
+        <div style="line-height:1.85;margin-top:8px">` +
+        d.headings.map((h,hi)=>`<div><b style="color:var(--purple)">${hi+1}.</b> ${escapeHtml(h)}${(d.headingsVn&&d.headingsVn[hi])?`<div class="qvn" style="margin-left:20px">${escapeHtml(d.headingsVn[hi])}</div>`:""}</div>`).join("") + `</div>
+        ${d.mnemonic?`<div class="note" style="margin-top:10px;background:var(--green-bg);color:var(--text)"><b>🪄 Tóm tắt:</b> ${escapeHtml(d.mnemonic)}</div>`:""}
+        ${d.note?`<div class="note" style="margin-top:8px;background:var(--amber-bg);color:var(--text)">⚠ <b>Lưu ý:</b> ${escapeHtml(d.note)}</div>`:""}
       </div>`;
     });
   }

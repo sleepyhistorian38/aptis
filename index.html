@@ -15415,7 +15415,7 @@ function q1617QuizItems(){
   return items;
 }
 function quizQ1617(){
-  startQuiz("Luyện câu 16–17 — " + q1617QuizItems().length + " topic", q1617QuizItems(), ()=>goHome('sec-quiz13'), {q:true});
+  startQuiz("Luyện câu 16–17 — " + q1617QuizItems().length + " topic", q1617QuizItems, ()=>goHome('sec-quiz13'), {q:true});
 }
 function buildRandomQ1617(){
   // đơn vị topic: từ tủ Update (chỉ có 2 ý đúng) + 4 bài có lựa chọn thật trong 2 đề đầy đủ
@@ -16082,8 +16082,11 @@ function quizToggleShuf(k){
   renderQuiz();
 }
 function startQuiz(title, items, back, shuf){
-  if(!items.length){ alert("Nguồn này chưa có câu nào ở dạng thi."); return; }
-  quiz = {title, raw: items, back, shuf: Object.assign({q:false, a:false}, shuf || {})};
+  // items có thể là MẢNG hoặc HÀM dựng đề — truyền hàm thì "Luyện lại" sẽ chia bài mới
+  const build = (typeof items === "function") ? items : null;
+  const arr = build ? build() : items;
+  if(!arr.length){ alert("Nguồn này chưa có câu nào ở dạng thi."); return; }
+  quiz = {title, raw: arr, build, back, shuf: Object.assign({q:false, a:false}, shuf || {})};
   quizArrange();
   const root = /^Reading/.test(title) ? "Reading" : /^Grammar/.test(title) ? "Grammar" : "Listening";
   setNav("nav-quiz", [root,"Luyện dạng thi", title.replace(/^Luyện[^·]*·\s*/,"")],
@@ -16099,8 +16102,7 @@ function quizExit(){
   quiz.back();
 }
 function quizFromDeck(i){
-  const items = buildDeckTest(i).questions;
-  startQuiz("Luyện cả đề · " + D.keyTests[i].title, items, ()=>openDeck(i), {q:false, a:true});
+  startQuiz("Luyện cả đề · " + D.keyTests[i].title, ()=>buildDeckTest(i).questions, ()=>openDeck(i), {q:false, a:true});
 }
 function quizFromBank(){
   const items = [];
@@ -16335,7 +16337,8 @@ function quizFinish(){
   showScreen("scr-quizres");
 }
 function quizRestart(){
-  quizArrange();          // chia bài mới: tráo lại theo chế độ đang bật
+  if(quiz.build) quiz.raw = quiz.build();   // dựng lại đề: đảo đoạn P4, tráo lựa chọn, vị trí đáp án...
+  quizArrange();                            // + tráo theo chế độ đang bật
   renderShufBar();
   showScreen("scr-quiz");
   renderQuiz();
@@ -16516,11 +16519,11 @@ function gVocabItems(s){
   return items;
 }
 /* --- luyện --- */
-function quizGAll(){ startQuiz("Grammar — 200 câu ngữ pháp (8 đề)", GV.sets.flatMap(gGramItems), ()=>goGrammar('gsec-quiz'), {q:true, a:true}); }
-function quizGVocab(){ startQuiz("Grammar — từ vựng (8 đề)", GV.sets.flatMap(gVocabItems), ()=>goGrammar('gsec-quiz'), {q:true}); }
+function quizGAll(){ startQuiz("Grammar — 200 câu ngữ pháp (8 đề)", ()=>GV.sets.flatMap(gGramItems), ()=>goGrammar('gsec-quiz'), {q:true, a:true}); }
+function quizGVocab(){ startQuiz("Grammar — từ vựng (8 đề)", ()=>GV.sets.flatMap(gVocabItems), ()=>goGrammar('gsec-quiz'), {q:true}); }
 function quizGSet(i){
   const s = GV.sets[i];
-  startQuiz("Grammar — " + s.title + " (trọn đề)", [...gGramItems(s), ...gVocabItems(s)], ()=>openGView(i), {q:false, a:true});
+  startQuiz("Grammar — " + s.title + " (trọn đề)", ()=>[...gGramItems(s), ...gVocabItems(s)], ()=>openGView(i), {q:false, a:true});
 }
 /* --- thi thử Core --- */
 function buildGrammarTest(){
@@ -16588,15 +16591,22 @@ function rOrderItem(d){
     src: d.title, audio: null};
 }
 function rP4Item(d){
-  // giống thi thật: 4 đoạn văn hiển thị ĐẦY ĐỦ phía trên, dropdown chỉ chọn nhãn ngắn
-  const choices = d.groups.map((g,i)=>"Đoạn " + (i+1));
-  const rows = [];
-  d.groups.forEach((g,gi)=>g.questions.forEach(q=>rows.push({t: q.replace(/\s*\?$/,"") + "?", a: gi})));
-  const legend = d.groups.map((g,gi)=>
+  // giống thi thật: 4 đoạn văn hiển thị ĐẦY ĐỦ phía trên, dropdown chỉ chọn nhãn ngắn.
+  // Vị trí các đoạn được ĐẢO mỗi lần luyện (thi thật cũng trộn người/đoạn) — đáp án tự ánh xạ theo.
+  const n = d.groups.length;
+  const perm = sample([...Array(n).keys()], n);        // vị trí hiển thị -> chỉ số đoạn gốc
+  const disp = perm.map(gi=>d.groups[gi]);
+  const choices = disp.map((g,i)=>"Đoạn " + (i+1));
+  const legend = disp.map((g,i)=>
     `<div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;color:var(--text);font-size:14.5px;line-height:1.65">
-       <b style="color:var(--purple)">Đoạn ${gi+1}.</b> ${escapeHtml(g.full || g.key)}</div>`).join("");
+       <b style="color:var(--purple)">Đoạn ${i+1}.</b> ${escapeHtml(g.full || g.key)}</div>`).join("");
+  const rows = [];
+  d.groups.forEach((g,gi)=>{
+    const shown = perm.indexOf(gi);                    // đoạn gốc gi đang hiển thị ở vị trí nào
+    g.questions.forEach(q=>rows.push({t: q.replace(/\s*\?$/,"") + "?", a: shown}));
+  });
   return {type:"pick", kid:"r4|"+d.title, topic: d.topic || d.title,
-    intro: "Đọc 4 đoạn văn dưới đây, rồi chọn ĐOẠN phù hợp cho từng câu hỏi (đúng cách trình bày của đề thật).",
+    intro: "Đọc 4 đoạn văn dưới đây, rồi chọn ĐOẠN phù hợp cho từng câu hỏi. Vị trí các đoạn được đảo mỗi lần luyện — nhận diện bằng NỘI DUNG, đừng nhớ vẹt vị trí.",
     legend, choices, rows: sample(rows, rows.length), src: d.title, audio: null};
 }
 function rP5Item(d){
@@ -16622,9 +16632,9 @@ function rP5Item(d){
 }
 /* --- luyện từng phần --- */
 function quizR1(){ startQuiz("Reading Part 1 — điền từ", RD.part1.flatMap(rP1Items), ()=>goReading('rsec-quiz'), {q:true, a:true}); }
-function quizR23(){ startQuiz("Reading Part 2&3 — xếp câu", RD.part23.map(rOrderItem), ()=>goReading('rsec-quiz'), {q:true}); }
-function quizR4(){ startQuiz("Reading Part 4 — nối người–câu hỏi", RD.part4.map(rP4Item), ()=>goReading('rsec-quiz'), {q:true}); }
-function quizR5(){ startQuiz("Reading Part 5 — chọn tiêu đề", RD.part5.map(rP5Item), ()=>goReading('rsec-quiz'), {q:true}); }
+function quizR23(){ startQuiz("Reading Part 2&3 — xếp câu", ()=>RD.part23.map(rOrderItem), ()=>goReading('rsec-quiz'), {q:true}); }
+function quizR4(){ startQuiz("Reading Part 4 — nối người–câu hỏi", ()=>RD.part4.map(rP4Item), ()=>goReading('rsec-quiz'), {q:true}); }
+function quizR5(){ startQuiz("Reading Part 5 — chọn tiêu đề", ()=>RD.part5.map(rP5Item), ()=>goReading('rsec-quiz'), {q:true}); }
 /* --- thi thử đủ 5 phần --- */
 function buildReadingTest(){
   const qs = [];

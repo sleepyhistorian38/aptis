@@ -242,8 +242,8 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     </div>
     <div class="card" style="cursor:pointer" onclick="openBank('q1617')">
       <span class="tag sim">CÂU 16–17</span>
-      <h3>32 topic độc thoại</h3>
-      <div class="meta">14 topic Update 2026 + 18 topic gom từ 22 đề trộn · 2 ý đúng mỗi topic</div>
+      <h3>36 topic độc thoại</h3>
+      <div class="meta">Update 2026 + đề trộn + 2 đề đầy đủ · 2 ý đúng mỗi topic · có nút luyện dạng thi</div>
     </div>
     <div class="card" style="cursor:pointer" onclick="openBank('extra2025')">
       <span class="tag key">BỔ SUNG 11/2025</span>
@@ -271,6 +271,11 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <span class="tag sim">CÂU 14</span>
       <h3>🔎 Nhận biết qua dấu hiệu</h3>
       <div class="meta">Đọc dấu hiệu nội dung người nói → chọn đúng ý. Luyện đối phó việc thi thật trộn thứ tự người.</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="quizQ1617()">
+      <span class="tag sim">CÂU 16–17</span>
+      <h3>🎭 36 topic độc thoại</h3>
+      <div class="meta">Mỗi topic 2 câu × 3 lựa chọn — nhiễu là ý ẢO cùng chủ đề (dấu *), không lấy chéo tủ</div>
     </div>
     <div class="card" style="cursor:pointer;border-color:var(--amber)" onclick="quizWrong()">
       <span class="tag key">ÔN LẠI</span>
@@ -11373,12 +11378,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "When she did a biology degree",
-      "vn": "Khi cô ấy học ngành sinh học"
+      "vn": "Khi cô ấy học ngành sinh học",
+      "f": [
+       "When she worked in a hospital kitchen",
+       "After finishing a cooking course"
+      ]
      },
      {
       "q": null,
       "a": "After solving people's problems in a helpline",
-      "vn": "Sau khi giải quyết vấn đề của mọi người qua đường dây trợ giúp"
+      "vn": "Sau khi giải quyết vấn đề của mọi người qua đường dây trợ giúp",
+      "f": [
+       "After writing a popular diet book",
+       "When a doctor recommended the job to her"
+      ]
      }
     ]
    },
@@ -11388,12 +11401,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Be well informed of the places you are going to visit",
-      "vn": "Tìm hiểu kỹ về nơi sẽ đến"
+      "vn": "Tìm hiểu kỹ về nơi sẽ đến",
+      "f": [
+       "Buy the most expensive equipment you can",
+       "Travel with a large group for safety"
+      ]
      },
      {
       "q": null,
       "a": "Knowing the people and cultures in the different countries",
-      "vn": "Hiểu con người và văn hóa các nước"
+      "vn": "Hiểu con người và văn hóa các nước",
+      "f": [
+       "Improving his physical fitness",
+       "Taking beautiful photographs along the way"
+      ]
      }
     ]
    },
@@ -11403,12 +11424,20 @@ window.APTIS.listening = {
      {
       "q": "What is the key to her enduring career?",
       "a": "Belief in her musical instincts",
-      "vn": "Niềm tin vào bản năng âm nhạc"
+      "vn": "Niềm tin vào bản năng âm nhạc",
+      "f": [
+       "Support from a famous producer",
+       "Copying current music trends"
+      ]
      },
      {
       "q": "What is the musician's opinion of the current music industry?",
       "a": "Performers find it difficult to start their careers (= find it hard to get started)",
-      "vn": "Nghệ sĩ khó bắt đầu sự nghiệp"
+      "vn": "Nghệ sĩ khó bắt đầu sự nghiệp",
+      "f": [
+       "Performers earn more than in the past",
+       "The industry has become easier for newcomers"
+      ]
      }
     ]
    },
@@ -11418,12 +11447,20 @@ window.APTIS.listening = {
      {
       "q": "What is the main strength of the book?",
       "a": "The book describes a particular historical period very effectively (= good description of a specific period of time)",
-      "vn": "Mô tả một giai đoạn lịch sử rất hiệu quả"
+      "vn": "Mô tả một giai đoạn lịch sử rất hiệu quả",
+      "f": [
+       "It reveals unknown letters of the subject",
+       "It is written in a very simple style"
+      ]
      },
      {
       "q": "What is the critic's overall opinion of the book?",
       "a": "It is an unconventional biography",
-      "vn": "Một cuốn tiểu sử không theo lối mòn"
+      "vn": "Một cuốn tiểu sử không theo lối mòn",
+      "f": [
+       "It is too long for most readers",
+       "It is a typical example of the genre"
+      ]
      }
     ]
    },
@@ -11433,12 +11470,20 @@ window.APTIS.listening = {
      {
       "q": "How does the speaker explain why new podcasts fail?",
       "a": "Creators do not promote their shows",
-      "vn": "Người sáng tạo không quảng bá chương trình"
+      "vn": "Người sáng tạo không quảng bá chương trình",
+      "f": [
+       "Creators choose topics nobody cares about",
+       "Episodes are usually too long"
+      ]
      },
      {
       "q": "What is the speaker's opinion of podcasting?",
       "a": "It is a great way to build a community",
-      "vn": "Cách tuyệt vời để xây dựng cộng đồng"
+      "vn": "Cách tuyệt vời để xây dựng cộng đồng",
+      "f": [
+       "It is mainly a way to make money",
+       "It will soon be replaced by video"
+      ]
      }
     ]
    },
@@ -11448,12 +11493,20 @@ window.APTIS.listening = {
      {
       "q": "How can productivity be maximized?",
       "a": "Effective time management (= By managing time effectively)",
-      "vn": "Quản lý thời gian hiệu quả"
+      "vn": "Quản lý thời gian hiệu quả",
+      "f": [
+       "By working longer hours",
+       "By avoiding all distractions completely"
+      ]
      },
      {
       "q": "What is the problem with productivity strategies?",
       "a": "Using them effectively requires effort",
-      "vn": "Dùng chúng hiệu quả đòi hỏi nỗ lực"
+      "vn": "Dùng chúng hiệu quả đòi hỏi nỗ lực",
+      "f": [
+       "They only work for certain jobs",
+       "They are too expensive to apply"
+      ]
      }
     ]
    },
@@ -11463,12 +11516,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Its production techniques",
-      "vn": "Kỹ thuật sản xuất của nó"
+      "vn": "Kỹ thuật sản xuất của nó",
+      "f": [
+       "Its famous actors",
+       "Its emotional story"
+      ]
      },
      {
       "q": null,
       "a": "They should be released at the right time",
-      "vn": "Nên phát hành đúng thời điểm"
+      "vn": "Nên phát hành đúng thời điểm",
+      "f": [
+       "They should be as short as possible",
+       "They should feature celebrities"
+      ]
      }
     ]
    },
@@ -11478,12 +11539,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It helps the company focus its resources and avoid wasting time on low-demand areas",
-      "vn": "Giúp công ty tập trung nguồn lực, tránh lãng phí vào mảng ít nhu cầu"
+      "vn": "Giúp công ty tập trung nguồn lực, tránh lãng phí vào mảng ít nhu cầu",
+      "f": [
+       "It attracts new investors quickly",
+       "It reduces the number of employees needed"
+      ]
      },
      {
       "q": null,
       "a": "It proves the company can cover costs and create opportunities for future growth",
-      "vn": "Chứng minh công ty trang trải được chi phí, tạo cơ hội tăng trưởng"
+      "vn": "Chứng minh công ty trang trải được chi phí, tạo cơ hội tăng trưởng",
+      "f": [
+       "It guarantees the products sell abroad",
+       "It shows customers trust the brand completely"
+      ]
      }
     ]
    },
@@ -11493,12 +11562,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Panos' paintings would be similar to those of another artist",
-      "vn": "Tranh của Panos giống tranh một nghệ sĩ khác"
+      "vn": "Tranh của Panos giống tranh một nghệ sĩ khác",
+      "f": [
+       "The exhibition would attract few visitors",
+       "His paintings would be too expensive"
+      ]
      },
      {
       "q": null,
       "a": "It is a window to the past",
-      "vn": "Là cửa sổ nhìn về quá khứ"
+      "vn": "Là cửa sổ nhìn về quá khứ",
+      "f": [
+       "A criticism of modern society",
+       "A celebration of Greek landscapes"
+      ]
      }
     ]
    },
@@ -11508,12 +11585,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Not making enough money",
-      "vn": "Không kiếm đủ tiền"
+      "vn": "Không kiếm đủ tiền",
+      "f": [
+       "A shortage of skilled workers",
+       "Complaints from passengers"
+      ]
      },
      {
       "q": null,
       "a": "Continuing the policies that had already been implemented",
-      "vn": "Tiếp tục các chính sách đã triển khai"
+      "vn": "Tiếp tục các chính sách đã triển khai",
+      "f": [
+       "Replacing the oldest railway lines",
+       "Reducing ticket prices for everyone"
+      ]
      }
     ]
    },
@@ -11523,12 +11608,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Because it brings him joy and chances to learn about different cultures",
-      "vn": "Mang lại niềm vui và cơ hội học hỏi văn hóa"
+      "vn": "Mang lại niềm vui và cơ hội học hỏi văn hóa",
+      "f": [
+       "Because it helps him forget about work",
+       "Because his family travelled a lot"
+      ]
      },
      {
       "q": null,
       "a": "Both help people discover new worlds and grow as a person",
-      "vn": "Cả hai giúp khám phá thế giới mới và phát triển bản thân"
+      "vn": "Cả hai giúp khám phá thế giới mới và phát triển bản thân",
+      "f": [
+       "Both are cheaper than other hobbies",
+       "Both are best enjoyed alone"
+      ]
      }
     ]
    },
@@ -11538,12 +11631,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Concentration depends mostly on environment",
-      "vn": "Tập trung phụ thuộc chủ yếu vào môi trường"
+      "vn": "Tập trung phụ thuộc chủ yếu vào môi trường",
+      "f": [
+       "Concentration improves with age",
+       "Concentration is a natural talent"
+      ]
      },
      {
       "q": null,
       "a": "People often fail to consider the limits of concentration",
-      "vn": "Mọi người thường không tính đến giới hạn của sự tập trung"
+      "vn": "Mọi người thường không tính đến giới hạn của sự tập trung",
+      "f": [
+       "People concentrate best under pressure",
+       "People can train unlimited concentration"
+      ]
      }
     ]
    },
@@ -11553,12 +11654,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "The team members lose confidence",
-      "vn": "Thành viên nhóm mất tự tin"
+      "vn": "Thành viên nhóm mất tự tin",
+      "f": [
+       "The team members change jobs",
+       "The team blames the leader"
+      ]
      },
      {
       "q": null,
       "a": "Set a realistic goal",
-      "vn": "Đặt mục tiêu thực tế"
+      "vn": "Đặt mục tiêu thực tế",
+      "f": [
+       "Offer a financial reward",
+       "Organise team-building trips"
+      ]
      }
     ]
    },
@@ -11568,12 +11677,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Effectively",
-      "vn": "Có hiệu quả"
+      "vn": "Có hiệu quả",
+      "f": [
+       "Quickly",
+       "Carefully"
+      ]
      },
      {
       "q": null,
       "a": "Experiment",
-      "vn": "Thí nghiệm"
+      "vn": "Thí nghiệm",
+      "f": [
+       "Lecture",
+       "Routine"
+      ]
      }
     ]
    },
@@ -11584,12 +11701,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Organise their resources more effectively",
-      "vn": "Tổ chức các nguồn lực của họ hiệu quả hơn"
+      "vn": "Tổ chức các nguồn lực của họ hiệu quả hơn",
+      "f": [
+       "Cut all unnecessary purchases immediately",
+       "Keep their money in several banks"
+      ]
      },
      {
       "q": null,
       "a": "Get advice from someone you know who has experience",
-      "vn": "Nhận lời khuyên từ người bạn biết có kinh nghiệm"
+      "vn": "Nhận lời khuyên từ người bạn biết có kinh nghiệm",
+      "f": [
+       "Follow tips from online influencers",
+       "Hire a professional financial planner"
+      ]
      }
     ]
    },
@@ -11600,12 +11725,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "They can have a harmful effect",
-      "vn": "Chúng có thể có tác dụng có hại"
+      "vn": "Chúng có thể có tác dụng có hại",
+      "f": [
+       "They are a waste of study time",
+       "They are only for talented students"
+      ]
      },
      {
       "q": null,
       "a": "It provides balance in the students' lives",
-      "vn": "Nó mang lại sự cân bằng trong cuộc sống của sinh viên"
+      "vn": "Nó mang lại sự cân bằng trong cuộc sống của sinh viên",
+      "f": [
+       "It helps students win scholarships",
+       "It teaches students to follow rules"
+      ]
      }
     ]
    },
@@ -11616,12 +11749,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "The dialogue seems unrealistic",
-      "vn": "Cuộc đối thoại có vẻ không thực tế"
+      "vn": "Cuộc đối thoại có vẻ không thực tế",
+      "f": [
+       "The story moves too slowly",
+       "The characters are hard to remember"
+      ]
      },
      {
       "q": null,
       "a": "New industry demands are negatively influencing script production",
-      "vn": "Nhu cầu mới của ngành đang ảnh hưởng tiêu cực đến việc sản xuất kịch bản"
+      "vn": "Nhu cầu mới của ngành đang ảnh hưởng tiêu cực đến việc sản xuất kịch bản",
+      "f": [
+       "Young writers lack proper training",
+       "Budgets for scripts keep being cut"
+      ]
      }
     ]
    },
@@ -11632,12 +11773,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "To maintain a positive attitude",
-      "vn": "Để duy trì một thái độ tích cực"
+      "vn": "Để duy trì một thái độ tích cực",
+      "f": [
+       "To follow the dress code strictly",
+       "To arrive earlier than the manager"
+      ]
      },
      {
       "q": null,
       "a": "Our definition of it is changing",
-      "vn": "Định nghĩa của chúng ta về nó đang thay đổi"
+      "vn": "Định nghĩa của chúng ta về nó đang thay đổi",
+      "f": [
+       "It matters less than qualifications",
+       "It cannot be taught at school"
+      ]
      }
     ]
    },
@@ -11648,12 +11797,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It wasn't as good as she had expected",
-      "vn": "Nó không tốt như cô mong đợi"
+      "vn": "Nó không tốt như cô mong đợi",
+      "f": [
+       "It saved her a lot of money",
+       "It made her much more productive"
+      ]
      },
      {
       "q": null,
       "a": "It depends on your situation and personality",
-      "vn": "Nó phụ thuộc vào hoàn cảnh và tính cách của bạn"
+      "vn": "Nó phụ thuộc vào hoàn cảnh và tính cách của bạn",
+      "f": [
+       "It only suits creative jobs",
+       "It will become compulsory in future"
+      ]
      }
     ]
    },
@@ -11664,12 +11821,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "The characters were interesting",
-      "vn": "Các nhân vật rất thú vị"
+      "vn": "Các nhân vật rất thú vị",
+      "f": [
+       "They are based on real people",
+       "They change too much during the story"
+      ]
      },
      {
       "q": null,
       "a": "It is not the author's strongest work",
-      "vn": "Đây không phải là tác phẩm mạnh nhất của tác giả"
+      "vn": "Đây không phải là tác phẩm mạnh nhất của tác giả",
+      "f": [
+       "Commercial success",
+       "Pleasant surprise"
+      ]
      }
     ]
    },
@@ -11680,12 +11845,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It is very exciting to read",
-      "vn": "Đọc rất thú vị"
+      "vn": "Đọc rất thú vị",
+      "f": [
+       "It is full of difficult theories",
+       "It is based on new interviews"
+      ]
      },
      {
       "q": null,
       "a": "It has been written for a general audience",
-      "vn": "Được viết cho đối tượng công chúng"
+      "vn": "Được viết cho đối tượng công chúng",
+      "f": [
+       "It was written for young scientists",
+       "It has been translated into many languages"
+      ]
      }
     ]
    },
@@ -11696,12 +11869,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It has not been accurately reported by the media",
-      "vn": "Báo chí chưa đưa tin chính xác"
+      "vn": "Báo chí chưa đưa tin chính xác",
+      "f": [
+       "It was funded by private companies",
+       "It only studied young people"
+      ]
      },
      {
       "q": null,
       "a": "The research is unlikely to find a conclusive answer",
-      "vn": "Nghiên cứu khó có thể tìm ra câu trả lời thuyết phục"
+      "vn": "Nghiên cứu khó có thể tìm ra câu trả lời thuyết phục",
+      "f": [
+       "The research will change government policy",
+       "The research repeats earlier studies"
+      ]
      }
     ]
    },
@@ -11712,12 +11893,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It creates a sense of adventure",
-      "vn": "Nó tạo ra một cảm giác phiêu lưu"
+      "vn": "Nó tạo ra một cảm giác phiêu lưu",
+      "f": [
+       "It lists the cheapest hotels",
+       "It focuses on famous landmarks"
+      ]
      },
      {
       "q": null,
       "a": "It is only suitable for a particular generation",
-      "vn": "Nó chỉ phù hợp với một thế hệ cụ thể"
+      "vn": "Nó chỉ phù hợp với một thế hệ cụ thể",
+      "f": [
+       "It is too heavy to carry around",
+       "It is updated every single year"
+      ]
      }
     ]
    },
@@ -11728,12 +11917,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Be flexible and open-minded",
-      "vn": "Hãy linh hoạt và cởi mở"
+      "vn": "Hãy linh hoạt và cởi mở",
+      "f": [
+       "Choose the highest-paying offer",
+       "Continue studying for another degree"
+      ]
      },
      {
       "q": null,
       "a": "They are becoming more competitive",
-      "vn": "Họ đang trở nên cạnh tranh hơn"
+      "vn": "Họ đang trở nên cạnh tranh hơn",
+      "f": [
+       "They are easier to enter than before",
+       "They reward loyalty above all"
+      ]
      }
     ]
    },
@@ -11744,12 +11941,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Create dedicated periods for writing",
-      "vn": "Tạo khoảng thời gian dành riêng cho việc viết"
+      "vn": "Tạo khoảng thời gian dành riêng cho việc viết",
+      "f": [
+       "Wait until inspiration arrives",
+       "Read other writers' work for ideas"
+      ]
      },
      {
       "q": null,
       "a": "Refusing to seek the advice of others",
-      "vn": "Từ chối tìm kiếm lời khuyên của người khác (gốc ghi tắt)"
+      "vn": "Từ chối tìm kiếm lời khuyên của người khác (gốc ghi tắt)",
+      "f": [
+       "Writing several projects at once",
+       "Comparing yourself with famous authors"
+      ]
      }
     ]
    },
@@ -11760,12 +11965,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It caught the viewers' attention",
-      "vn": "Nó thu hút sự chú ý của người xem (gốc ghi tắt)"
+      "vn": "Nó thu hút sự chú ý của người xem (gốc ghi tắt)",
+      "f": [
+       "It won several television awards",
+       "It was based on a popular book"
+      ]
      },
      {
       "q": null,
       "a": "Series can be damaged ...",
-      "vn": "Loạt phim có thể bị ảnh hưởng... (gốc ghi tắt)"
+      "vn": "Loạt phim có thể bị ảnh hưởng... (gốc ghi tắt)",
+      "f": [
+       "Series should end after one season",
+       "Series depend on their main actors"
+      ]
      }
     ]
    },
@@ -11776,12 +11989,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It doesn't do enough to promote alternatives to driving",
-      "vn": "Chưa đủ để thúc đẩy các lựa chọn thay thế cho lái xe"
+      "vn": "Chưa đủ để thúc đẩy các lựa chọn thay thế cho lái xe",
+      "f": [
+       "It ignores the needs of local businesses",
+       "It was designed without public consultation"
+      ]
      },
      {
       "q": null,
       "a": "The plan fails to live up to expectations",
-      "vn": "Kế hoạch không đáp ứng được kỳ vọng"
+      "vn": "Kế hoạch không đáp ứng được kỳ vọng",
+      "f": [
+       "The plan will be delayed for years",
+       "The plan costs more than promised"
+      ]
      }
     ]
    },
@@ -11792,12 +12013,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "Blocking out noise and light is key",
-      "vn": "Chặn tiếng ồn và ánh sáng là chìa khóa"
+      "vn": "Chặn tiếng ồn và ánh sáng là chìa khóa",
+      "f": [
+       "Going to bed at the same time is key",
+       "Avoiding coffee after noon is key"
+      ]
      },
      {
       "q": null,
       "a": "The media overemphasise the subject",
-      "vn": "Truyền thông nhấn mạnh quá mức chủ đề này"
+      "vn": "Truyền thông nhấn mạnh quá mức chủ đề này",
+      "f": [
+       "Schools should teach sleep habits",
+       "Most people sleep more than they think"
+      ]
      }
     ]
    },
@@ -11808,12 +12037,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "They both have something to say about ...",
-      "vn": "Cả hai đều có điều muốn nói về... (gốc ghi tắt)"
+      "vn": "Cả hai đều có điều muốn nói về... (gốc ghi tắt)",
+      "f": [
+       "They both write for young readers",
+       "They both started writing late in life"
+      ]
      },
      {
       "q": null,
       "a": "The meaning of their work is not always easily identified",
-      "vn": "Ý nghĩa tác phẩm của họ không phải lúc nào cũng dễ xác định"
+      "vn": "Ý nghĩa tác phẩm của họ không phải lúc nào cũng dễ xác định",
+      "f": [
+       "Their work is praised more abroad",
+       "Their work follows a strict formula"
+      ]
      }
     ]
    },
@@ -11824,12 +12061,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "He will probably retire from singing",
-      "vn": "Có lẽ anh ấy sẽ nghỉ hát"
+      "vn": "Có lẽ anh ấy sẽ nghỉ hát",
+      "f": [
+       "He will record a new album soon",
+       "He plans to teach music students"
+      ]
      },
      {
       "q": null,
       "a": "He could have been more successful",
-      "vn": "Anh ấy có thể đã thành công hơn"
+      "vn": "Anh ấy có thể đã thành công hơn",
+      "f": [
+       "He was luckier than other singers",
+       "He regrets choosing this career"
+      ]
      }
     ]
    },
@@ -11840,12 +12085,20 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "He wasn't ready to start higher education",
-      "vn": "Anh ấy chưa sẵn sàng học lên cao"
+      "vn": "Anh ấy chưa sẵn sàng học lên cao",
+      "f": [
+       "He wanted to earn money first",
+       "He failed his entrance exams"
+      ]
      },
      {
       "q": null,
       "a": "How to be more independent",
-      "vn": "Làm thế nào để độc lập hơn"
+      "vn": "Làm thế nào để độc lập hơn",
+      "f": [
+       "How to choose the right course",
+       "How to make friends abroad"
+      ]
      }
     ]
    },
@@ -11856,12 +12109,116 @@ window.APTIS.listening = {
      {
       "q": null,
       "a": "It is quite different compared to ...",
-      "vn": "Nó khá khác biệt so với tác phẩm trước... (gốc ghi tắt)"
+      "vn": "Nó khá khác biệt so với tác phẩm trước... (gốc ghi tắt)",
+      "f": [
+       "It is very similar to his early work",
+       "It was finished in a great hurry"
+      ]
      },
      {
       "q": null,
       "a": "He should listen to his critics before ...",
-      "vn": "Anh ấy nên lắng nghe phê bình trước khi... (gốc ghi tắt)"
+      "vn": "Anh ấy nên lắng nghe phê bình trước khi... (gốc ghi tắt)",
+      "f": [
+       "He should stop reading his reviews",
+       "He should work with a co-author"
+      ]
+     }
+    ]
+   },
+   {
+    "topic": "Making plans (Lên kế hoạch)",
+    "src": "Đề 250 POUND (lựa chọn gốc trong đề mô phỏng)",
+    "qa": [
+     {
+      "q": null,
+      "a": "They allow you to be flexible",
+      "vn": "Chúng cho phép bạn linh hoạt",
+      "f": [
+       "They save you money in the long run",
+       "They impress your colleagues"
+      ]
+     },
+     {
+      "q": null,
+      "a": "It prevents you from making mistakes",
+      "vn": "Nó giúp bạn tránh mắc sai lầm",
+      "f": [
+       "It makes the work more enjoyable",
+       "It helps you finish ahead of schedule"
+      ]
+     }
+    ]
+   },
+   {
+    "topic": "A promotion campaign for a product (Chiến dịch quảng bá sản phẩm)",
+    "src": "Đề 250 POUND",
+    "qa": [
+     {
+      "q": null,
+      "a": "It is making exaggerated claims",
+      "vn": "Nó đưa ra những tuyên bố cường điệu",
+      "f": [
+       "It targets the wrong customers",
+       "It copies a rival's campaign"
+      ]
+     },
+     {
+      "q": null,
+      "a": "It costs too much to make to be profitable",
+      "vn": "Chi phí quá cao để có lợi nhuận",
+      "f": [
+       "It will be banned by regulators",
+       "It confuses customers about the product"
+      ]
+     }
+    ]
+   },
+   {
+    "topic": "The new restaurant (Nhà hàng mới)",
+    "src": "Đề THE COLLEGE",
+    "qa": [
+     {
+      "q": null,
+      "a": "Standard of service wasn't good",
+      "vn": "Chất lượng dịch vụ không tốt",
+      "f": [
+       "The menu offered too few choices",
+       "The prices were unreasonably high"
+      ]
+     },
+     {
+      "q": null,
+      "a": "They need to make the customers feel valued and welcome",
+      "vn": "Cần làm khách hàng thấy được trân trọng, chào đón",
+      "f": [
+       "They need to hire a famous chef",
+       "They need to redecorate the dining room"
+      ]
+     }
+    ]
+   },
+   {
+    "topic": "New novel (Tiểu thuyết mới)",
+    "src": "Đề THE COLLEGE",
+    "qa": [
+     {
+      "q": null,
+      "a": "They are difficult to relate to",
+      "vn": "Rất khó để đồng cảm",
+      "f": [
+       "They are based on real people",
+       "They change too much during the story"
+      ]
+     },
+     {
+      "q": null,
+      "a": "Ambitious failure",
+      "vn": "Thất bại đầy tham vọng",
+      "f": [
+       "Commercial success",
+       "Pleasant surprise"
+      ]
      }
     ]
    }
@@ -14909,6 +15266,21 @@ function buildDeckTest(i){
         statements:e.statements.map(s=>({t:s.t, vn:null})),
         answer:e.statements.map(s=>s.a), src:t.title, audio:null});
     } else if(e.type==="pair1617"){
+      // nếu topic có trong kho 16-17 (đã soạn đáp án ảo) thì dùng bộ đó
+      const nrm = s=>s.toLowerCase().replace(/\(.*?\)/g,"").replace(/[^a-z0-9]+/g," ").trim();
+      const bt = D.updateBank.q1617.find(x=>{
+        const a = nrm(x.topic), b = nrm(e.topic);
+        return a && b && (a.includes(b) || b.includes(a));
+      });
+      if(bt){
+        const bsubs = q1617Subs(bt.qa, it.n);
+        if(!bsubs.some(s2=>!s2)){
+          qs.push({type:"multi2", topic: e.topic, intro: "Listen to the talk and answer the two questions.",
+            subs: bsubs, note: "Phương án có dấu * là ý ẢO cùng chủ đề do app soạn — không có trong tủ.",
+            src: t.title, audio: null});
+          return;
+        }
+      }
       const subs = e.answers.map((a,si)=>{
         const ds = sample(allAnswers.filter(x=>x!==e.answers[0] && x!==e.answers[1]), 2);
         const pos = Math.floor(Math.random()*3);
@@ -14964,6 +15336,37 @@ function buildRandomQ15(){
     answer: t.statements.map(s=>L[s.a]),
     src: "Tủ câu 15 · Update 01.08.2026", audio: null};
 }
+function q1617Subs(qa, slotLabel){
+  // dựng 2 câu hỏi con từ 1 topic: nhiễu là ĐÁP ÁN ẢO cùng chủ đề (x.f), có dấu *
+  return qa.map((x, si)=>{
+    const fakes = (x.f && x.f.length===2) ? x.f : null;
+    if(!fakes) return null;
+    const pos = Math.floor(Math.random()*3);
+    const options=[], made=[];
+    let di=0;
+    for(let k=0;k<3;k++){
+      if(k===pos){ options.push(x.a); made.push(false); }
+      else { options.push(fakes[di++]); made.push(true); }
+    }
+    return {q: (slotLabel ? slotLabel+"."+(si+1)+" — " : (si+1)+") ") + (x.q || "Chọn ý ĐÚNG theo bài nghe:"),
+            options, answer: pos, made};
+  });
+}
+function q1617QuizItems(){
+  const items = [];
+  D.updateBank.q1617.forEach(t=>{
+    const subs = q1617Subs(t.qa, null);
+    if(subs.some(s=>!s)) return;
+    items.push({type:"multi2", kid:"q1617|"+t.topic, topic: t.topic,
+      intro: "Bài độc thoại — chọn ý ĐÚNG của topic này cho từng câu.",
+      subs, note: "Phương án có dấu * là ý ẢO cùng chủ đề do app soạn — KHÔNG có trong tủ.",
+      src: t.src || "Update 01.08.2026", audio: null});
+  });
+  return items;
+}
+function quizQ1617(){
+  startQuiz("Luyện câu 16–17 — " + q1617QuizItems().length + " topic", q1617QuizItems(), ()=>goHome('sec-quiz13'), {q:true});
+}
 function buildRandomQ1617(){
   // đơn vị topic: từ tủ Update (chỉ có 2 ý đúng) + 4 bài có lựa chọn thật trong 2 đề đầy đủ
   const units = D.updateBank.q1617.map(t=>({kind: "bank", topic: t.topic, qa: t.qa}));
@@ -14979,21 +15382,25 @@ function buildRandomQ1617(){
     if(u.kind==="real"){
       return {...u.q, src: "Đề đầy đủ (lựa chọn gốc)", audio: null};
     }
-    const subs = u.qa.map((x, si)=>{
-      const ds = sample(allAnswers.filter(a=>a!==u.qa[0].a && a!==u.qa[1].a), 2);
-      const pos = Math.floor(Math.random()*3);
-      const options = [], made = [];
-      let di = 0;
-      for(let i=0;i<3;i++){
-        if(i===pos){ options.push(x.a); made.push(false); }
-        else { options.push(ds[di++]); made.push(true); }
-      }
-      return {q: x.q ? `${slot}.${si+1} — ${x.q}` : `${slot}.${si+1} — Chọn ý ĐÚNG theo bài nghe:`,
-              options, answer: pos, made};
-    });
+    // ưu tiên đáp án ẢO cùng chủ đề (x.f); topic nào chưa có mới rơi về lấy tủ khác
+    let subs = q1617Subs(u.qa, slot);
+    if(subs.some(s=>!s)){
+      subs = u.qa.map((x, si)=>{
+        const ds = sample(allAnswers.filter(a=>a!==u.qa[0].a && a!==u.qa[1].a), 2);
+        const pos = Math.floor(Math.random()*3);
+        const options = [], made = [];
+        let di = 0;
+        for(let i=0;i<3;i++){
+          if(i===pos){ options.push(x.a); made.push(false); }
+          else { options.push(ds[di++]); made.push(true); }
+        }
+        return {q: x.q ? `${slot}.${si+1} — ${x.q}` : `${slot}.${si+1} — Chọn ý ĐÚNG theo bài nghe:`,
+                options, answer: pos, made};
+      });
+    }
     return {type: "multi2", topic: u.topic,
       intro: "Listen to the talk and answer the two questions.",
-      subs, note: "Phương án có dấu * là do app lấy từ tủ topic khác làm nhiễu.",
+      subs, note: "Phương án có dấu * là ý ẢO cùng chủ đề do app soạn — không có trong tủ.",
       src: "Tủ câu 16–17 · Update 01.08.2026", audio: null};
   });
 }
@@ -15547,7 +15954,8 @@ function openBank(kind){
     });
   }
   else if(kind==="q1617"){
-    html += `<div class="note">Kho gồm ${B.q1617.length} topic: 14 từ bản Update 01.08.2026 + 18 gom từ 22 đề trộn (đã bỏ trùng). Nhiều topic chưa có câu hỏi cụ thể — nhớ cặp TOPIC ↔ 2 Ý ĐÚNG. Mục có ghi "(gốc ghi tắt)" là tài liệu gốc viết tắt bằng "...".</div>`;
+    html += `<div style="margin-bottom:16px"><button class="btn" onclick="quizQ1617()">🎭 Luyện dạng thi ${B.q1617.length} topic</button></div>`;
+    html += `<div class="note">Kho gồm ${B.q1617.length} topic (Update 01.08.2026 + gom từ 22 đề trộn + 2 đề đầy đủ, đã bỏ trùng). Nhiều topic chưa có câu hỏi cụ thể — nhớ cặp TOPIC ↔ 2 Ý ĐÚNG. Mục có ghi "(gốc ghi tắt)" là tài liệu gốc viết tắt bằng "...".</div>`;
     B.q1617.forEach((t,i)=>{
       html += `<div class="kitem"><div class="qline"><span class="num">${i+1}.</span><b>Topic: ${escapeHtml(t.topic)}</b>${t.src?` <span class="qvn" style="display:inline">· ${escapeHtml(t.src)}</span>`:""}</div>`;
       html += `<div class="ansblock blur" onclick="this.classList.toggle('blur')">`;

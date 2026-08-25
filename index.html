@@ -11189,7 +11189,54 @@ window.APTIS.listening = {
      "M",
      "M"
     ],
-    "note": null
+    "note": null,
+    "dialogue": [
+     {
+      "sp": "M",
+      "en": "Have you ever thought about how different local cultures can be, even within the same country?",
+      "vn": "Bạn đã bao giờ nghĩ về sự khác biệt giữa các nền văn hóa địa phương, ngay cả trong cùng một quốc gia chưa?"
+     },
+     {
+      "sp": "W",
+      "en": "Definitely. When I visited different regions last year, I was really surprised by how unique each place felt — the food, the festivals, the daily customs.",
+      "vn": "Chắc chắn rồi. Năm ngoái khi đến thăm các vùng miền khác nhau, tôi thực sự ngạc nhiên về sự độc đáo của mỗi nơi – từ ẩm thực, lễ hội đến phong tục tập quán hàng ngày."
+     },
+     {
+      "sp": "M",
+      "en": "For me, the hardest part is always the language. Even when people share a national language, local dialects and accents can create real misunderstandings. I honestly think language is the biggest barrier to experiencing a different local culture.",
+      "vn": "Đối với tôi, phần khó khăn nhất luôn là ngôn ngữ. Ngay cả khi mọi người cùng nói một ngôn ngữ quốc gia, phương ngữ và giọng điệu địa phương cũng có thể gây ra những hiểu lầm thực sự. Thành thật mà nói, tôi nghĩ ngôn ngữ là rào cản lớn nhất để trải nghiệm một nền văn hóa địa phương khác biệt."
+     },
+     {
+      "sp": "W",
+      "en": "I would not say language alone is the biggest issue. There are other challenges too, like differences in values and social customs. But I am also concerned about how globalisation is affecting local cultures. International trends are slowly replacing traditional customs everywhere.",
+      "vn": "Tôi không cho rằng chỉ riêng ngôn ngữ là vấn đề lớn nhất. Còn có những thách thức khác nữa, như sự khác biệt về giá trị và phong tục xã hội. Nhưng tôi cũng lo ngại về việc toàn cầu hóa đang ảnh hưởng đến các nền văn hóa địa phương như thế nào. Các xu hướng quốc tế đang dần thay thế các phong tục truyền thống ở khắp mọi nơi."
+     },
+     {
+      "sp": "M",
+      "en": "I think you are right about that. Globalisation is clearly changing the way people live, and local traditions are not as strong as they used to be.",
+      "vn": "Tôi nghĩ bạn nói đúng. Toàn cầu hóa rõ ràng đang thay đổi cách sống của mọi người, và các truyền thống địa phương không còn mạnh mẽ như trước nữa."
+     },
+     {
+      "sp": "W",
+      "en": "What worries me most is that younger people seem less motivated to learn about their own heritage. They are more interested in global trends than in local traditions.",
+      "vn": "Điều khiến tôi lo lắng nhất là giới trẻ dường như ít có động lực tìm hiểu về di sản của chính họ. Họ quan tâm đến các xu hướng toàn cầu hơn là các truyền thống địa phương."
+     },
+     {
+      "sp": "M",
+      "en": "I am not completely sure about that. Some young people are actually very proud of where they come from and work hard to keep their traditions alive.",
+      "vn": "Tôi không hoàn toàn chắc chắn về điều đó. Một số người trẻ thực sự rất tự hào về quê hương của họ và nỗ lực hết mình để giữ gìn truyền thống."
+     },
+     {
+      "sp": "W",
+      "en": "Maybe a few are. But in general, local knowledge is not being passed on the way it used to be. That is why I believe travel is really the most effective way to truly understand and appreciate cultural differences. You learn so much more by being there in person than by reading about it.",
+      "vn": "Có lẽ một vài người như vậy. Nhưng nhìn chung, kiến thức địa phương không được truyền lại như trước đây. Đó là lý do tại sao tôi tin rằng du lịch thực sự là cách hiệu quả nhất để hiểu và trân trọng sự khác biệt văn hóa. Bạn học được nhiều hơn khi trực tiếp trải nghiệm hơn là chỉ đọc về nó."
+     },
+     {
+      "sp": "M",
+      "en": "Travel can certainly be eye-opening. But I think there are other good ways to learn too, such as online resources and cultural events.",
+      "vn": "Du lịch chắc chắn có thể mở mang tầm mắt. Nhưng tôi nghĩ cũng có những cách học hỏi tốt khác, chẳng hạn như các nguồn tài liệu trực tuyến và các sự kiện văn hóa."
+     }
+    ]
    },
    {
     "topic": "Work Business / Business and Culture — Mới update",
@@ -15572,6 +15619,20 @@ function c15Scenario(t){
   return {manFirst, keyOf,
     label: manFirst ? "giọng NAM đọc trước" : "giọng NỮ đọc trước"};
 }
+function c15DialogueHtml(t, manFirst){
+  // hội thoại nguyên văn từ tủ (chỉ Local Cultural Differences có); tủ ghi theo bản
+  // NAM đọc trước — khi mô phỏng nữ đọc trước thì đảo vai M↔W (cùng kịch bản, đổi giọng)
+  if(!t.dialogue) return "";
+  const rows = t.dialogue.map(d=>{
+    const sp = manFirst ? d.sp : (d.sp==="M" ? "W" : "M");
+    const name = sp==="M" ? "Man" : "Woman";
+    const col = sp==="M" ? "#1d4ed8" : "#be185d";
+    return `<div style="margin:7px 0"><b style="color:${col}">${name}:</b> ${escapeHtml(d.en)}
+      <span class="qvn" style="display:block;margin-left:14px">${escapeHtml(d.vn)}</span></div>`;
+  }).join("");
+  return `<details style="margin:10px 0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px">
+    <summary style="cursor:pointer;font-weight:600">📜 Hội thoại nguyên văn từ tủ — mô phỏng bài nghe${manFirst?"":" (vai Man/Woman đã ĐẢO vì giọng nữ đọc trước)"} · bấm để mở</summary>${rows}</details>`;
+}
 function c15MwbItem(t){
   const n = t.statements.length;
   const perm = sample([...Array(n).keys()], n);
@@ -15587,7 +15648,8 @@ function c15MwbItem(t){
   if(t.note) after += `<br>⚠ ${escapeHtml(t.note)}`;
   after += `</div>`;
   return {type: "mwb", kid: "c15a|"+t.topic, topic: t.topic,
-    intro: "🎧 Mô phỏng: trong bài nghe này " + sc.label.toUpperCase() + ". Chọn Man/Woman/Both cho từng ý — THỨ TỰ Ý ĐÃ TRỘN (thi thật cũng đảo thứ tự câu, đừng học vẹt chuỗi).",
+    intro: "🎧 Mô phỏng: trong bài nghe này " + sc.label.toUpperCase() + ". Chọn Man/Woman/Both cho từng ý — THỨ TỰ Ý ĐÃ TRỘN (thi thật cũng đảo thứ tự câu, đừng học vẹt chuỗi)." + (t.dialogue ? " Topic này có hội thoại nguyên văn — thử ĐỌC hội thoại rồi tự suy đáp án như nghe thật." : ""),
+    dialogueHtml: c15DialogueHtml(t, sc.manFirst),
     statements: perm.map(i=>({t: t.statements[i].t, vn: t.statements[i].vn})),
     answer: perm.map(i=>sc.keyOf(i)),
     afterHtml: after, src: "Update 01.08.2026 · " + sc.label, audio: null};
@@ -15606,24 +15668,27 @@ function c15FakeKey(real, avoid){
   const r = real.slice().reverse().join(" – ");
   return avoid.includes(r) ? real.map(x=>x==="M"?"W":x==="W"?"M":x).join(" – ") : r;
 }
-// Mẹo nhớ do APP TỰ SOẠN (✎) cho các chuỗi tủ KHÔNG có ghi chú — bám theo nội dung ý kiến khi có
+// Mẹo nhớ do APP TỰ SOẠN (✎) cho các chuỗi tủ KHÔNG có ghi chú — theo kiểu của tủ:
+// 1 câu chuyện, thứ tự nhân vật (viết HOA) mã hóa chuỗi M/W/B
 const C15_NOTE_APP = {
- "Home Schooling|man":   "1W – 2M – 1B: Nữ mở màn, Nam chiếm 2 ý giữa, chốt CẢ HAI",
- "Home Schooling|woman": "Gần như toàn B (3 chữ B), CHỈ vị trí 3 là M — ⚠ đây KHÔNG phải bản đảo M↔W của bản nam",
- "Children and Young People|man": "2 ý đầu CẢ HAI đồng ý (trẻ mê học công nghệ + khó giao tiếp trực tiếp) → Nam: gia đình cần hỗ trợ quản lý → Nữ: trẻ tự điều chỉnh được",
- "Children and Young People|woman": "Đảo M↔W bản nam: 2 chữ B đầu giữ nguyên, đuôi đổi thành W – M",
- "Environment Volunteer Program|man": "Mở CẢ HAI (truyền thông phóng đại) → Nam bi quan 2 lần (xả rác mãi mãi + phạt là hiệu quả nhất), Nữ kẹp giữa (động cơ không ảnh hưởng)",
- "Environment Volunteer Program|woman": "Đảo M↔W bản nam: B – W – M – W",
- "Local Cultural Differences|man": "Nam mở màn (ngôn ngữ là rào cản) → CẢ HAI (toàn cầu hóa) → Nữ đôi cuối (giới trẻ thờ ơ di sản + du lịch để hiểu văn hóa)",
- "Local Cultural Differences|woman": "Đảo M↔W bản nam: W – B – M – M",
- "Work Business / Business and Culture|man": "1W – 1B – 2M: Nữ mở màn, CẢ HAI thứ 2, Nam chiếm đôi cuối",
- "Work Business / Business and Culture|woman": "Đảo M↔W bản nam: M – B – W – W",
+ "Home Schooling|man":   "VỢ mở lớp học tại nhà, CHỒNG soạn bài, CHỒNG đứng lớp, cuối buổi CẢ HAI cùng khen con (W-M-M-B)",
+ "Home Schooling|woman": "CẢ NHÀ đồng ý học tại nhà, CẢ NHÀ xếp thời khóa biểu, riêng BỐ đi mua sách, rồi CẢ NHÀ cùng ngồi học (B-B-M-B — không phải bản đảo M↔W!)",
+ "Children and Young People|man": "CẢ HAI khen trẻ mê học công nghệ, CẢ HAI lo trẻ ngại giao tiếp, BỐ xin trợ giúp quản lý thiết bị, MẸ tin con tự điều chỉnh (B-B-M-W)",
+ "Children and Young People|woman": "CẢ HAI khen trẻ mê học công nghệ, CẢ HAI lo trẻ ngại giao tiếp, MẸ xin trợ giúp quản lý, BỐ tin con tự điều chỉnh (đảo vai bản nam: B-B-W-M)",
+ "Environment Volunteer Program|man": "CẢ HAI chê truyền thông phóng đại, ÔNG than xả rác là chuyện muôn đời, BÀ bảo động cơ không quan trọng, ÔNG đòi phạt thật nặng (B-M-W-M)",
+ "Environment Volunteer Program|woman": "CẢ HAI chê truyền thông phóng đại, BÀ than xả rác là chuyện muôn đời, ÔNG bảo động cơ không quan trọng, BÀ đòi phạt thật nặng (đảo vai: B-W-M-W)",
+ "Local Cultural Differences|man": "ÔNG kêu ngôn ngữ là rào cản, CẢ HAI thấy toàn cầu hóa lấn tới, BÀ chê giới trẻ thờ ơ di sản, BÀ rủ đi du lịch cho hiểu văn hóa (M-B-W-W)",
+ "Local Cultural Differences|woman": "BÀ kêu ngôn ngữ là rào cản, CẢ HAI thấy toàn cầu hóa lấn tới, ÔNG chê giới trẻ thờ ơ di sản, ÔNG rủ đi du lịch cho hiểu văn hóa (đảo vai: W-B-M-M)",
+ "Work Business / Business and Culture|man": "VỢ mở công ty, CẢ HAI bàn văn hóa kinh doanh, CHỒNG ký hợp đồng, CHỒNG chốt lãi (W-B-M-M)",
+ "Work Business / Business and Culture|woman": "CHỒNG mở công ty, CẢ HAI bàn văn hóa kinh doanh, VỢ ký hợp đồng, VỢ chốt lãi (đảo vai: M-B-W-W)",
+ "Arts|Giọng NỮ đọc trước": "CÔ GÁI và CHÀNG TRAI cùng nhau nhảy múa, nhưng CHÀNG TRAI rời đi khi bản nhạc còn dang dở (đảo vai bản nam: W-M-B-M)",
+ "Urban Farming|Giọng NỮ đọc trước": "ĐÀN ÔNG nói cả PHỤ NỮ và đàn ông đều phải làm ruộng (đảo vai bản nam: M-B-W-B)",
 };
 function c15NoteFor(t, v){
   // v = {label, key, note?, gender?} → {txt, app} — app=true nghĩa là mẹo do app tự soạn
   if(v.note) return {txt: v.note, app: false};
   const tk = t.topic.split("(")[0].split("—")[0].trim();
-  const hand = C15_NOTE_APP[tk + "|" + (v.gender || "")];
+  const hand = C15_NOTE_APP[tk + "|" + (v.gender || v.label || "")];
   if(hand) return {txt: hand, app: true};
   const swap = a=>a.map(x=>x==="M"?"W":x==="W"?"M":x).join(" ");
   const other = (t.variants||[]).find(o=>o.label!==v.label && swap(o.key)===v.key.join(" "));
@@ -15679,6 +15744,7 @@ function buildRandomQ15(){
   return {type: "mwb", topic: t.topic,
     intro: "Listen to a man and a woman talking. Whose opinion matches each statement: Man, Woman or Both?" +
       " (🎧 Mô phỏng vì không có audio: trong bài nghe này " + sc.label + ")",
+    dialogueHtml: c15DialogueHtml(t, sc.manFirst),
     statements: t.statements.map(s=>({t: s.t, vn: s.vn})),
     answer: t.statements.map((s,i)=>sc.keyOf(i)),
     src: "Tủ câu 15 · Update 01.08.2026 · " + sc.label, audio: null};
@@ -15915,6 +15981,7 @@ function renderQuestion(){
   }
   else if(q.type==="mwb"){
     html += `<div class="qtext">${q.intro||""}</div><div class="qvn">Topic: ${q.topic}</div>`;
+    if(q.dialogueHtml) html += q.dialogueHtml;
     const MWB=[["M","Man"],["W","Woman"],["B","Both"]];
     q.statements.forEach((st,si)=>{
       let cls="";
@@ -16294,6 +16361,7 @@ function openBank(kind){
     B.q15.forEach((t,i)=>{
       html += `<div class="kitem"><div class="qline"><span class="num">${i+1}.</span><b>Topic: ${escapeHtml(t.topic)}</b>${t.src?` <span class="qvn" style="display:inline">· ${escapeHtml(t.src)}</span>`:""}</div>`;
       if(t.topicNote) html += `<div class="qvn" style="margin:4px 0">${escapeHtml(t.topicNote)}</div>`;
+      if(t.dialogue) html += c15DialogueHtml(t, true);
       html += `<div class="ansblock blur" onclick="this.classList.toggle('blur')">`;
       if(t.statements){
         html += t.statements.map(s=>`• ${escapeHtml(s.t)}: ${s.a}\n   (${escapeHtml(s.vn)})`).join("\n");
@@ -16488,6 +16556,7 @@ function renderQuiz(){
   else if(type==="mwb"){
     html += `<div class="qtext">${escapeHtml(it.intro||"Whose opinion matches each statement?")}</div>
       <div class="qvn">Topic: ${escapeHtml(it.topic||"")}</div>`;
+    if(it.dialogueHtml) html += it.dialogueHtml;
     const MWB=[["M","Man"],["W","Woman"],["B","Both"]];
     it.statements.forEach((st,si)=>{
       const done = p[si]!==null;

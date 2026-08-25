@@ -237,8 +237,8 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     </div>
     <div class="card" style="cursor:pointer" onclick="openBank('q15')">
       <span class="tag sim">CÂU 15</span>
-      <h3>13 topic — Man / Woman / Both</h3>
-      <div class="meta">5 Update 2026 + 8 gom từ đề trộn (đủ nội dung 4 ý kiến)</div>
+      <h3>17 topic — Man / Woman / Both</h3>
+      <div class="meta">5 Update 01.08.2026 + 12 topic từ bảng "Đáp án câu 15" (đã số hóa) · có nút luyện</div>
     </div>
     <div class="card" style="cursor:pointer" onclick="openBank('q1617')">
       <span class="tag sim">CÂU 16–17</span>
@@ -276,6 +276,11 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <span class="tag sim">CÂU 14</span>
       <h3>🔎 Nhận biết qua dấu hiệu</h3>
       <div class="meta">Mức khó hơn: chỉ đọc dấu hiệu rút gọn → chọn đúng ý. Luyện đối phó việc thi thật trộn thứ tự người.</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="quizC15()">
+      <span class="tag sim">CÂU 15</span>
+      <h3>⚖️ Nội dung + chuỗi rút gọn</h3>
+      <div class="meta">3 topic đủ ý kiến: chọn M/W/B với thứ tự ý TRỘN. 14 topic còn lại (Update + bảng ảnh): chọn đúng chuỗi theo giọng đọc trước — chuỗi ảo (*) là hoán vị bẫy.</div>
     </div>
     <div class="card" style="cursor:pointer" onclick="quizQ1617()">
       <span class="tag sim">CÂU 16–17</span>
@@ -11204,236 +11209,309 @@ window.APTIS.listening = {
     "note": null
    },
    {
+    "topic": "Politics (Chính trị)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "B",
+       "M",
+       "W",
+       "B"
+      ],
+      "note": "Cả đàn ông - phụ nữ đều phải tôn trọng pháp luật"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "B",
+       "W",
+       "M",
+       "B"
+      ],
+      "note": "Cả phụ nữ - đàn ông đều phải tôn trọng pháp luật"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Information and technology (Thông tin và công nghệ)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "M",
+       "W",
+       "W",
+       "B"
+      ],
+      "note": "Đàn ông chê phụ nữ kém công nghệ, nhưng phụ nữ nghĩ cả 2 đều giỏi"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "W",
+       "M",
+       "M",
+       "B"
+      ],
+      "note": "Phụ nữ chê đàn ông kém công nghệ nhưng đàn ông nói cả 2 đều giỏi"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Arts (Nghệ thuật)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "M",
+       "W",
+       "B",
+       "W"
+      ],
+      "note": "Chàng trai và cô gái cùng nhau nhảy múa, nhưng cô gái rời đi khi bản nhạc đời vẫn còn dang dở"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "W",
+       "M",
+       "B",
+       "M"
+      ],
+      "note": ""
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Music and singers (Âm nhạc và ca sĩ)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "M",
+       "B",
+       "W",
+       "B"
+      ],
+      "note": "Đàn ông thích cả âm nhạc và ca sĩ, phụ nữ cũng thích cả âm nhạc và ca sĩ"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "W",
+       "B",
+       "M",
+       "B"
+      ],
+      "note": "Ngược lại câu trên"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "University (University and Technology — có thể tên này)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "B",
+       "W",
+       "M",
+       "W"
+      ],
+      "note": "Bố đưa con gái đi học, nhưng đến trường thì người yêu đưa con gái đi chơi"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "B",
+       "M",
+       "W",
+       "M"
+      ],
+      "note": "Đảo M với W câu trên"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Urban Farming (Nông nghiệp đô thị)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "W",
+       "B",
+       "M",
+       "B"
+      ],
+      "note": "Phụ nữ nói cả đàn ông và phụ nữ đều phải làm rộng"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "M",
+       "B",
+       "W",
+       "B"
+      ],
+      "note": ""
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "The subject of beauty (Chủ đề sắc đẹp)",
+    "variants": [
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "M",
+       "W",
+       "B",
+       "W"
+      ],
+      "note": "Chàng trai đưa cô gái đi làm đẹp, nhưng cả 2 đã bị bà chủ tiệm lừa sang Campuchia"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Changes in the Workplace (Thay đổi nơi làm việc)",
+    "variants": [
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "M",
+       "W",
+       "B",
+       "M"
+      ],
+      "note": "Đàn ông - phụ nữ đều công nhận đàn ông làm việc khoẻ hơn"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "The local center (Trung tâm cộng đồng địa phương)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "M",
+       "B",
+       "W",
+       "W"
+      ],
+      "note": "Mẹ bảo Win tìm em gái ở trung tâm cộng đồng"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Community design (Thiết kế cộng đồng)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "B",
+       "W",
+       "M",
+       "M"
+      ],
+      "note": "Bố Win muốn mua bản vẽ thiết kế (design) nhà"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
+    "topic": "Actor (Diễn viên)",
+    "variants": [
+     {
+      "label": "Giọng NAM đọc trước",
+      "key": [
+       "W",
+       "M",
+       "B",
+       "B"
+      ],
+      "note": "Phụ nữ - đàn ông đều chọn Tom và đều thần tượng anh ấy"
+     },
+     {
+      "label": "Giọng NỮ đọc trước",
+      "key": [
+       "M",
+       "W",
+       "B",
+       "B"
+      ],
+      "note": "Đàn ông - phụ nữ đều chọn Tom và đều thần tượng anh ấy"
+     },
+     {
+      "label": "Giọng NỮ đọc trước (bản 2)",
+      "key": [
+       "B",
+       "W",
+       "M",
+       "B"
+      ],
+      "note": "Cả phụ nữ - đàn ông đều chọn Tép"
+     }
+    ],
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
+   },
+   {
     "topic": "Internet",
-    "src": "đề gốc Tea (đề 1)",
-    "statements": [
+    "topicNote": "Cả phụ nữ và đàn ông đều thích Internet. Mẹo (từ tài liệu): nghe không được thì cứ B-W-M-B, xác suất 75%",
+    "variants": [
      {
-      "t": "Finding information on the internet ... (gốc ghi tắt)",
-      "a": "Man",
-      "vn": "Có quá nhiều thông tin trên internet"
+      "label": "Phiên bản 1",
+      "key": [
+       "B",
+       "B",
+       "M",
+       "B"
+      ],
+      "note": "An toàn thì (chọn bản này)"
      },
      {
-      "t": "Using internet requires skills",
-      "a": "Woman",
-      "vn": "Sử dụng internet cần có kỹ năng"
+      "label": "Phiên bản 2",
+      "key": [
+       "M",
+       "W",
+       "B",
+       "W"
+      ],
+      "note": "→ Chọn B hai đầu, W ở giữa"
      },
      {
-      "t": "The internet is changing the way we think",
-      "a": "Woman",
-      "vn": "Internet đang thay đổi cách chúng ta suy nghĩ"
-     },
-     {
-      "t": "Internet has made people less patient",
-      "a": "Both",
-      "vn": "Internet khiến con người bớt kiên nhẫn hơn"
+      "label": "Phiên bản 3",
+      "key": [
+       "B",
+       "W",
+       "W",
+       "B"
+      ],
+      "note": "→ Chọn B – W – W – B"
      }
     ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": null
-   },
-   {
-    "topic": "The subject of universities (Chủ đề đại học)",
-    "src": "đề gốc 1.5£ (đề 2, 8, 12, 17, 21)",
-    "statements": [
-     {
-      "t": "Technology helps make education more accessible",
-      "a": "Both",
-      "vn": "Công nghệ giúp giáo dục dễ tiếp cận hơn"
-     },
-     {
-      "t": "Social interaction is important",
-      "a": "Woman",
-      "vn": "Tương tác xã hội là quan trọng"
-     },
-     {
-      "t": "A diverse curriculum is not an advantage",
-      "a": "Man",
-      "vn": "Chương trình giảng dạy đa dạng không phải là lợi thế"
-     },
-     {
-      "t": "Competition between universities should be encouraged",
-      "a": "Woman",
-      "vn": "Nên khuyến khích cạnh tranh giữa các đại học"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": "Cảnh báo trong tài liệu: đừng học vẹt B–W–M–W, thi thật đảo thứ tự câu."
-   },
-   {
-    "topic": "Arts (Nghệ thuật) — bản đề trộn",
-    "src": "đề gốc Room 301 (đề 3, 16)",
-    "statements": [
-     {
-      "t": "The arts are mainly for the privileged few",
-      "a": "Woman",
-      "vn": "Nghệ thuật chủ yếu dành cho số ít người có đặc quyền"
-     },
-     {
-      "t": "The government should invest more in the arts",
-      "a": "Man",
-      "vn": "Chính phủ nên đầu tư nhiều hơn vào nghệ thuật"
-     },
-     {
-      "t": "Children should get involved early in the arts",
-      "a": "Both",
-      "vn": "Trẻ em nên tham gia nghệ thuật sớm"
-     },
-     {
-      "t": "In the future the arts will be more accessible",
-      "a": "Man",
-      "vn": "Trong tương lai nghệ thuật sẽ dễ tiếp cận hơn"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": "Xem thêm bảng 'Đáp án câu 15' (mục Arts) — key đổi theo giọng nam/nữ đọc trước."
-   },
-   {
-    "topic": "Information and technology (Công nghệ thông tin)",
-    "src": "đề gốc 9 a.m (đề 5, 7, 18)",
-    "statements": [
-     {
-      "t": "The future generation will fail to cope with new information",
-      "a": "Man",
-      "vn": "Thế hệ tương lai sẽ không thích ứng được với thông tin mới"
-     },
-     {
-      "t": "The information revolution will be good for the economy",
-      "a": "Woman",
-      "vn": "Cách mạng thông tin sẽ tốt cho nền kinh tế"
-     },
-     {
-      "t": "No computer is superior to the human brain",
-      "a": "Woman",
-      "vn": "Không máy tính nào vượt trội hơn não người"
-     },
-     {
-      "t": "More should be done to protect individual privacy",
-      "a": "Both",
-      "vn": "Cần làm nhiều hơn để bảo vệ quyền riêng tư"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": "Đừng học vẹt M–W–W–B — thi thật đảo thứ tự câu."
-   },
-   {
-    "topic": "Changes in the workplace (Thay đổi nơi làm việc)",
-    "src": "đề gốc Sick (đề 6, 11) + người thi 20/07",
-    "statements": [
-     {
-      "t": "Continuity is important when planning a career",
-      "a": "Man",
-      "vn": "Sự liên tục quan trọng khi lập kế hoạch sự nghiệp"
-     },
-     {
-      "t": "Job security cannot be guaranteed",
-      "a": "Woman",
-      "vn": "An toàn việc làm không thể được đảm bảo"
-     },
-     {
-      "t": "Job satisfaction is an important motivator",
-      "a": "Both",
-      "vn": "Hài lòng công việc là động lực quan trọng"
-     },
-     {
-      "t": "Technological improvement is good for the economy",
-      "a": "Man",
-      "vn": "Cải tiến công nghệ tốt cho nền kinh tế"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": "Người thi 20/07 xác nhận: nữ nói trước, key M-W-B-M đúng như file ôn."
-   },
-   {
-    "topic": "Urban farming (Nông nghiệp đô thị) — bản có nội dung",
-    "src": "đề gốc Thursday (đề 13, 19)",
-    "statements": [
-     {
-      "t": "Living space is more important than farming space",
-      "a": "Woman",
-      "vn": "Không gian sống quan trọng hơn không gian canh tác"
-     },
-     {
-      "t": "Urban farming sites can be visually appealing",
-      "a": "Man",
-      "vn": "Trang trại đô thị có thể hấp dẫn về thị giác"
-     },
-     {
-      "t": "Urban farming can benefit local economies",
-      "a": "Man",
-      "vn": "Nông nghiệp đô thị có lợi cho kinh tế địa phương"
-     },
-     {
-      "t": "Urban farming cannot meet food needs",
-      "a": "Both",
-      "vn": "Nông nghiệp đô thị không đáp ứng được nhu cầu lương thực"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": "Đừng học vẹt W-M-M-B — thi thật đảo thứ tự câu."
-   },
-   {
-    "topic": "Singers and music (Ca sĩ và âm nhạc)",
-    "src": "đề gốc 07h45 (đề 10, 22)",
-    "statements": [
-     {
-      "t": "Singers play a good role for young people",
-      "a": "Woman",
-      "vn": "Ca sĩ đóng vai trò tốt cho giới trẻ"
-     },
-     {
-      "t": "Taste in music is a highly personal thing",
-      "a": "Woman",
-      "vn": "Gu âm nhạc là điều rất cá nhân"
-     },
-     {
-      "t": "Music is a universal language",
-      "a": "Man",
-      "vn": "Âm nhạc là ngôn ngữ chung của thế giới"
-     },
-     {
-      "t": "Music can manipulate people's feelings",
-      "a": "Both",
-      "vn": "Âm nhạc có thể điều khiển cảm xúc con người"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": null
-   },
-   {
-    "topic": "Actors (Diễn viên)",
-    "src": "đề 250 POUND (đề 4, 20)",
-    "statements": [
-     {
-      "t": "Auditions are the most important part of casting",
-      "a": "Woman",
-      "vn": "Buổi thử vai là quan trọng nhất của casting"
-     },
-     {
-      "t": "Actors respond best to a strong script",
-      "a": "Man",
-      "vn": "Diễn viên phản ứng tốt nhất với kịch bản mạnh"
-     },
-     {
-      "t": "Theatre acting and movie acting require different skills",
-      "a": "Both",
-      "vn": "Diễn xuất sân khấu và điện ảnh cần kỹ năng khác nhau"
-     },
-     {
-      "t": "Actors need to be praised",
-      "a": "Both",
-      "vn": "Diễn viên cần được khen ngợi"
-     }
-    ],
-    "manFirst": null,
-    "womanFirst": null,
-    "note": "Xem thêm bảng 'Đáp án câu 15' (mục Actor) — key đổi theo giọng đọc trước."
+    "img": true,
+    "src": "Bảng 'Đáp án câu 15' (cau15.jpg)"
    }
   ],
   "q1617": [
@@ -15483,6 +15561,75 @@ function quizC14(){
   ];
   startQuiz("Luyện câu 14 — format đề thật (" + build().length + " bài)", build, ()=>goHome('sec-quiz13'), {q:true});
 }
+/* ---- Luyện câu 15: (a) topic đủ nội dung — trộn thứ tự ý; (b) chuỗi rút gọn (bảng ảnh + Update) ---- */
+function c15MwbItem(t){
+  const n = t.statements.length;
+  const perm = sample([...Array(n).keys()], n);
+  const L = {"Man":"M", "Woman":"W", "Both":"B"};
+  let after = `<div class="note" style="margin-top:12px"><b>🪄 Ôn lại chuỗi rút gọn:</b>`;
+  if(t.manFirst) after += `<br>Người ĐÀN ÔNG bắt đầu: <b>${t.manFirst.join(" – ")}</b>`;
+  if(t.womanFirst) after += `<br>Người PHỤ NỮ bắt đầu: <b>${t.womanFirst.join(" – ")}</b>`;
+  if(t.note) after += `<br>⚠ ${escapeHtml(t.note)}`;
+  after += `</div>`;
+  return {type: "mwb", kid: "c15a|"+t.topic, topic: t.topic,
+    intro: "Chọn Man/Woman/Both cho từng ý — THỨ TỰ Ý ĐÃ TRỘN (thi thật cũng đảo thứ tự câu, đừng học vẹt chuỗi).",
+    statements: perm.map(i=>({t: t.statements[i].t, vn: t.statements[i].vn})),
+    answer: perm.map(i=>L[t.statements[i].a]),
+    afterHtml: after, src: "Update 01.08.2026", audio: null};
+}
+function c15FakeKey(real, avoid){
+  // chuỗi ẢO = hoán vị nhẹ chuỗi thật; không trùng chuỗi thật/biến thể khác cùng topic
+  for(let tries=0; tries<40; tries++){
+    const k = real.slice();
+    const i = Math.floor(Math.random()*k.length);
+    let j = Math.floor(Math.random()*k.length);
+    if(i===j) j = (j+1) % k.length;
+    [k[i], k[j]] = [k[j], k[i]];
+    const s = k.join(" – ");
+    if(s !== real.join(" – ") && !avoid.includes(s)) return s;
+  }
+  const r = real.slice().reverse().join(" – ");
+  return avoid.includes(r) ? real.map(x=>x==="M"?"W":x==="W"?"M":x).join(" – ") : r;
+}
+function c15KeyItems(){
+  const items = [];
+  D.updateBank.q15.forEach(t=>{
+    const vars = [];
+    if(t.variants){
+      t.variants.forEach(v=>vars.push({label: v.label, key: v.key, note: v.note || ""}));
+    } else {
+      if(t.manFirst) vars.push({label: "Người ĐÀN ÔNG bắt đầu", key: t.manFirst, note: t.note || ""});
+      if(t.womanFirst) vars.push({label: "Người PHỤ NỮ bắt đầu", key: t.womanFirst, note: t.note || ""});
+    }
+    const allKeys = vars.map(v=>v.key.join(" – "));
+    vars.forEach(v=>{
+      const real = v.key.join(" – ");
+      const f1 = c15FakeKey(v.key, allKeys);
+      const f2 = c15FakeKey(v.key, [...allKeys, f1]);
+      const pos = Math.floor(Math.random()*3);
+      const options=[], made=[];
+      const fs=[f1, f2];
+      let di = 0;
+      for(let k=0;k<3;k++){
+        if(k===pos){ options.push(real); made.push(false); }
+        else { options.push(fs[di++]); made.push(true); }
+      }
+      items.push({type: "mcq", kid: "c15k|"+t.topic+"|"+v.label,
+        q: "Topic “" + t.topic.replace(/\s*\(.*/,"") + "” — " + v.label.toUpperCase() + ": chuỗi đáp án đúng?",
+        vn: (t.topicNote ? t.topicNote + " · " : "") + (v.note || "Chuỗi có dấu * là hoán vị bẫy do app tạo"),
+        options, answer: pos, made, qMade: false,
+        src: t.src || "Update 01.08.2026", audio: null});
+    });
+  });
+  return items;
+}
+function quizC15(){
+  const build = ()=>[
+    ...D.updateBank.q15.filter(t=>t.statements && t.statements.length===4).map(c15MwbItem),
+    ...c15KeyItems()
+  ];
+  startQuiz("Luyện câu 15 — nội dung + chuỗi (" + build().length + " bài)", build, ()=>goHome('sec-quiz13'), {q:true});
+}
 function buildRandomQ15(){
   const pool = D.updateBank.q15.filter(t=>t.statements && t.statements.length===4);
   const t = sample(pool, 1)[0];
@@ -16099,11 +16246,17 @@ function openBank(kind){
     });
   }
   else if(kind==="q15"){
+    html += `<div style="margin-bottom:16px"><button class="btn" onclick="quizC15()">⚖️ Luyện dạng thi câu 15</button></div>`;
+    html += `<div class="note">Tủ câu 15 (theo yêu cầu): CHỈ gồm bản Update 01.08.2026 + bảng "Đáp án câu 15" (đã số hóa từ ảnh — ảnh gốc vẫn xem được ở mục Tra cứu).</div>`;
     B.q15.forEach((t,i)=>{
       html += `<div class="kitem"><div class="qline"><span class="num">${i+1}.</span><b>Topic: ${escapeHtml(t.topic)}</b>${t.src?` <span class="qvn" style="display:inline">· ${escapeHtml(t.src)}</span>`:""}</div>`;
+      if(t.topicNote) html += `<div class="qvn" style="margin:4px 0">${escapeHtml(t.topicNote)}</div>`;
       html += `<div class="ansblock blur" onclick="this.classList.toggle('blur')">`;
       if(t.statements){
         html += t.statements.map(s=>`• ${escapeHtml(s.t)}: ${s.a}\n   (${escapeHtml(s.vn)})`).join("\n");
+      }
+      if(t.variants){
+        html += t.variants.map(v=>`${v.label}:  ${v.key.join(" – ")}${v.note?`\n   💡 ${v.note}`:""}`).join("\n");
       }
       if(t.manFirst && t.womanFirst){
         html += (t.statements?`\n\n`:"") + `Bản rút gọn:\n  Người ĐÀN ÔNG bắt đầu:  ${t.manFirst.join(" – ")}\n  Người PHỤ NỮ bắt đầu:  ${t.womanFirst.join(" – ")}`;

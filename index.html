@@ -15633,10 +15633,7 @@ function c15DialogueHtml(t, manFirst){
   return `<details style="margin:10px 0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px">
     <summary style="cursor:pointer;font-weight:600">📜 Hội thoại nguyên văn từ tủ — mô phỏng bài nghe${manFirst?"":" (vai Man/Woman đã ĐẢO vì giọng nữ đọc trước)"} · bấm để mở</summary>${rows}</details>`;
 }
-function c15MwbItem(t){
-  const n = t.statements.length;
-  const perm = sample([...Array(n).keys()], n);
-  const sc = c15Scenario(t);
+function c15AfterHtml(t, sc){
   const mk = (lbl, key, on, gender) => {
     const nt = c15NoteFor(t, {label: lbl, key, note: "", gender});
     return `<br>${on?"👉 ":""}${lbl}: <b>${key.join(" – ")}</b>${on?" (bản vừa làm)":""}`
@@ -15646,7 +15643,13 @@ function c15MwbItem(t){
   if(t.manFirst) after += mk("Người ĐÀN ÔNG bắt đầu", t.manFirst, sc.manFirst && t.womanFirst, "man");
   if(t.womanFirst) after += mk("Người PHỤ NỮ bắt đầu", t.womanFirst, !sc.manFirst, "woman");
   if(t.note) after += `<br>⚠ ${escapeHtml(t.note)}`;
-  after += `</div>`;
+  return after + `</div>`;
+}
+function c15MwbItem(t){
+  const n = t.statements.length;
+  const perm = sample([...Array(n).keys()], n);
+  const sc = c15Scenario(t);
+  const after = c15AfterHtml(t, sc);
   return {type: "mwb", kid: "c15a|"+t.topic, topic: t.topic,
     intro: "🎧 Mô phỏng: trong bài nghe này " + sc.label.toUpperCase() + ". Chọn Man/Woman/Both cho từng ý — THỨ TỰ Ý ĐÃ TRỘN (thi thật cũng đảo thứ tự câu, đừng học vẹt chuỗi)." + (t.dialogue ? " Topic này có hội thoại nguyên văn — thử ĐỌC hội thoại rồi tự suy đáp án như nghe thật." : ""),
     dialogueHtml: c15DialogueHtml(t, sc.manFirst),
@@ -15747,6 +15750,7 @@ function buildRandomQ15(){
     dialogueHtml: c15DialogueHtml(t, sc.manFirst),
     statements: t.statements.map(s=>({t: s.t, vn: s.vn})),
     answer: t.statements.map((s,i)=>sc.keyOf(i)),
+    afterHtml: c15AfterHtml(t, sc),
     src: "Tủ câu 15 · Update 01.08.2026 · " + sc.label, audio: null};
 }
 function q1617Subs(qa, slotLabel){

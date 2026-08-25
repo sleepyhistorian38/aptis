@@ -15474,6 +15474,21 @@ function buildQ13Pool(){
   // tráo vị trí đáp án mỗi lần xây kho (đề ngẫu nhiên mỗi lần thi sẽ khác)
   return pool.map(shuffleMcqItem);
 }
+function sampleQ13Unique(n){
+  // rút n câu KHÔNG trùng nội dung: cùng 1 câu tủ có thể nằm ở nhiều đề trộn
+  // với chính tả/vị trí đáp án hơi khác nhau — tính là 1 câu khi rút vào đề thi
+  const norm = s=>(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  const out = [], seen = new Set();
+  const pool = buildQ13Pool();
+  for(const q of sample(pool, pool.length)){
+    const k = norm(q.q);
+    if(seen.has(k)) continue;
+    seen.add(k);
+    out.push(q);
+    if(out.length===n) break;
+  }
+  return out;
+}
 function sample(arr, n){
   const a = arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -15826,7 +15841,7 @@ function buildRandomQ1617(){
 function startExam(){
   test = pvIndex===-1
     ? {id: "random", title: "Đề ngẫu nhiên 17 câu", timeMin: 40,
-       questions: [...sample(buildQ13Pool(), 13), buildRandomQ14(), buildRandomQ15(), ...buildRandomQ1617()]}
+       questions: [...sampleQ13Unique(13), buildRandomQ14(), buildRandomQ15(), ...buildRandomQ1617()]}
     : pvIndex===-2 ? buildDeckTest(deckIdx)
     : pvIndex===-3 ? buildReadingTest()
     : pvIndex===-4 ? buildGrammarTest()

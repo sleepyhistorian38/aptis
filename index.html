@@ -15562,20 +15562,31 @@ function quizC14(){
   startQuiz("Luyện câu 14 — format đề thật (" + build().length + " bài)", build, ()=>goHome('sec-quiz13'), {q:true});
 }
 /* ---- Luyện câu 15: (a) topic đủ nội dung — trộn thứ tự ý; (b) chuỗi rút gọn (bảng ảnh + Update) ---- */
+function c15Scenario(t){
+  // các topic có statements đều ghi ý theo kịch bản NAM đọc trước (đã đối chiếu:
+  // chuỗi statements trùng manFirst); nữ đọc trước = lấy chuỗi womanFirst theo cùng vị trí
+  const both = t.manFirst && t.womanFirst;
+  const manFirst = both ? Math.random() < 0.5 : true;
+  const L = {"Man":"M", "Woman":"W", "Both":"B"};
+  const keyOf = i => both ? (manFirst ? t.manFirst[i] : t.womanFirst[i]) : L[t.statements[i].a];
+  return {manFirst, keyOf,
+    label: manFirst ? "giọng NAM đọc trước" : "giọng NỮ đọc trước"};
+}
 function c15MwbItem(t){
   const n = t.statements.length;
   const perm = sample([...Array(n).keys()], n);
-  const L = {"Man":"M", "Woman":"W", "Both":"B"};
+  const sc = c15Scenario(t);
+  const mk = (lbl, key, on) => `<br>${on?"👉 ":""}${lbl}: <b>${key.join(" – ")}</b>${on?" (bản vừa làm)":""}`;
   let after = `<div class="note" style="margin-top:12px"><b>🪄 Ôn lại chuỗi rút gọn:</b>`;
-  if(t.manFirst) after += `<br>Người ĐÀN ÔNG bắt đầu: <b>${t.manFirst.join(" – ")}</b>`;
-  if(t.womanFirst) after += `<br>Người PHỤ NỮ bắt đầu: <b>${t.womanFirst.join(" – ")}</b>`;
+  if(t.manFirst) after += mk("Người ĐÀN ÔNG bắt đầu", t.manFirst, sc.manFirst && t.womanFirst);
+  if(t.womanFirst) after += mk("Người PHỤ NỮ bắt đầu", t.womanFirst, !sc.manFirst);
   if(t.note) after += `<br>⚠ ${escapeHtml(t.note)}`;
   after += `</div>`;
   return {type: "mwb", kid: "c15a|"+t.topic, topic: t.topic,
-    intro: "Chọn Man/Woman/Both cho từng ý — THỨ TỰ Ý ĐÃ TRỘN (thi thật cũng đảo thứ tự câu, đừng học vẹt chuỗi).",
+    intro: "🎧 Mô phỏng: trong bài nghe này " + sc.label.toUpperCase() + ". Chọn Man/Woman/Both cho từng ý — THỨ TỰ Ý ĐÃ TRỘN (thi thật cũng đảo thứ tự câu, đừng học vẹt chuỗi).",
     statements: perm.map(i=>({t: t.statements[i].t, vn: t.statements[i].vn})),
-    answer: perm.map(i=>L[t.statements[i].a]),
-    afterHtml: after, src: "Update 01.08.2026", audio: null};
+    answer: perm.map(i=>sc.keyOf(i)),
+    afterHtml: after, src: "Update 01.08.2026 · " + sc.label, audio: null};
 }
 function c15FakeKey(real, avoid){
   // chuỗi ẢO = hoán vị nhẹ chuỗi thật; không trùng chuỗi thật/biến thể khác cùng topic
@@ -15633,12 +15644,13 @@ function quizC15(){
 function buildRandomQ15(){
   const pool = D.updateBank.q15.filter(t=>t.statements && t.statements.length===4);
   const t = sample(pool, 1)[0];
-  const L = {"Man":"M", "Woman":"W", "Both":"B"};
+  const sc = c15Scenario(t);
   return {type: "mwb", topic: t.topic,
-    intro: "Listen to a man and a woman talking. Whose opinion matches each statement: Man, Woman or Both?",
+    intro: "Listen to a man and a woman talking. Whose opinion matches each statement: Man, Woman or Both?" +
+      " (🎧 Mô phỏng vì không có audio: trong bài nghe này " + sc.label + ")",
     statements: t.statements.map(s=>({t: s.t, vn: s.vn})),
-    answer: t.statements.map(s=>L[s.a]),
-    src: "Tủ câu 15 · Update 01.08.2026", audio: null};
+    answer: t.statements.map((s,i)=>sc.keyOf(i)),
+    src: "Tủ câu 15 · Update 01.08.2026 · " + sc.label, audio: null};
 }
 function q1617Subs(qa, slotLabel){
   // dựng 2 câu hỏi con từ 1 topic: nhiễu là ĐÁP ÁN ẢO cùng chủ đề (x.f), có dấu *
@@ -16254,6 +16266,7 @@ function openBank(kind){
       html += `<div class="ansblock blur" onclick="this.classList.toggle('blur')">`;
       if(t.statements){
         html += t.statements.map(s=>`• ${escapeHtml(s.t)}: ${s.a}\n   (${escapeHtml(s.vn)})`).join("\n");
+        if(t.womanFirst) html += `\n(Ý kiến ghi theo kịch bản giọng NAM đọc trước — nữ đọc trước thì theo chuỗi bản rút gọn bên dưới)`;
       }
       if(t.variants){
         html += t.variants.map(v=>`${v.label}:  ${v.key.join(" – ")}${v.note?`\n   💡 ${v.note}`:""}`).join("\n");

@@ -269,8 +269,8 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     </div>
     <div class="card" style="cursor:pointer" onclick="quizC14()">
       <span class="tag sim">CÂU 14</span>
-      <h3>🗣 Nghe–nối + nhận ý</h3>
-      <div class="meta">Topic đủ transcript: đọc nguyên văn lời người nói → nối ý (trộn vị trí). Topic chỉ có bộ ý: phân biệt ý thật vs ý ảo (*) — tránh học vẹt thứ tự.</div>
+      <h3>🗣 Format đề thật: 4 người — 6 lựa chọn</h3>
+      <div class="meta">Topic đủ transcript: đọc lời 4 người → chọn trong 6 ý (2 ý thừa như đề thật). Topic chỉ có bộ ý: phân loại nhanh Ý TỦ / Ý THỪA.</div>
     </div>
     <div class="card" style="cursor:pointer" onclick="quizCue14()">
       <span class="tag sim">CÂU 14</span>
@@ -15433,54 +15433,55 @@ function buildRandomQ14(){
   // topic mâu thuẫn thứ tự giữa các đề (conflict) chỉ để ôn flashcard, không chấm điểm
   const pool = D.updateBank.q14.filter(t=>!t.conflict);
   const t = sample(pool, 1)[0];
-  const n = t.mapping.length;
-  const perm = sample([...Array(n).keys()], n);   // trộn vị trí các Ý trong dropdown
+  const six = c14SixOptions(t);   // 6 lựa chọn như đề thật (4 tủ + 2 ý thừa)
   return {type: "match", topic: t.topic,
-    intro: "Four people are talking about this topic. Match each person (A–D) with the statement.",
-    options: perm.map(i=>t.mapping[i].statement),
-    answer: t.mapping.map((m,mi)=>perm.indexOf(mi)),
+    intro: "Four people are talking about this topic. Match each person (A–D) with one of the six statements. Two statements are NOT used.",
+    options: six.choices,
+    answer: t.mapping.map((m,mi)=>six.posOf(mi)),
     cues: t.mapping.map(m=>m.cue||""),
-    resNote: "⚠ Vào thi thật thứ tự người nói sẽ bị TRỘN — nhớ theo dấu hiệu nội dung (xem 🔎 phía trên), đừng nhớ vẹt A/B/C/D.",
+    resNote: "⚠ Đề thật có 6 lựa chọn với 2 ý THỪA (ở đây là ý ảo app soạn) — và thứ tự người nói bị TRỘN. Nhớ theo nội dung, đừng nhớ vẹt vị trí.",
     src: "Tủ câu 14 · Update 01.08.2026", audio: null};
 }
-/* ---- Luyện câu 14 riêng: nghe–nối (topic đủ transcript) + nhận ý (mọi topic) ---- */
+/* ---- Luyện câu 14 theo FORMAT ĐỀ THẬT: 4 người nói — 6 lựa chọn (2 ý thừa) ---- */
+function c14SixOptions(t){
+  // 6 lựa chọn = 4 ý tủ + 2 ý ảo (đóng vai 2 option thừa của đề thật), vị trí trộn
+  const opts = [...t.mapping.map(m=>m.statement), ...t.fakes.slice(0,2)];
+  const perm = sample([...Array(opts.length).keys()], opts.length);
+  return {choices: perm.map(i=>opts[i]), posOf: mi=>perm.indexOf(mi)};
+}
 function c14MatchItem(t){
   const n = t.mapping.length;
-  const perm = sample([...Array(n).keys()], n);     // vị trí các Ý trong dropdown
-  const order = sample([...Array(n).keys()], n);    // trộn cả thứ tự người nói
+  const six = c14SixOptions(t);
+  const order = sample([...Array(n).keys()], n);    // trộn thứ tự người nói
   return {type: "pick", kid: "c14a|"+t.topic, topic: t.topic,
-    intro: "Đọc LỜI TỪNG NGƯỜI NÓI (nguyên văn tài liệu) rồi chọn Ý tương ứng. Thứ tự người và vị trí lựa chọn trộn mỗi lần — nhận bằng nội dung.",
-    choices: perm.map(i=>t.mapping[i].statement),
+    intro: "Format đề thật: 4 người nói — 6 lựa chọn, mỗi ý dùng 1 lần, có 2 Ý THỪA. Đọc lời từng người (nguyên văn tài liệu) rồi chọn.",
+    choices: six.choices,
     rows: order.map((mi,ri)=>({t: "🗣 Người " + (ri+1) + ": “" + t.mapping[mi].talk + "”",
-                               a: perm.indexOf(mi)})),
-    unique: true, src: "Tủ câu 14 · Update 01.08.2026", audio: null};
+                               a: six.posOf(mi)})),
+    unique: true,
+    afterHtml: "<b>2 ý THỪA (ảo, app soạn)*:</b> " + escapeHtml(t.fakes[0]) + " · " + escapeHtml(t.fakes[1]),
+    src: "Tủ câu 14 · Update 01.08.2026", audio: null};
 }
-function c14StmtItems(){
-  const items = [];
-  D.updateBank.q14.forEach(t=>{
-    if(!t.fakes || t.fakes.length < 2) return;
-    t.mapping.forEach((m,mi)=>{
-      const pos = Math.floor(Math.random()*3);
-      const options=[], made=[];
-      let di = 0;
-      for(let k=0;k<3;k++){
-        if(k===pos){ options.push(m.statement); made.push(false); }
-        else { options.push(t.fakes[di++]); made.push(true); }
-      }
-      items.push({type:"mcq", kid:"c14b|"+t.topic+"|"+mi,
-        q: "Ý nào sau đây THUỘC tủ topic “" + t.topic.replace(/\s*\(.*/,"") + "”?",
-        vn: "2 ý còn lại là ý ẢO cùng chủ đề (*). Thuộc mặt chữ bộ ý — vào thi chỉ cần nghe ai khớp ý nào.",
-        options, answer: pos, made, qMade: false, src: "Tủ câu 14", audio: null});
-    });
+function c14ClassifyItems(){
+  // topic chỉ có bộ ý: 1 bài/topic — phân loại 6 lựa chọn thành Ý TỦ / Ý THỪA
+  return D.updateBank.q14.filter(t=>t.fakes && t.fakes.length >= 2).map(t=>{
+    const entries = [...t.mapping.map(m=>({s: m.statement, real: true})),
+                     ...t.fakes.slice(0,2).map(f=>({s: f, real: false}))];
+    const mixed = sample(entries, entries.length);
+    return {type: "pick", kid: "c14c|"+t.topic, topic: t.topic,
+      intro: "Đề thật hiện 6 lựa chọn (4 ý tủ + 2 ý thừa). Phân loại từng ý — vào thi bạn khoanh ngay được 4 ứng viên thật, chỉ còn nghe để xếp người.",
+      choices: ["Ý TỦ ✅", "Ý THỪA (ảo) ✗"],
+      rows: mixed.map(e=>({t: e.s, a: e.real ? 0 : 1})),
+      afterHtml: "<b>Bộ 4 ý tủ của topic này:</b><br>" + t.mapping.map(m=>"• " + escapeHtml(m.statement)).join("<br>"),
+      src: "Tủ câu 14", audio: null};
   });
-  return items;
 }
 function quizC14(){
   const build = ()=>[
     ...D.updateBank.q14.filter(t=>t.mapping.every(m=>m.talk)).map(c14MatchItem),
-    ...c14StmtItems()
+    ...c14ClassifyItems()
   ];
-  startQuiz("Luyện câu 14 — nghe–nối + nhận ý (" + build().length + " bài)", build, ()=>goHome('sec-quiz13'), {q:true});
+  startQuiz("Luyện câu 14 — format đề thật (" + build().length + " bài)", build, ()=>goHome('sec-quiz13'), {q:true});
 }
 function buildRandomQ15(){
   const pool = D.updateBank.q15.filter(t=>t.statements && t.statements.length===4);
@@ -15893,8 +15894,8 @@ function gradeQuestion(q, a){
     const ok = a===q.answer;
     const st = oi => q.made && q.made[oi] ? ' <span style="color:var(--amber);font-weight:700">*</span>' : "";
     let d = `${q.q}${q.qMade?' <span style="color:var(--amber)">*</span>':""}${q.src?` <i style="color:var(--muted)">(${q.src})</i>`:""}<br>` +
-      `Bạn chọn: <b>${a===null?"—":("ABCD"[a]+". "+q.options[a])}</b>${a===null?"":st(a)} · ` +
-      `Đáp án: <span class="okmark">${"ABCD"[q.answer]}. ${q.options[q.answer]}</span>${st(q.answer)}`;
+      `Bạn chọn: <b>${a===null?"—":("ABCDEF"[a]+". "+q.options[a])}</b>${a===null?"":st(a)} · ` +
+      `Đáp án: <span class="okmark">${"ABCDEF"[q.answer]}. ${q.options[q.answer]}</span>${st(q.answer)}`;
     if(q.qMade || (q.made && q.made.some(Boolean)))
       d += `<br><span style="font-size:12.5px;color:var(--muted)">(<span style="color:var(--amber)">*</span> = phần do app tự soạn thêm)</span>`;
     return {got: ok?1:0, total:1, detail: d};
@@ -16257,12 +16258,12 @@ function renderQuiz(){
         if(it.made && it.made[oi]) star = QSTAR;
       }
       return `<div class="opt ${cls}" onclick="quizPick(${oi})">
-        <div class="letter">${"ABCD"[oi]}</div><div class="txt">${escapeHtml(o)}${star}</div></div>`;
+        <div class="letter">${"ABCDEF"[oi]}</div><div class="txt">${escapeHtml(o)}${star}</div></div>`;
     }).join("") + `</div>`;
     if(p!==null){
       html += p===it.answer
         ? `<div class="fb ok">✔ Chính xác!</div>`
-        : `<div class="fb no">✘ Chưa đúng — đáp án: ${"ABCD"[it.answer]}. ${escapeHtml(it.options[it.answer])}</div>`;
+        : `<div class="fb no">✘ Chưa đúng — đáp án: ${"ABCDEF"[it.answer]}. ${escapeHtml(it.options[it.answer])}</div>`;
     }
   }
   else if(type==="match"){
@@ -16547,14 +16548,14 @@ function quizCue14(){
   const items = [];
   D.updateBank.q14.forEach(t=>{
     if(!t.mapping || !t.mapping.some(m=>m.cue)) return;
-    const opts = t.mapping.map(m=>m.statement);
+    const opts = [...t.mapping.map(m=>m.statement), ...(t.fakes||[]).slice(0,2)];
     t.mapping.forEach((m,mi)=>{
       if(!m.cue) return;
       items.push({type:"mcq",
-        q: "Người nói kể: “" + m.cue + "” — người này thuộc ý nào?",
+        q: "Người nói kể: “" + m.cue + "” — người này thuộc ý nào? (danh sách 6 ý như đề thật, có 2 ý thừa)",
         vn: "Topic: " + t.topic + " · dấu hiệu tóm tắt từ transcript trong tài liệu",
         options: opts, answer: mi,
-        made: opts.map(()=>false), qMade: false, src: "Tủ câu 14 · Update 01.08.2026"});
+        made: opts.map((o,oi)=>oi>=t.mapping.length), qMade: false, src: "Tủ câu 14 · Update 01.08.2026"});
     });
   });
   startQuiz("Câu 14 — nhận biết qua dấu hiệu", items, ()=>goHome('sec-quiz13'), {q:true, a:true});

@@ -15570,15 +15570,21 @@ function openDeckPreview(i){
   showScreen("scr-preview");
 }
 function buildRandomQ14(){
-  // topic mâu thuẫn thứ tự giữa các đề (conflict) chỉ để ôn flashcard, không chấm điểm
-  const pool = D.updateBank.q14.filter(t=>!t.conflict);
+  // topic mâu thuẫn thứ tự (conflict) hoặc KHÔNG có lời thoại/dấu hiệu để mô phỏng
+  // bài nghe → chỉ ôn flashcard, không vào đề thi (không có audio thì không làm được)
+  const pool = D.updateBank.q14.filter(t=>!t.conflict && t.mapping.every(m=>m.talk||m.cue));
   const t = sample(pool, 1)[0];
   const six = c14SixOptions(t);   // 6 lựa chọn như đề thật (4 tủ + 2 ý thừa)
+  const order = sample([...Array(t.mapping.length).keys()], t.mapping.length); // trộn người nói như thi thật
   return {type: "match", topic: t.topic,
-    intro: "Four people are talking about this topic. Match each person (A–D) with one of the six statements. Two statements are NOT used.",
+    intro: "Four people are talking about this topic. Match each person (A–D) with one of the six statements. Two statements are NOT used. (🎧 Mô phỏng vì không có audio: dưới mỗi người là lời họ nói / dấu hiệu nhận biết từ tủ — thứ tự người đã TRỘN)",
     options: six.choices,
-    answer: t.mapping.map((m,mi)=>six.posOf(mi)),
-    cues: t.mapping.map(m=>m.cue||""),
+    personTexts: order.map(mi=>{
+      const m = t.mapping[mi];
+      return m.talk ? "🗣 “" + m.talk + "”" : "🔎 Dấu hiệu: " + m.cue;
+    }),
+    answer: order.map(mi=>six.posOf(mi)),
+    cues: order.map(mi=>t.mapping[mi].cue||""),
     resNote: "⚠ Đề thật có 6 lựa chọn với 2 ý THỪA (ở đây là ý ảo app soạn) — và thứ tự người nói bị TRỘN. Nhớ theo nội dung, đừng nhớ vẹt vị trí.",
     src: "Tủ câu 14 · Update 01.08.2026", audio: null};
 }
@@ -15988,7 +15994,7 @@ function renderQuestion(){
       let cls="";
       if(practice && answers[cur][pi]!==null)
         cls = answers[cur][pi]===q.answer[pi] ? "correct-hl" : "wrong-hl";
-      html += `<div class="matchrow ${cls}"><div class="lab"><b>Person ${p}</b></div>
+      html += `<div class="matchrow ${cls}"><div class="lab"><b>Person ${p}</b>${q.personTexts&&q.personTexts[pi]?`<div class="qvn" style="display:block;margin-top:4px">${escapeHtml(q.personTexts[pi])}</div>`:""}</div>
         <select onchange="pickSub(${pi}, this.value===''?null:+this.value)">
           <option value="">— chọn —</option>
           ${q.options.map((o,oi)=>`<option value="${oi}" ${answers[cur][pi]===oi?"selected":""}>${o}</option>`).join("")}

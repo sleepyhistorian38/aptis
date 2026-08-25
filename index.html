@@ -15576,10 +15576,14 @@ function c15MwbItem(t){
   const n = t.statements.length;
   const perm = sample([...Array(n).keys()], n);
   const sc = c15Scenario(t);
-  const mk = (lbl, key, on) => `<br>${on?"👉 ":""}${lbl}: <b>${key.join(" – ")}</b>${on?" (bản vừa làm)":""}`;
+  const mk = (lbl, key, on, gender) => {
+    const nt = c15NoteFor(t, {label: lbl, key, note: "", gender});
+    return `<br>${on?"👉 ":""}${lbl}: <b>${key.join(" – ")}</b>${on?" (bản vừa làm)":""}`
+      + `<br><span style="opacity:.85">&nbsp;&nbsp;&nbsp;${nt.app?"✎ Mẹo (app tự soạn): ":""}${escapeHtml(nt.txt)}</span>`;
+  };
   let after = `<div class="note" style="margin-top:12px"><b>🪄 Ôn lại chuỗi rút gọn:</b>`;
-  if(t.manFirst) after += mk("Người ĐÀN ÔNG bắt đầu", t.manFirst, sc.manFirst && t.womanFirst);
-  if(t.womanFirst) after += mk("Người PHỤ NỮ bắt đầu", t.womanFirst, !sc.manFirst);
+  if(t.manFirst) after += mk("Người ĐÀN ÔNG bắt đầu", t.manFirst, sc.manFirst && t.womanFirst, "man");
+  if(t.womanFirst) after += mk("Người PHỤ NỮ bắt đầu", t.womanFirst, !sc.manFirst, "woman");
   if(t.note) after += `<br>⚠ ${escapeHtml(t.note)}`;
   after += `</div>`;
   return {type: "mwb", kid: "c15a|"+t.topic, topic: t.topic,
@@ -15602,6 +15606,31 @@ function c15FakeKey(real, avoid){
   const r = real.slice().reverse().join(" – ");
   return avoid.includes(r) ? real.map(x=>x==="M"?"W":x==="W"?"M":x).join(" – ") : r;
 }
+// Mẹo nhớ do APP TỰ SOẠN (✎) cho các chuỗi tủ KHÔNG có ghi chú — bám theo nội dung ý kiến khi có
+const C15_NOTE_APP = {
+ "Home Schooling|man":   "1W – 2M – 1B: Nữ mở màn, Nam chiếm 2 ý giữa, chốt CẢ HAI",
+ "Home Schooling|woman": "Gần như toàn B (3 chữ B), CHỈ vị trí 3 là M — ⚠ đây KHÔNG phải bản đảo M↔W của bản nam",
+ "Children and Young People|man": "2 ý đầu CẢ HAI đồng ý (trẻ mê học công nghệ + khó giao tiếp trực tiếp) → Nam: gia đình cần hỗ trợ quản lý → Nữ: trẻ tự điều chỉnh được",
+ "Children and Young People|woman": "Đảo M↔W bản nam: 2 chữ B đầu giữ nguyên, đuôi đổi thành W – M",
+ "Environment Volunteer Program|man": "Mở CẢ HAI (truyền thông phóng đại) → Nam bi quan 2 lần (xả rác mãi mãi + phạt là hiệu quả nhất), Nữ kẹp giữa (động cơ không ảnh hưởng)",
+ "Environment Volunteer Program|woman": "Đảo M↔W bản nam: B – W – M – W",
+ "Local Cultural Differences|man": "Nam mở màn (ngôn ngữ là rào cản) → CẢ HAI (toàn cầu hóa) → Nữ đôi cuối (giới trẻ thờ ơ di sản + du lịch để hiểu văn hóa)",
+ "Local Cultural Differences|woman": "Đảo M↔W bản nam: W – B – M – M",
+ "Work Business / Business and Culture|man": "1W – 1B – 2M: Nữ mở màn, CẢ HAI thứ 2, Nam chiếm đôi cuối",
+ "Work Business / Business and Culture|woman": "Đảo M↔W bản nam: M – B – W – W",
+};
+function c15NoteFor(t, v){
+  // v = {label, key, note?, gender?} → {txt, app} — app=true nghĩa là mẹo do app tự soạn
+  if(v.note) return {txt: v.note, app: false};
+  const tk = t.topic.split("(")[0].split("—")[0].trim();
+  const hand = C15_NOTE_APP[tk + "|" + (v.gender || "")];
+  if(hand) return {txt: hand, app: true};
+  const swap = a=>a.map(x=>x==="M"?"W":x==="W"?"M":x).join(" ");
+  const other = (t.variants||[]).find(o=>o.label!==v.label && swap(o.key)===v.key.join(" "));
+  if(other) return {txt: `Đảo M↔W so với bản “${other.label}”` + (other.note ? ` (bản đó: ${other.note})` : ""), app: true};
+  const posOf = c=>v.key.map((x,i)=>x===c?(i+1):0).filter(Boolean).join(",");
+  return {txt: [...new Set(v.key)].map(c=>`${c} ở vị trí ${posOf(c)}`).join(" · "), app: true};
+}
 function c15KeyItems(){
   const items = [];
   D.updateBank.q15.forEach(t=>{
@@ -15609,8 +15638,8 @@ function c15KeyItems(){
     if(t.variants){
       t.variants.forEach(v=>vars.push({label: v.label, key: v.key, note: v.note || ""}));
     } else {
-      if(t.manFirst) vars.push({label: "Người ĐÀN ÔNG bắt đầu", key: t.manFirst, note: t.note || ""});
-      if(t.womanFirst) vars.push({label: "Người PHỤ NỮ bắt đầu", key: t.womanFirst, note: t.note || ""});
+      if(t.manFirst) vars.push({label: "Người ĐÀN ÔNG bắt đầu", key: t.manFirst, note: "", gender: "man"});
+      if(t.womanFirst) vars.push({label: "Người PHỤ NỮ bắt đầu", key: t.womanFirst, note: "", gender: "woman"});
     }
     const allKeys = vars.map(v=>v.key.join(" – "));
     vars.forEach(v=>{
@@ -15625,9 +15654,11 @@ function c15KeyItems(){
         if(k===pos){ options.push(real); made.push(false); }
         else { options.push(fs[di++]); made.push(true); }
       }
+      const nt = c15NoteFor(t, v);
       items.push({type: "mcq", kid: "c15k|"+t.topic+"|"+v.label,
         q: "Topic “" + t.topic.replace(/\s*\(.*/,"") + "” — " + v.label.toUpperCase() + ": chuỗi đáp án đúng?",
-        vn: (t.topicNote ? t.topicNote + " · " : "") + (v.note || "Chuỗi có dấu * là hoán vị bẫy do app tạo"),
+        vn: (t.topicNote ? t.topicNote + " · " : "") + (nt.app ? "✎ Mẹo (app tự soạn): " : "") + nt.txt
+            + (t.note && !t.variants ? " · ⚠ " + t.note : ""),
         options, answer: pos, made, qMade: false,
         src: t.src || "Update 01.08.2026", audio: null});
     });
@@ -16269,10 +16300,17 @@ function openBank(kind){
         if(t.womanFirst) html += `\n(Ý kiến ghi theo kịch bản giọng NAM đọc trước — nữ đọc trước thì theo chuỗi bản rút gọn bên dưới)`;
       }
       if(t.variants){
-        html += t.variants.map(v=>`${v.label}:  ${v.key.join(" – ")}${v.note?`\n   💡 ${v.note}`:""}`).join("\n");
+        html += t.variants.map(v=>{
+          const nt = c15NoteFor(t, v);
+          return `${v.label}:  ${v.key.join(" – ")}\n   💡 ${nt.app?"✎ (app tự soạn) ":""}${escapeHtml(nt.txt)}`;
+        }).join("\n");
       }
       if(t.manFirst && t.womanFirst){
-        html += (t.statements?`\n\n`:"") + `Bản rút gọn:\n  Người ĐÀN ÔNG bắt đầu:  ${t.manFirst.join(" – ")}\n  Người PHỤ NỮ bắt đầu:  ${t.womanFirst.join(" – ")}`;
+        const nm = c15NoteFor(t, {label:"m", key:t.manFirst, note:"", gender:"man"});
+        const nw = c15NoteFor(t, {label:"w", key:t.womanFirst, note:"", gender:"woman"});
+        html += (t.statements?`\n\n`:"") + `Bản rút gọn:`
+          + `\n  Người ĐÀN ÔNG bắt đầu:  ${t.manFirst.join(" – ")}\n   💡 ${nm.app?"✎ (app tự soạn) ":""}${escapeHtml(nm.txt)}`
+          + `\n  Người PHỤ NỮ bắt đầu:  ${t.womanFirst.join(" – ")}\n   💡 ${nw.app?"✎ (app tự soạn) ":""}${escapeHtml(nw.txt)}`;
       }
       html += `</div>`;
       if(t.note) html += `<div class="note">⚠ ${escapeHtml(t.note)}</div>`;

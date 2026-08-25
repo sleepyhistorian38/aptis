@@ -267,10 +267,15 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <h3>67 câu tủ mới nhất</h3>
       <div class="meta">47 câu giữ nguyên lựa chọn gốc, 20 câu dạng hỏi–đáp được thêm phương án nhiễu (*)</div>
     </div>
+    <div class="card" style="cursor:pointer" onclick="quizC14()">
+      <span class="tag sim">CÂU 14</span>
+      <h3>🗣 Nghe–nối + nhận ý</h3>
+      <div class="meta">Topic đủ transcript: đọc nguyên văn lời người nói → nối ý (trộn vị trí). Topic chỉ có bộ ý: phân biệt ý thật vs ý ảo (*) — tránh học vẹt thứ tự.</div>
+    </div>
     <div class="card" style="cursor:pointer" onclick="quizCue14()">
       <span class="tag sim">CÂU 14</span>
       <h3>🔎 Nhận biết qua dấu hiệu</h3>
-      <div class="meta">Đọc dấu hiệu nội dung người nói → chọn đúng ý. Luyện đối phó việc thi thật trộn thứ tự người.</div>
+      <div class="meta">Mức khó hơn: chỉ đọc dấu hiệu rút gọn → chọn đúng ý. Luyện đối phó việc thi thật trộn thứ tự người.</div>
     </div>
     <div class="card" style="cursor:pointer" onclick="quizQ1617()">
       <span class="tag sim">CÂU 16–17</span>
@@ -10592,22 +10597,26 @@ window.APTIS.listening = {
      {
       "person": "A",
       "statement": "Finished the visit quickly",
-      "cue": "Bảo tàng nhỏ hơn kỳ vọng, chỉ vài phòng mở cửa, rời đi sau ~30 phút"
+      "cue": "Bảo tàng nhỏ hơn kỳ vọng, chỉ vài phòng mở cửa, rời đi sau ~30 phút",
+      "talk": "I was quite excited to see the new museum in town, but when I arrived, I found it smaller than I expected. There were only a few rooms open to visitors, and some exhibitions were still being prepared. I walked through the main displays, took a few photos, and left after about thirty minutes. I thought the museum was interesting, but there was not enough to keep me there for a long time."
      },
      {
       "person": "B",
       "statement": "Got lost during the visit",
-      "cue": "Tòa nhà lớn, biển chỉ dẫn không rõ, đi vòng quanh, phải nhờ nhân viên"
+      "cue": "Tòa nhà lớn, biển chỉ dẫn không rõ, đi vòng quanh, phải nhờ nhân viên",
+      "talk": "I liked the idea of having a new museum in our town, but my visit was a little frustrating. The building was quite large, and the signs were not very clear. I tried to find the history section, but I ended up walking around the same area several times. In the end, I had to ask a staff member for help because I could not find the correct room."
      },
      {
       "person": "C",
       "statement": "Enjoyed the use of technology",
-      "cue": "Màn hình cảm ứng, audio guide, thực tế ảo (VR)"
+      "cue": "Màn hình cảm ứng, audio guide, thực tế ảo (VR)",
+      "talk": "For me, the best thing about the new museum was the modern technology. Instead of just reading information on the walls, visitors could use touch screens, audio guides, and even virtual reality to learn about the exhibits. This made the visit much more interesting and enjoyable, especially for young people."
      },
      {
       "person": "D",
       "statement": "Wants to visit again",
-      "cue": "Đông đúc, bỏ lỡ 1 triển lãm vì đến muộn, chắc chắn sẽ quay lại"
+      "cue": "Đông đúc, bỏ lỡ 1 triển lãm vì đến muộn, chắc chắn sẽ quay lại",
+      "talk": "I had a really good time at the new museum, although I could not see everything in one visit. Some parts were very crowded, and I missed one special exhibition because I arrived too late. I think the museum has a lot to offer, so I would definitely like to go back another day and spend more time there."
      }
     ],
     "alt": [
@@ -10628,7 +10637,11 @@ window.APTIS.listening = {
       "statement": "Enjoyed the use of technology"
      }
     ],
-    "note": "Tài liệu ghi 2 phương án đảo người — nhớ theo DẤU HIỆU NHẬN BIẾT (cue), đừng nhớ máy móc theo thứ tự người."
+    "note": "Tài liệu ghi 2 phương án đảo người — nhớ theo DẤU HIỆU NHẬN BIẾT (cue), đừng nhớ máy móc theo thứ tự người.",
+    "fakes": [
+     "Thought the tickets were too expensive",
+     "Preferred the old museum building"
+    ]
    },
    {
     "topic": "Reading book (Đọc sách)",
@@ -10636,26 +10649,34 @@ window.APTIS.listening = {
      {
       "person": "A",
       "statement": "Read when travelling to school",
-      "cue": "Đọc tiểu thuyết trên xe buýt ~30 phút đến trường, không đọc ở nhà vì điện thoại"
+      "cue": "Đọc tiểu thuyết trên xe buýt ~30 phút đến trường, không đọc ở nhà vì điện thoại",
+      "talk": "I used to read a lot in my bedroom when I was younger, especially before going to sleep. But these days, I don't really read at home anymore because my phone is always next to me. The only time I read properly is on the bus in the morning. My journey to school takes about 30 minutes, so I usually bring a novel with me and read a few pages before class."
      },
      {
       "person": "B",
       "statement": "Don't have time to read",
-      "cue": "Có 2 cuốn sách mới nhưng quá mệt vì bài tập, đá bóng, giúp bố mẹ"
+      "cue": "Có 2 cuốn sách mới nhưng quá mệt vì bài tập, đá bóng, giúp bố mẹ",
+      "talk": "I actually enjoy books, and I've got two new ones on my desk right now. Sometimes I even put one beside my bed, thinking I'll read it before I sleep. But most evenings I'm too tired after homework, football practice, and helping my parents. On weekends, I often plan to read, but something else always comes up. So at the moment, I hardly read at all."
      },
      {
       "person": "C",
       "statement": "Read on their beds",
-      "cue": "Đọc trên xe bị say, phòng khách ồn TV → đọc trên giường mỗi tối ~10 phút"
+      "cue": "Đọc trên xe bị say, phòng khách ồn TV → đọc trên giường mỗi tối ~10 phút",
+      "talk": "Some of my friends read on the train or bus. But I can't do that because it makes me feel a bit sick. I also don't like reading in the living room because the TV is usually on. For me, the best place is my bed. I read there almost every night, even if it's only for 10 minutes. It helps me relax and forget about school for a while."
      },
      {
       "person": "D",
       "statement": "Prefer another activity to reading books",
-      "cue": "Thích chơi bóng rổ / xem video thể thao hơn đọc sách"
+      "cue": "Thích chơi bóng rổ / xem video thể thao hơn đọc sách",
+      "talk": "My parents keep telling me that reading is important, and I agree with them, really. I sometimes read short stories for school, and I can finish them if I have to. But when I have free time, I'd much rather play basketball or watch videos about sports. Books are okay, but they don't excite me as much as doing something active with my friends."
      }
     ],
     "alt": null,
-    "note": null
+    "note": null,
+    "fakes": [
+     "Reads mostly at the local library",
+     "Listens to audiobooks instead of reading"
+    ]
    },
    {
     "topic": "A new restaurant — Restaurant experiences (Trải nghiệm nhà hàng)",
@@ -10663,26 +10684,34 @@ window.APTIS.listening = {
      {
       "person": "A",
       "statement": "Was still hungry after dinner",
-      "cue": "Trang trí đẹp, phục vụ nhanh nhưng suất ăn quá ít → về nhà làm sandwich"
+      "cue": "Trang trí đẹp, phục vụ nhanh nhưng suất ăn quá ít → về nhà làm sandwich",
+      "talk": "I chose that restaurant because friends kept telling me how beautiful the decoration was, and honestly, they were right. The service was quick as well, so I have nothing bad to say about that. The problem was the food itself. The portion was so small that when I got home I had to make myself a sandwich. I walked out of there still hungry."
      },
      {
       "person": "B",
       "statement": "Paid a high price",
-      "cue": "Không gian đẹp, phục vụ nhanh nhưng hóa đơn gần GẤP ĐÔI dự kiến"
+      "cue": "Không gian đẹp, phục vụ nhanh nhưng hóa đơn gần GẤP ĐÔI dự kiến",
+      "talk": "The atmosphere was lovely and the waiters brought our dishes out very quickly, so I really cannot complain about the service. What shocked me was the bill at the end of the evening. Every single dish cost far more than I had expected, and I ended up paying almost double what I had planned to spend on dinner."
      },
      {
       "person": "C",
       "statement": "Met the helpful staff",
-      "cue": "Dị ứng đậu phộng — nhân viên giải thích từng món, gợi ý món an toàn"
+      "cue": "Dị ứng đậu phộng — nhân viên giải thích từng món, gợi ý món an toàn",
+      "talk": "I am allergic to peanuts, so eating out always makes me a little nervous. One of the waiters went through the entire menu with me, explained exactly how each dish was cooked, and then suggested something that was completely safe for me. He was so patient and never once made me feel like I was being difficult. That is what I remember most about the evening."
      },
      {
       "person": "D",
       "statement": "Watched a perfect performance",
-      "cue": "Đến vì nhạc sống, ca sĩ & ban nhạc tuyệt vời, không lỗi nào"
+      "cue": "Đến vì nhạc sống, ca sĩ & ban nhạc tuyệt vời, không lỗi nào",
+      "talk": "I did not go there for the food, to be honest, and the dishes were nothing special. I went because there was live music that night. The singer and the band were absolutely fantastic. I listened to every song carefully and I could not find a single mistake anywhere. It was, without doubt, the best evening of music I have had in years."
      }
     ],
     "alt": null,
-    "note": null
+    "note": null,
+    "fakes": [
+     "Booked a table but had to wait long",
+     "Loved the dessert most of all"
+    ]
    },
    {
     "topic": "Sports (Thể thao)",
@@ -10690,26 +10719,34 @@ window.APTIS.listening = {
      {
       "person": "A",
       "statement": "Plays in a team sport",
-      "cue": "Bóng rổ — thích phối hợp đồng đội, thắng theo nhóm"
+      "cue": "Bóng rổ — thích phối hợp đồng đội, thắng theo nhóm",
+      "talk": "The speaker says basketball is a team sport and explains that they enjoy working together and trying to win as a group."
      },
      {
       "person": "B",
       "statement": "Spends time in the water",
-      "cue": "Bơi lội là môn yêu thích, dành nhiều thời gian dưới nước"
+      "cue": "Bơi lội là môn yêu thích, dành nhiều thời gian dưới nước",
+      "talk": "The speaker says swimming is their favourite sport and that they spend a lot of time in the water."
      },
      {
       "person": "C",
       "statement": "Plays in the street",
-      "cue": "Đá bóng ngoài đường với bạn sau giờ học"
+      "cue": "Đá bóng ngoài đường với bạn sau giờ học",
+      "talk": "The speaker says they often played football in the street and sometimes still do so with friends after school."
      },
      {
       "person": "D",
       "statement": "Does sports with animals",
-      "cue": "Cưỡi ngựa — xây dựng quan hệ với con ngựa"
+      "cue": "Cưỡi ngựa — xây dựng quan hệ với con ngựa",
+      "talk": "The speaker says horse riding is special because it is a sport they do with an animal and they build a relationship with the horse."
      }
     ],
     "alt": null,
-    "note": null
+    "note": null,
+    "fakes": [
+     "Prefers watching sports on TV",
+     "Does yoga at home every morning"
+    ]
    },
    {
     "topic": "Listening to music (Nghe nhạc)",
@@ -10734,7 +10771,11 @@ window.APTIS.listening = {
     ],
     "alt": null,
     "note": "Trong bài thi sẽ đảo A B C D — nhớ nội dung từng người.",
-    "conflict": false
+    "conflict": false,
+    "fakes": [
+     "While cooking dinner",
+     "Before going to bed"
+    ]
    },
    {
     "topic": "Protect the environment (Bảo vệ môi trường)",
@@ -10776,7 +10817,11 @@ window.APTIS.listening = {
      }
     ],
     "note": "Đề 1+8 ghi bản 1, đề 20 ghi bản 2 (đảo A↔C). Ngoài ra bản người thi 05/2025 là bộ ý khác hẳn: not driving to work / shopping online / using less electricity / using less water (xem tab Câu 14–15 bổ sung 11/2025). Học NỘI DUNG, đừng học thứ tự.",
-    "conflict": true
+    "conflict": true,
+    "fakes": [
+     "Cycles to work instead of driving",
+     "Grows their own vegetables"
+    ]
    },
    {
     "topic": "How they feel about exercise (Cảm nhận về tập thể dục)",
@@ -10818,7 +10863,11 @@ window.APTIS.listening = {
      }
     ],
     "note": "Đề 21 (giáo viên thi 17/08/2024 trúng 100%) ghi bản chính; đề 2 ghi bản khác. Học nội dung 4 ý.",
-    "conflict": true
+    "conflict": true,
+    "fakes": [
+     "Exercises only on weekends",
+     "Thinks gyms are too expensive"
+    ]
    },
    {
     "topic": "Running — the place to run (Chạy bộ ở đâu)",
@@ -10860,7 +10909,11 @@ window.APTIS.listening = {
      }
     ],
     "note": "Tài liệu ghi 4 phiên bản thứ tự khác nhau (đề 3/5 ≠ đề 7 ≠ đề 16/18 ≠ đề 22) — bằng chứng rõ nhất là vào thi BỊ TRỘN. Chỉ cần nhớ 4 địa điểm: running track / fitness centre / street / seaside, nghe kỹ từng người.",
-    "conflict": true
+    "conflict": true,
+    "fakes": [
+     "In the park near the office",
+     "On a treadmill at home"
+    ]
    },
    {
     "topic": "Journey to work (Đi làm bằng gì)",
@@ -10902,7 +10955,11 @@ window.APTIS.listening = {
      }
     ],
     "note": "Đề 4+17 ghi bản 1; đề 19 ghi bản 2 (đảo bus↔car, kèm chú 'mình cũng không chắc'). Nhớ 4 phương thức, nghe kỹ.",
-    "conflict": true
+    "conflict": true,
+    "fakes": [
+     "Takes the train every day",
+     "Works from home most days"
+    ]
    },
    {
     "topic": "Online shopping (Mua sắm trực tuyến)",
@@ -10944,7 +11001,11 @@ window.APTIS.listening = {
      }
     ],
     "note": "Đề 6 ghi bản 1, đề 11 ghi bản 2 (đảo A↔C). Nhớ 4 lợi ích, nghe kỹ từng người.",
-    "conflict": true
+    "conflict": true,
+    "fakes": [
+     "Free delivery for large orders",
+     "It is easy to return unwanted items"
+    ]
    },
    {
     "topic": "Outdoor activities (Hoạt động ngoài trời)",
@@ -10986,7 +11047,11 @@ window.APTIS.listening = {
      }
     ],
     "note": "Đề 10 ghi bản 1; người thi 20/07 (50/50 điểm) ghi bản 2. Nhớ 4 hoạt động: run / climbing / horse riding / mountain biking.",
-    "conflict": true
+    "conflict": true,
+    "fakes": [
+     "Camping by the lake",
+     "Fishing with their father"
+    ]
    }
   ],
   "q15": [
@@ -15368,13 +15433,54 @@ function buildRandomQ14(){
   // topic mâu thuẫn thứ tự giữa các đề (conflict) chỉ để ôn flashcard, không chấm điểm
   const pool = D.updateBank.q14.filter(t=>!t.conflict);
   const t = sample(pool, 1)[0];
+  const n = t.mapping.length;
+  const perm = sample([...Array(n).keys()], n);   // trộn vị trí các Ý trong dropdown
   return {type: "match", topic: t.topic,
     intro: "Four people are talking about this topic. Match each person (A–D) with the statement.",
-    options: t.mapping.map(m=>m.statement),
-    answer: [0,1,2,3],
+    options: perm.map(i=>t.mapping[i].statement),
+    answer: t.mapping.map((m,mi)=>perm.indexOf(mi)),
     cues: t.mapping.map(m=>m.cue||""),
     resNote: "⚠ Vào thi thật thứ tự người nói sẽ bị TRỘN — nhớ theo dấu hiệu nội dung (xem 🔎 phía trên), đừng nhớ vẹt A/B/C/D.",
     src: "Tủ câu 14 · Update 01.08.2026", audio: null};
+}
+/* ---- Luyện câu 14 riêng: nghe–nối (topic đủ transcript) + nhận ý (mọi topic) ---- */
+function c14MatchItem(t){
+  const n = t.mapping.length;
+  const perm = sample([...Array(n).keys()], n);     // vị trí các Ý trong dropdown
+  const order = sample([...Array(n).keys()], n);    // trộn cả thứ tự người nói
+  return {type: "pick", kid: "c14a|"+t.topic, topic: t.topic,
+    intro: "Đọc LỜI TỪNG NGƯỜI NÓI (nguyên văn tài liệu) rồi chọn Ý tương ứng. Thứ tự người và vị trí lựa chọn trộn mỗi lần — nhận bằng nội dung.",
+    choices: perm.map(i=>t.mapping[i].statement),
+    rows: order.map((mi,ri)=>({t: "🗣 Người " + (ri+1) + ": “" + t.mapping[mi].talk + "”",
+                               a: perm.indexOf(mi)})),
+    unique: true, src: "Tủ câu 14 · Update 01.08.2026", audio: null};
+}
+function c14StmtItems(){
+  const items = [];
+  D.updateBank.q14.forEach(t=>{
+    if(!t.fakes || t.fakes.length < 2) return;
+    t.mapping.forEach((m,mi)=>{
+      const pos = Math.floor(Math.random()*3);
+      const options=[], made=[];
+      let di = 0;
+      for(let k=0;k<3;k++){
+        if(k===pos){ options.push(m.statement); made.push(false); }
+        else { options.push(t.fakes[di++]); made.push(true); }
+      }
+      items.push({type:"mcq", kid:"c14b|"+t.topic+"|"+mi,
+        q: "Ý nào sau đây THUỘC tủ topic “" + t.topic.replace(/\s*\(.*/,"") + "”?",
+        vn: "2 ý còn lại là ý ẢO cùng chủ đề (*). Thuộc mặt chữ bộ ý — vào thi chỉ cần nghe ai khớp ý nào.",
+        options, answer: pos, made, qMade: false, src: "Tủ câu 14", audio: null});
+    });
+  });
+  return items;
+}
+function quizC14(){
+  const build = ()=>[
+    ...D.updateBank.q14.filter(t=>t.mapping.every(m=>m.talk)).map(c14MatchItem),
+    ...c14StmtItems()
+  ];
+  startQuiz("Luyện câu 14 — nghe–nối + nhận ý (" + build().length + " bài)", build, ()=>goHome('sec-quiz13'), {q:true});
 }
 function buildRandomQ15(){
   const pool = D.updateBank.q15.filter(t=>t.statements && t.statements.length===4);
@@ -15982,7 +16088,7 @@ function openBank(kind){
     B.q14.forEach((t,i)=>{
       html += `<div class="kitem"><div class="qline"><span class="num">${i+1}.</span><b>Topic: ${escapeHtml(t.topic)}</b>${t.src?` <span class="qvn" style="display:inline">· ${escapeHtml(t.src)}</span>`:""}${t.conflict?' <span class="tag key" style="margin:0">⚠ THỨ TỰ KHÔNG CỐ ĐỊNH</span>':""}</div>`;
       html += `<div class="ansblock blur" onclick="this.classList.toggle('blur')">`;
-      html += t.mapping.map(m=>`<b>Person ${m.person}:</b> ${escapeHtml(m.statement)}${m.cue?`\n    🔎 ${escapeHtml(m.cue)}`:""}`).join("\n");
+      html += t.mapping.map(m=>`<b>Person ${m.person}:</b> ${escapeHtml(m.statement)}${m.cue?`\n    🔎 ${escapeHtml(m.cue)}`:""}${m.talk?`\n    🗣 “${escapeHtml(m.talk)}”`:""}`).join("\n\n");
       if(t.alt){
         html += `\n\n— Phương án đảo (bản 2): —\n` + t.alt.map(m=>`Person ${m.person}: ${escapeHtml(m.statement)}`).join("\n");
       }

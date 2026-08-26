@@ -15331,10 +15331,10 @@ window.APTIS.writing = {
   },
   {
    "part": "Part 2",
-   "task": "Điền form giới thiệu bản thân về chủ đề của club",
+   "task": "Điền form về chủ đề của club — đề có thể bảo giới thiệu bản thân HOẶC hỏi 1 câu cụ thể (Tell me a painting that you like…)",
    "words": "20–30 từ",
    "time": "~7 phút",
-   "note": "Có khung chung — chỉ thay tên chủ đề (bỏ chữ club) vào các chỗ trống."
+   "note": "Có 2 khung: đề hỏi câu cụ thể → dùng công thức 4 câu (thích gì → khi nào → bối cảnh → nội dung); đề chung chung → khung giới thiệu. Luôn trả lời THẲNG vào câu đề hỏi, đừng ốp nguyên khung chung."
   },
   {
    "part": "Part 3",
@@ -15415,8 +15415,51 @@ window.APTIS.writing = {
  ],
  "templates": [
   {
+   "id": "p2b",
+   "title": "Part 2 — khung khi đề hỏi 1 CÂU CỤ THỂ (Tell me a painting/photo that you like… — dạng hay gặp thi thật)",
+   "segments": [
+    {
+     "t": "I have a great ",
+     "fix": true
+    },
+    {
+     "t": "thứ đề hỏi: photo / painting / book…",
+     "fix": false
+    },
+    {
+     "t": " involving my friends. As far as I can remember, it was ",
+     "fix": true
+    },
+    {
+     "t": "thời gian: 2 years ago…",
+     "fix": false
+    },
+    {
+     "t": ". At that time, I was ",
+     "fix": true
+    },
+    {
+     "t": "bối cảnh: a freshman at the University…",
+     "fix": false
+    },
+    {
+     "t": ". It is about ",
+     "fix": true
+    },
+    {
+     "t": "nội dung: our English class…",
+     "fix": false
+    },
+    {
+     "t": ".",
+     "fix": true
+    }
+   ],
+   "vn": "Tôi có một bức ảnh/tranh tuyệt vời chụp cùng bạn bè. Theo trí nhớ thì đó là 2 năm trước. Lúc đó tôi là sinh viên năm nhất. Nó nói về lớp tiếng Anh của chúng tôi. — Công thức 4 câu (THÍCH GÌ → KHI NÀO → BỐI CẢNH → NỘI DUNG) dùng cho mọi đề 'kể về một thứ bạn thích'; nguồn: bài mẫu Art club trả lời đúng đề thi thật này."
+  },
+  {
    "id": "p2",
-   "title": "Part 2 — khung 20–30 từ (dùng cho mọi chủ đề)",
+   "title": "Part 2 — khung khi đề bảo GIỚI THIỆU BẢN THÂN về chủ đề club (20–30 từ)",
    "segments": [
     {
      "t": "Hello, My name is ",
@@ -17310,7 +17353,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2:"Part 2", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
+  return {p2b:"P2 · đề hỏi cụ thể", p2:"P2 · giới thiệu chủ đề", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;

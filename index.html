@@ -480,6 +480,15 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
   <div id="wsec-frame"></div>
 </div>
 
+<!-- ============ WRITING CLOZE ============ -->
+<div id="scr-wcloze" class="page">
+  <div class="backbar" id="nav-wcloze"></div>
+  <h1>⌨️ Luyện thuộc khung Writing</h1>
+  <p class="sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét ít + gợi ý chữ đầu → mức 2 khoét quá nửa → mức 3 gõ lại cả bài từ trí nhớ. Đạt ≥90% ở mức 3 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
+  <div id="wcl-pills"></div>
+  <div id="wcl-body"></div>
+</div>
+
 <!-- ============ GRAMMAR HOME ============ -->
 <div id="scr-ghome" class="page">
   <div class="backbar" id="nav-ghome"></div>
@@ -15658,7 +15667,7 @@ window.APTIS.writing = {
 "use strict";
 const D = window.APTIS.listening;
 const $ = id => document.getElementById(id);
-const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview","scr-whome"];
+const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview","scr-whome","scr-wcloze"];
 
 let test = null;          // current full test
 let practice = false;
@@ -17234,8 +17243,17 @@ function goWriting(sec){
   stopTimer(); stopAudio();
   if(!WD){ alert("Chưa có dữ liệu Writing"); return; }
   setNav("nav-whome", ["Writing"], "Trang chủ", "goRoot()");
+  // ---- luyện thuộc ----
+  let sh = `<div class="grid" style="margin-top:14px">
+    <div class="card" style="cursor:pointer;border-color:var(--purple)" onclick="wClozeGo()">
+      <span class="tag sim">LUYỆN THUỘC</span>
+      <h3>⌨️ Đục lỗ khung — 3 mức</h3>
+      <div class="meta">Cách thuộc nhanh nhất: mức 1 khoét 25% có gợi ý → mức 2 khoét 60% → mức 3 gõ lại cả bài, app chấm % khớp từng từ. Lưu kỷ lục 🏆 theo từng khung.</div>
+      <div class="meta">Lộ trình gợi ý: ngày 1 đọc khung + mức 1 · ngày 2-3 mức 2 · ngày 4-5 mức 3 đến khi ≥90% cả 5 khung (~15 phút/ngày).</div>
+    </div>
+  </div>`;
   // ---- cấu trúc bài thi ----
-  let sh = `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · 50 phút)</h2><div class="grid">`;
+  sh += `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · 50 phút)</h2><div class="grid">`;
   WD.structure.forEach(p=>{
     sh += `<div class="card"><span class="tag sim">${escapeHtml(p.part)}</span>
       <h3>${escapeHtml(p.task)}</h3>
@@ -17274,6 +17292,164 @@ function goWriting(sec){
   $("wsec-frame").innerHTML = fh;
   showScreen("scr-whome");
   if(sec && $(sec)) $(sec).scrollIntoView({behavior:"smooth"});
+}
+
+/* ---------------- Writing: luyện thuộc khung (đục lỗ 3 mức) ---------------- */
+let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0};
+const WCL_LV = {
+  1: {hide: 0.25, hint: true,  name: "Mức 1 · khoét 25% + gợi ý"},
+  2: {hide: 0.60, hint: false, name: "Mức 2 · khoét 60%"},
+  3: {name: "Mức 3 · gõ cả bài"},
+};
+function wNorm(s){ return (s||"").toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9']+/g,""); }
+function wBest(){ try{ return JSON.parse(localStorage.aptisWBest || "{}"); }catch(e){ return {}; } }
+function wSaveBest(pct){
+  try{
+    const b = wBest(), k = wcl.tpl + "|" + wcl.lv;
+    if(!(k in b) || pct > b[k]){ b[k] = pct; localStorage.aptisWBest = JSON.stringify(b); }
+  }catch(e){}
+}
+function wTplLabel(id){
+  return {p2:"Part 2", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
+}
+function wClozeGo(tpl, lv){
+  if(tpl) wcl.tpl = tpl;
+  if(lv) wcl.lv = lv;
+  renderWCloze();
+}
+function renderWCloze(){
+  setNav("nav-wcloze", ["Writing", "Luyện thuộc khung"], "Writing", "goWriting()");
+  const best = wBest();
+  let ph = `<div class="pillbar" style="flex-wrap:wrap">` + WD.templates.map(t=>
+      `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')">${wTplLabel(t.id)}</button>`
+    ).join("") + `</div>`;
+  ph += `<div class="pillbar" style="flex-wrap:wrap">` + [1,2,3].map(l=>{
+      const b = best[wcl.tpl+"|"+l];
+      return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
+    }).join("") + `</div>`;
+  $("wcl-pills").innerHTML = ph;
+  const t = WD.templates.find(x=>x.id===wcl.tpl);
+  $("wcl-body").innerHTML = wcl.lv===3 ? wClozeLv3Html(t) : wClozeGapHtml(t);
+  if(wcl.lv!==3) wClozeProgress();
+  showScreen("scr-wcloze");
+}
+function wClozeGapHtml(t){
+  // token hóa phần CỐ ĐỊNH thành từ; chọn ngẫu nhiên để khoét
+  const lv = WCL_LV[wcl.lv];
+  const tokens = [];
+  t.segments.forEach(seg=>{
+    if(!seg.fix){ tokens.push({type:"slot", txt: seg.t}); return; }
+    seg.t.split(/(\n)/).forEach(part=>{
+      if(part==="\n"){ tokens.push({type:"br"}); return; }
+      part.split(/\s+/).filter(Boolean).forEach(w=>tokens.push({type:"w", txt:w}));
+    });
+  });
+  const idxCandidates = tokens.map((tk,i)=>tk.type==="w" && wNorm(tk.txt).length>=3 ? i : -1).filter(i=>i>=0);
+  const nHide = Math.max(3, Math.round(idxCandidates.length * lv.hide));
+  const hideSet = new Set(sample(idxCandidates, Math.min(nHide, idxCandidates.length)));
+  wcl.total = hideSet.size; wcl.ok = 0; wcl.revealed = 0;
+  let html = `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;line-height:2.2">`;
+  tokens.forEach((tk,i)=>{
+    if(tk.type==="br"){ html += "<br>"; return; }
+    if(tk.type==="slot"){ html += `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">${escapeHtml(tk.txt)}</span> `; return; }
+    if(hideSet.has(i)){
+      const bare = wNorm(tk.txt);
+      const hint = lv.hint ? tk.txt.replace(/[A-Za-z0-9’']+/, m=>m[0]+"…") : "";
+      const width = Math.max(52, bare.length*11 + 18);
+      html += `<input class="wgap" data-w="${escapeHtml(tk.txt)}" placeholder="${escapeHtml(hint)}" autocomplete="off" spellcheck="false"
+        oninput="wGapCheck(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();wGapNext(this)}"
+        style="width:${width}px;border:1.5px solid #d97706;border-radius:6px;padding:2px 6px;font:inherit;font-size:15px"> `;
+    } else html += escapeHtml(tk.txt) + " ";
+  });
+  html += `</div>
+    <div id="wcl-progress" class="note" style="margin-top:10px"></div>
+    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" onclick="renderWCloze()">🔄 Khoét chỗ khác</button>
+      <button class="btn secondary" onclick="wRevealAll()">👁 Hiện hết (tính là chưa thuộc)</button>
+    </div>`;
+  return html;
+}
+function wGapCheck(el){
+  if(wNorm(el.value)===wNorm(el.dataset.w)){
+    const ok = document.createElement("span");
+    ok.style.cssText = "color:#15803d;font-weight:600";
+    ok.textContent = el.dataset.w + " ";
+    el.replaceWith(ok);
+    wcl.ok++;
+    wClozeProgress();
+  }
+}
+function wGapNext(el){
+  const gaps = [...document.querySelectorAll(".wgap")];
+  const i = gaps.indexOf(el);
+  if(i>=0 && gaps[i+1]) gaps[i+1].focus();
+}
+function wRevealAll(){
+  document.querySelectorAll(".wgap").forEach(el=>{
+    const sp = document.createElement("span");
+    sp.style.cssText = "color:#b91c1c;font-weight:600;text-decoration:underline dotted";
+    sp.textContent = el.dataset.w + " ";
+    el.replaceWith(sp);
+    wcl.revealed++;
+  });
+  wClozeProgress();
+}
+function wClozeProgress(){
+  const el = $("wcl-progress");
+  if(!el) return;
+  const left = wcl.total - wcl.ok - wcl.revealed;
+  if(left>0){ el.innerHTML = `Đã điền đúng <b>${wcl.ok}/${wcl.total}</b> chỗ khoét${wcl.revealed?` · đã "hiện hết" ${wcl.revealed} chỗ`:""}.`; return; }
+  const pct = Math.round(wcl.ok / Math.max(1,wcl.total) * 100);
+  wSaveBest(pct);
+  el.innerHTML = `🎉 Xong! Tự điền đúng <b>${pct}%</b> chỗ khoét${pct===100?` — quá chuẩn, lên mức ${Math.min(3,wcl.lv+1)} thôi!`:` — bấm "Khoét chỗ khác" luyện lại những từ vừa lộ.`}`;
+  renderWClozePillsOnly();
+}
+function renderWClozePillsOnly(){
+  const best = wBest();
+  const bar2 = $("wcl-pills").querySelectorAll(".pillbar")[1];
+  if(bar2) bar2.innerHTML = [1,2,3].map(l=>{
+    const b = best[wcl.tpl+"|"+l];
+    return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
+  }).join("");
+}
+function wClozeLv3Html(t){
+  const slots = t.segments.filter(s=>!s.fix).map(s=>s.t);
+  return `<div class="note">Gõ lại CẢ BÀI từ trí nhớ (các chỗ điền-theo-đề cứ gõ đại nội dung bất kỳ — app chỉ chấm phần khung cố định). Gợi ý duy nhất: nghĩa tiếng Việt bên dưới.</div>
+    <details style="margin:8px 0"><summary class="qvn" style="cursor:pointer">🇻🇳 Nghĩa tiếng Việt (gợi ý)</summary>
+      <div class="qvn" style="display:block;margin-top:6px">${escapeHtml(t.vn)}</div></details>
+    <div class="qvn" style="display:block;margin:4px 0">Các chỗ điền theo đề trong khung: ${slots.map(s=>`<span style="background:#fef3c7;border-radius:6px;padding:0 6px">${escapeHtml(s)}</span>`).join(" ")}</div>
+    <textarea id="wcl-typed" rows="10" spellcheck="false" style="width:100%;font:inherit;font-size:15px;border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-top:6px" placeholder="Gõ toàn bộ khung ${wTplLabel(t.id)} tại đây..."></textarea>
+    <div style="margin-top:10px"><button class="btn" onclick="wCompare()">📊 So với bản gốc</button></div>
+    <div id="wcl-cmp" style="margin-top:12px"></div>`;
+}
+function wCompare(){
+  const t = WD.templates.find(x=>x.id===wcl.tpl);
+  const refWords = t.segments.filter(s=>s.fix).flatMap(s=>s.t.split(/\s+/)).filter(w=>wNorm(w));
+  const typedRaw = ($("wcl-typed").value||"").split(/\s+/).filter(w=>wNorm(w));
+  const ref = refWords.map(wNorm), typed = typedRaw.map(wNorm);
+  // LCS so khớp từ
+  const m = ref.length, n = typed.length;
+  const dp = Array.from({length:m+1}, ()=>new Array(n+1).fill(0));
+  for(let i=m-1;i>=0;i--) for(let j=n-1;j>=0;j--)
+    dp[i][j] = ref[i]===typed[j] ? dp[i+1][j+1]+1 : Math.max(dp[i+1][j], dp[i][j+1]);
+  const inLcs = new Array(m).fill(false);
+  let i=0,j=0;
+  while(i<m && j<n){
+    if(ref[i]===typed[j]){ inLcs[i]=true; i++; j++; }
+    else if(dp[i+1][j]>=dp[i][j+1]) i++;
+    else j++;
+  }
+  const hit = inLcs.filter(Boolean).length;
+  const pct = Math.round(hit/Math.max(1,m)*100);
+  wSaveBest(pct);
+  let html = `<div class="note"><b>Khớp ${pct}%</b> phần khung cố định (${hit}/${m} từ, thứ tự đúng)${pct>=90?" — 🎉 coi như THUỘC khung này!":pct>=60?" — khá rồi, xem chỗ đỏ bên dưới rồi gõ lại.":" — chưa thuộc, quay lại mức 2 luyện thêm nhé."}</div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;line-height:2">`;
+  refWords.forEach((w,k)=>{
+    html += inLcs[k] ? escapeHtml(w)+" " : `<span style="color:#b91c1c;font-weight:600;text-decoration:underline dotted">${escapeHtml(w)}</span> `;
+  });
+  html += `</div><div class="qvn" style="display:block;margin-top:6px">Từ <span style="color:#b91c1c">đỏ gạch chấm</span> = bạn gõ thiếu/sai vị trí. (Chỗ điền-theo-đề không chấm.)</div>`;
+  $("wcl-cmp").innerHTML = html;
+  renderWClozePillsOnly();
 }
 
 /* ================= GRAMMAR & VOCABULARY (8 đề tủ) ================= */

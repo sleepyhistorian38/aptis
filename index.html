@@ -17964,11 +17964,19 @@ function bankRevealAll(show){
 const WD = (window.APTIS && window.APTIS.writing) || null;
 function wSegsHtml(segs){
   return segs.map(s => s.lbl
-    ? `<b style="color:#475569">${escapeHtml(s.t).replace(/\n/g, "<br>")}</b>`
+    ? `<div style="margin:14px -6px 8px;padding:5px 12px;background:#f1f5f9;border-left:3px solid var(--purple);border-radius:6px;font-weight:700;color:#334155;font-size:13.5px">${escapeHtml(s.t.replace(/^\n+/, ""))}</div>`
     : s.fix
     ? escapeHtml(s.t).replace(/\n/g, "<br>")
     : `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">${escapeHtml(s.t)}</span>`
   ).join("");
+}
+function wVnHtml(vn){
+  let t = escapeHtml(vn);
+  t = t.replace(/\s*✅\s*/g, '<br><span style="color:#15803d;font-weight:700">✅ </span>');
+  t = t.replace(/\s*⚠\s*/g, '<br><span style="color:#b45309;font-weight:700">⚠ </span>');
+  t = t.replace(/\s*Ví dụ/g, "<br><b>Ví dụ</b>");
+  t = t.replace(/\s*·\s*/g, "<br>&nbsp;&nbsp;• ");
+  return t;
 }
 function goWriting(sec){
   if(!confirmLeave()) return;
@@ -18009,10 +18017,31 @@ function goWriting(sec){
   fh += `<div class="note">Bấm vào ô mờ để hiện câu trả lời gợi ý — trả lời NGẮN (1–5 từ), không viết cả câu dài.</div></div>`;
   // Templates P2-P4
   WD.templates.forEach(t=>{
-    fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(t.title)}</b></div>
-      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin:8px 0;line-height:1.9">${wSegsHtml(t.segments)}</div>
-      <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Xem nghĩa tiếng Việt</summary>
-        <div class="qvn" style="display:block;margin-top:6px">${escapeHtml(t.vn)}</div></details></div>`;
+    const nWords = t.segments.filter(s=>s.fix && !s.lbl).flatMap(s=>s.t.split(/\s+/)).filter(w=>/[A-Za-z]/.test(w)).length;
+    const star = t.title.includes("⭐");
+    let chips = "";
+    if(t.id==="p3u"){
+      chips = `<div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px">` + [
+        ["Tell me / When / How do you…", "① thói quen"],
+        ["first film / most exciting / a time you…", "①b quá khứ"],
+        ["favourite / most interesting…", "mở My favourite…"],
+        ["Should I / How can I / suggestions…", "② lời khuyên"],
+        ["What do you think / agree / Is it good…", "③ ý kiến"],
+      ].map(([q,k])=>`<span style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:3px 10px;font-size:13px">${q} → <b>${k}</b></span>`).join("") + `</div>`;
+    }
+    if(t.id==="p2u"){
+      chips = `<div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px">
+        <span style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:3px 10px;font-size:13px">đề thường → <b>BẢN HIỆN TẠI</b></span>
+        <span style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:3px 10px;font-size:13px">“the last time…” → <b>BẢN QUÁ KHỨ</b> (toàn bài chia quá khứ)</span></div>`;
+    }
+    fh += `<div class="kitem"${star?' style="border:1.5px solid var(--purple);border-radius:12px"':''}>
+      <div class="qline" style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap">
+        <b>${escapeHtml(t.title)}</b>
+        <span class="qvn" style="display:inline;white-space:nowrap">📚 thuộc lòng ≈ ${nWords} từ</span></div>
+      ${chips}
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;margin:8px 0;line-height:2.05">${wSegsHtml(t.segments)}</div>
+      <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Cách dùng & ví dụ (bấm mở)</summary>
+        <div class="qvn" style="display:block;margin-top:6px;line-height:1.8">${wVnHtml(t.vn)}</div></details></div>`;
   });
   // bảng cô đọng Part 2
   if(WD.part2Types){
@@ -18110,7 +18139,7 @@ function wClozeGapHtml(t){
   let html = `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;line-height:2.2">`;
   tokens.forEach((tk,i)=>{
     if(tk.type==="br"){ html += "<br>"; return; }
-    if(tk.type==="lbl"){ html += `<b style="color:#475569">${escapeHtml(tk.txt)}</b> `; return; }
+    if(tk.type==="lbl"){ html += `<div style="margin:14px -6px 8px;padding:5px 12px;background:#f1f5f9;border-left:3px solid var(--purple);border-radius:6px;font-weight:700;color:#334155;font-size:13.5px">${escapeHtml(tk.txt)}</div>`; return; }
     if(tk.type==="slot"){ html += `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">${escapeHtml(tk.txt)}</span> `; return; }
     if(hideSet.has(i)){
       const bare = wNorm(tk.txt);

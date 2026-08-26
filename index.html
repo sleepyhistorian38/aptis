@@ -15415,6 +15415,21 @@ window.APTIS.writing = {
  ],
  "templates": [
   {
+   "id": "p2u",
+   "title": "P2 ⭐ KHUNG VẠN NĂNG — 1 câu tự chế + 2 câu thuộc lòng, dùng cho MỌI đề Part 2 (✎ app tổng hợp từ mẹo tủ)",
+   "segments": [
+    {
+     "t": "CÂU 1 (5–10 từ): chép lại câu hỏi của đề, bỏ từ để hỏi, đổi ngôi, điền đáp án ngắn",
+     "fix": false
+    },
+    {
+     "t": " I really like it because it is interesting and very good for me. Moreover, it always makes me feel relaxed and happy.",
+     "fix": true
+    }
+   ],
+   "vn": "Câu 1 tự chế theo mẹo tủ 'đề bài chính là gợi ý', 2 câu sau học thuộc chết (20 từ) → tổng 25–30 từ. Ví dụ câu 1 cho cả 6 dạng — Thứ bạn thích: My favourite painting is a picture of my English class. · Khi nào/ở đâu: I usually use a computer in the evening at home. · Lần cuối: The last time I went to the museum was two months ago. · Tại sao: I love travelling (2 câu sau chính là phần lý do). · Rảnh/sở thích: In my free time, I usually read books and play badminton. · Dùng làm gì: I usually use the Internet for work and entertainment."
+  },
+  {
    "id": "p2b",
    "title": "Part 2 — khung khi đề hỏi 1 CÂU CỤ THỂ (Tell me a painting/photo that you like… — dạng hay gặp thi thật)",
    "segments": [
@@ -17682,7 +17697,7 @@ function goWriting(sec){
   // bảng cô đọng Part 2
   if(WD.part2Types){
     fh += `<h2 style="margin:26px 0 6px">🗂 Part 2 cô đọng — quét cả 43 file club chỉ còn 6 DẠNG câu hỏi</h2>
-      <div class="note">Vào thi gặp đề Part 2 nào cũng chỉ cần: nhận ra nó thuộc dạng nào → ốp khung của dạng đó (luyện từng khung ở mục Đục lỗ phía trên).</div>`;
+      <div class="note">Vào thi gặp đề Part 2 nào cũng chỉ cần: nhận ra nó thuộc dạng nào → ốp khung của dạng đó (luyện từng khung ở mục Đục lỗ phía trên). Lười nhớ 6 dạng? Học mỗi khung ⭐ VẠN NĂNG (đầu danh sách khung phía trên) — 1 câu tự chế + 2 câu thuộc lòng là đủ mọi đề.</div>`;
     WD.part2Types.forEach(ty=>{
       fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(ty.name)}</b>
           <button class="btn secondary" style="padding:4px 12px;font-size:13px;margin-left:10px" onclick="wClozeGo('${ty.tpl}',1)">⌨️ Luyện khung dạng này</button></div>`;
@@ -17722,7 +17737,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;

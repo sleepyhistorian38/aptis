@@ -15715,6 +15715,37 @@ window.APTIS.writing = {
    "vn": "Xin chào, tôi tên là… Tôi rất vui được nói về chủ đề này. Đây là một chủ đề rất hay và ý nghĩa với tôi. Tôi thích… Theo tôi, bạn nên dành nhiều thời gian và suy nghĩ nhiều hơn về… Vì tôi nghĩ nó sẽ có ích cho bạn sau này."
   },
   {
+   "id": "p3u",
+   "title": "P3 ⭐ KHUNG VẠN NĂNG — câu 1 tự chế + chọn 2 trong 3 câu đuôi thuộc lòng (✎ app tổng hợp từ mẹo tủ)",
+   "segments": [
+    {
+     "t": "CÂU 1 (8–12 từ): chép lại câu hỏi, bỏ từ để hỏi, đổi ngôi + đáp án ngắn",
+     "fix": false
+    },
+    {
+     "t": " ĐUÔI A: In my opinion, it is really interesting and useful for everyone.",
+     "fix": true
+    },
+    {
+     "t": "\nĐUÔI B: It also gives ",
+     "fix": true
+    },
+    {
+     "t": "me / you — theo ngôi câu hỏi",
+     "fix": false
+    },
+    {
+     "t": " a good chance to make new friends and learn many new things.",
+     "fix": true
+    },
+    {
+     "t": "\nĐUÔI C: What about you? I hope you can share your ideas with me soon.",
+     "fix": true
+    }
+   ],
+   "vn": "MỖI câu trả lời = câu 1 tự chế + 2 TRONG 3 đuôi (≈35 từ, chuẩn 30–40); 3 câu trả lời đảo tổ hợp (câu 1: A+B · câu 2: B+C · câu 3: A+C) để không lặp nguyên xi. Cả tủ có 106 câu hỏi P3 nhưng chỉ 3 KIỂU — cách mở câu 1 theo kiểu: ① KINH NGHIỆM (When/What/Tell me… — 65 câu): chép câu hỏi thành câu kể: 'I have kept this picture for ten years because…' · ② LỜI KHUYÊN (Should I…? — 14 câu): 'I think you should + việc đó' · ③ Ý KIẾN (What's your opinion? — 16 câu): 'I somewhat agree with this idea' hoặc 'I think it is a good idea'. Câu trả lời ĐẦU TIÊN có thể thêm chào hỏi của tủ: 'Hi + tên. Nice to meet you. My name is…'"
+  },
+  {
    "id": "p3a",
    "title": "Part 3 — Mẫu 1 (mỗi câu trả lời 30–40 từ)",
    "segments": [
@@ -17737,7 +17768,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ VẠN NĂNG", p3a:"P3 · mẫu 1", p3b:"P3 · mẫu 2", p4a:"P4 · email bạn", p4b:"P4 · email quản lý"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;

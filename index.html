@@ -207,10 +207,11 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <h3>🗣️ Speaking</h3>
       <div class="meta">Tài liệu đã có: 36 bài mẫu + mẹo thi</div>
     </div>
-    <div class="card" style="opacity:.65">
-      <span class="tag key">SẮP CÓ</span>
+    <div class="card" style="cursor:pointer" onclick="goWriting()">
+      <span class="tag sim">SẴN SÀNG</span>
       <h3>✍️ Writing</h3>
-      <div class="meta">Tài liệu đã có: 19 đề club + bài viết mẫu</div>
+      <div class="meta">4 phần · 50 phút · 1 bộ khung dùng cho mọi đề</div>
+      <div class="meta">Cấu trúc đề + khung xương chung + 12 câu Part 1 tủ (đề club sẽ thêm sau)</div>
     </div>
   </div>
   <div class="note">Muốn xây tiếp kỹ năng nào, nhắn Claude làm theo đúng mô hình của Listening — dữ liệu sẽ nằm ở <code>data/&lt;kỹ năng&gt;.js</code>.</div>
@@ -468,6 +469,15 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
     <button class="btn small secondary" onclick="bankRevealAll(false)">Ẩn tất cả</button>
   </div>
   <div id="bank-list"></div>
+</div>
+
+<!-- ============ WRITING HOME ============ -->
+<div id="scr-whome" class="page">
+  <div class="backbar" id="nav-whome"></div>
+  <h1>✍️ Aptis Writing</h1>
+  <p class="sub">Bước 1: thuộc CẤU TRÚC ĐỀ và BỘ KHUNG XƯƠNG dùng chung cho mọi chủ đề — tài liệu khẳng định thuộc bộ khung này là đủ đạt B1. Đề từng club sẽ thêm ở bước sau.</p>
+  <div id="wsec-structure"></div>
+  <div id="wsec-frame"></div>
 </div>
 
 <!-- ============ GRAMMAR HOME ============ -->
@@ -15299,10 +15309,356 @@ window.APTIS.grammar = {
 
 </script>
 <script>
+window.APTIS = window.APTIS || {};
+window.APTIS.writing = {
+ "src": "0. Bài viết mẫu Aptis Esol.docx — \"học thuộc bài mẫu này để áp dụng với mọi đề thi bài viết là đủ đạt mức B1\"",
+ "structure": [
+  {
+   "part": "Part 1",
+   "task": "Trả lời 5 câu hỏi cá nhân (dạng tin nhắn)",
+   "words": "1–5 từ mỗi câu",
+   "time": "~3 phút",
+   "note": "Tài liệu khẳng định: đề chỉ lấy trong 12 câu hỏi tủ bên dưới (+ câu ví dụ How are you? có sẵn)."
+  },
+  {
+   "part": "Part 2",
+   "task": "Điền form giới thiệu bản thân về chủ đề của club",
+   "words": "20–30 từ",
+   "time": "~7 phút",
+   "note": "Có khung chung — chỉ thay tên chủ đề (bỏ chữ club) vào các chỗ trống."
+  },
+  {
+   "part": "Part 3",
+   "task": "Trò chuyện trong nhóm chat của club — trả lời 3 câu hỏi liên tiếp",
+   "words": "30–40 từ mỗi câu",
+   "time": "~10 phút",
+   "note": "Mẹo tài liệu: CHÉP LẠI câu đầu tiên của đề, bỏ từ để hỏi, biến đổi ngôi — đề bài chính là gợi ý (Part 4 cũng vậy)."
+  },
+  {
+   "part": "Part 4",
+   "task": "Nhận thông báo của club → viết 2 email: cho BẠN (thân mật) và cho QUẢN LÝ club (trang trọng)",
+   "words": "email bạn ~50 từ · email quản lý 120–150 từ",
+   "time": "~30 phút (quan trọng nhất)",
+   "note": "Khung email cố định ~80% — chỉ điền tên club, nội dung thông báo, cảm xúc buồn/vui và 2-3 đề xuất. Tài liệu dặn: học tủ sẵn mấy cái đề xuất để đối phó."
+  }
+ ],
+ "part1": [
+  {
+   "q": "What is the weather like today?",
+   "vn": "Thời tiết hôm nay như thế nào?",
+   "a": "It's sunny / rainy…"
+  },
+  {
+   "q": "What is your favourite colour?",
+   "vn": "Màu sắc yêu thích?",
+   "a": "My favorite color is pink / green / red…"
+  },
+  {
+   "q": "What do you like to do in the evening?",
+   "vn": "Buổi tối thích làm gì?",
+   "a": "Reading books / Drinking tea…"
+  },
+  {
+   "q": "What is your favourite time of year?",
+   "vn": "Mùa yêu thích trong năm?",
+   "a": "Spring / Summer / Autumn / Winter"
+  },
+  {
+   "q": "What is your favourite food?",
+   "vn": "Món ăn yêu thích?",
+   "a": "Donut / Pizza / Snack / Steak…"
+  },
+  {
+   "q": "What do you usually do in the morning?",
+   "vn": "Thường làm gì buổi sáng?",
+   "a": "Eat breakfast / go for a run…"
+  },
+  {
+   "q": "What is your favorite sport?",
+   "vn": "Môn thể thao yêu thích?",
+   "a": "Football / Volleyball / Badminton…"
+  },
+  {
+   "q": "What is your favorite hobby?",
+   "vn": "Sở thích?",
+   "a": "Shopping / Singing / Drawing…"
+  },
+  {
+   "q": "What do you like to do in your free time?",
+   "vn": "Lúc rảnh rỗi thích làm gì?",
+   "a": "Shopping / Singing / Drawing…"
+  },
+  {
+   "q": "Where do you like to go on holiday?",
+   "vn": "Nghỉ lễ thích đi đâu?",
+   "a": "Sam Son beach…"
+  },
+  {
+   "q": "What do you usually do in the evening?",
+   "vn": "Thích làm gì buổi tối?",
+   "a": "Listen to music…"
+  },
+  {
+   "q": "What is your job?",
+   "vn": "Nghề nghiệp?",
+   "a": "I am a teacher / a student…"
+  }
+ ],
+ "templates": [
+  {
+   "id": "p2",
+   "title": "Part 2 — khung 20–30 từ (dùng cho mọi chủ đề)",
+   "segments": [
+    {
+     "t": "Hello, My name is ",
+     "fix": true
+    },
+    {
+     "t": "tên bạn",
+     "fix": false
+    },
+    {
+     "t": ". I am happy to talk to you about the topic ",
+     "fix": true
+    },
+    {
+     "t": "chủ đề đề bài cho",
+     "fix": false
+    },
+    {
+     "t": ". This is a very good and meaningful topic for me. I like ",
+     "fix": true
+    },
+    {
+     "t": "tên chủ đề — bỏ chữ club đi",
+     "fix": false
+    },
+    {
+     "t": ". In my opinion, you should spend more time and think more about ",
+     "fix": true
+    },
+    {
+     "t": "chủ đề đề bài cho",
+     "fix": false
+    },
+    {
+     "t": ". Because I think it will be useful for you in the future.",
+     "fix": true
+    }
+   ],
+   "vn": "Xin chào, tôi tên là… Tôi rất vui được nói về chủ đề này. Đây là một chủ đề rất hay và ý nghĩa với tôi. Tôi thích… Theo tôi, bạn nên dành nhiều thời gian và suy nghĩ nhiều hơn về… Vì tôi nghĩ nó sẽ có ích cho bạn sau này."
+  },
+  {
+   "id": "p3a",
+   "title": "Part 3 — Mẫu 1 (mỗi câu trả lời 30–40 từ)",
+   "segments": [
+    {
+     "t": "Hi ",
+     "fix": true
+    },
+    {
+     "t": "tên người hỏi",
+     "fix": false
+    },
+    {
+     "t": ". Nice to meet you. My name is ",
+     "fix": true
+    },
+    {
+     "t": "tên bạn",
+     "fix": false
+    },
+    {
+     "t": ". ",
+     "fix": true
+    },
+    {
+     "t": "CHÉP LẠI câu đầu tiên ở đề, bỏ từ để hỏi, biến đổi ngôi",
+     "fix": false
+    },
+    {
+     "t": " I really like ",
+     "fix": true
+    },
+    {
+     "t": "chủ đề / sự việc được nhắc trong đề",
+     "fix": false
+    },
+    {
+     "t": " because it is funny / good for health… ",
+     "fix": true
+    },
+    {
+     "t": "lí do thích",
+     "fix": false
+    }
+   ],
+   "vn": "Chào bạn, rất vui được gặp. Tôi tên là… (chép lại câu hỏi của đề thành câu trần thuật). Tôi thực sự thích… vì nó vui / tốt cho sức khỏe… — đề bài chính là gợi ý."
+  },
+  {
+   "id": "p3b",
+   "title": "Part 3 — Mẫu 2 (thay thế, cùng công thức)",
+   "segments": [
+    {
+     "t": "Hello, I am so happy to be a new member of the club! Regarding your question, I believe it will be information to help you understand me. ",
+     "fix": true
+    },
+    {
+     "t": "CHÉP LẠI câu đầu tiên ở đề, bỏ từ để hỏi, biến đổi ngôi",
+     "fix": false
+    },
+    {
+     "t": " I really like ",
+     "fix": true
+    },
+    {
+     "t": "chủ đề / sự việc được nhắc trong đề",
+     "fix": false
+    },
+    {
+     "t": " because it is funny / good for health… ",
+     "fix": true
+    },
+    {
+     "t": "lí do thích",
+     "fix": false
+    }
+   ],
+   "vn": "Tôi rất vui khi là thành viên mới của câu lạc bộ! Về câu hỏi của bạn… (chép lại câu đầu của đề, đổi ngôi), tôi thực sự thích… vì…"
+  },
+  {
+   "id": "p4a",
+   "title": "Part 4 — Email 1: gửi BẠN (thân mật, ~50 từ)",
+   "segments": [
+    {
+     "t": "Hi ",
+     "fix": true
+    },
+    {
+     "t": "tên bất kì 1 người bạn",
+     "fix": false
+    },
+    {
+     "t": ",\nHow are you these days?\nHave you received the notice of the ",
+     "fix": true
+    },
+    {
+     "t": "tên club trong đề",
+     "fix": false
+    },
+    {
+     "t": "? To be honest, I was ",
+     "fix": true
+    },
+    {
+     "t": "sad / happy — tùy tin buồn hay vui",
+     "fix": false
+    },
+    {
+     "t": " when I heard about this news. I think I should send an email to the club manager to give my ideas.\nPlease write back to me as soon as possible.\nLove,\n",
+     "fix": true
+    },
+    {
+     "t": "ký tên",
+     "fix": false
+    }
+   ],
+   "vn": "Chào bạn, dạo này thế nào? Bạn nhận được thông báo của club… chưa? Thật lòng thì mình buồn/vui khi nghe tin này. Mình nghĩ nên gửi email cho quản lý club để nêu ý kiến. Trả lời mình sớm nhé. Thân ái, ký tên."
+  },
+  {
+   "id": "p4b",
+   "title": "Part 4 — Email 2: gửi QUẢN LÝ club (trang trọng, 120–150 từ)",
+   "segments": [
+    {
+     "t": "Dear Sir (madam),\nMy name is ",
+     "fix": true
+    },
+    {
+     "t": "tên — trùng tên ký ở email 1",
+     "fix": false
+    },
+    {
+     "t": ". I have been a member of the ",
+     "fix": true
+    },
+    {
+     "t": "tên club",
+     "fix": false
+    },
+    {
+     "t": " for 5 months. I am writing this email to express my feelings and suggestions about the notice that I have received from our club recently.\nAccording to the announcement, ",
+     "fix": true
+    },
+    {
+     "t": "tóm tắt nội dung thông báo trong đề",
+     "fix": false
+    },
+    {
+     "t": ". Frankly, I think the plan/problem is ",
+     "fix": true
+    },
+    {
+     "t": "nhận xét ngắn",
+     "fix": false
+    },
+    {
+     "t": " and I felt ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc",
+     "fix": false
+    },
+    {
+     "t": " when I heard about it.\nIn my opinion, we should ",
+     "fix": true
+    },
+    {
+     "t": "đề xuất 1 + giải thích tại sao",
+     "fix": false
+    },
+    {
+     "t": ". Besides, we should ",
+     "fix": true
+    },
+    {
+     "t": "đề xuất 2, 3 nếu có",
+     "fix": false
+    },
+    {
+     "t": ".\nI hope that my suggestions are useful for you to keep members satisfied.\nI look forward to hearing from you if my recommendations are accepted.\nBest regards,\n",
+     "fix": true
+    },
+    {
+     "t": "ký tên",
+     "fix": false
+    }
+   ],
+   "vn": "Kính gửi ông/bà, tôi là… — thành viên club 5 tháng. Tôi viết email bày tỏ cảm xúc và đề xuất về thông báo gần đây. Theo thông báo… Thật lòng tôi nghĩ kế hoạch/vấn đề là… và tôi cảm thấy… Theo tôi chúng ta nên… (đề xuất 1 + lý do). Ngoài ra nên… (đề xuất 2, 3). Hy vọng đề xuất hữu ích để giữ các thành viên hài lòng. Mong nhận phản hồi. Trân trọng, ký tên."
+  }
+ ],
+ "suggestions": [
+  {
+   "en": "I suggest we invite Mr. John, who inspires talent. I believe he will convince the audience.",
+   "vn": "Mời một người nổi tiếng/truyền cảm hứng (đổi tên theo ngữ cảnh)"
+  },
+  {
+   "en": "We may post announcements on social networks like Facebook and Instagram.",
+   "vn": "Đăng thông báo lên mạng xã hội để thu hút thành viên"
+  },
+  {
+   "en": "Finally, I suggest we have a meeting to discuss this in more detail.",
+   "vn": "Chốt bằng đề xuất họp bàn thêm chi tiết — dùng được cho MỌI đề"
+  }
+ ]
+};
+
+</script>
+<script>
 "use strict";
 const D = window.APTIS.listening;
 const $ = id => document.getElementById(id);
-const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview"];
+const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview","scr-whome"];
 
 let test = null;          // current full test
 let practice = false;
@@ -16863,6 +17219,61 @@ function bankRevealAll(show){
   document.querySelectorAll("#bank-list .ans, #bank-list .ansblock").forEach(el=>{
     if(!el.dataset.noblur) el.classList.toggle("blur", !show);
   });
+}
+
+/* ================= WRITING (khung xương chung) ================= */
+const WD = (window.APTIS && window.APTIS.writing) || null;
+function wSegsHtml(segs){
+  return segs.map(s => s.fix
+    ? escapeHtml(s.t).replace(/\n/g, "<br>")
+    : `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">${escapeHtml(s.t)}</span>`
+  ).join("");
+}
+function goWriting(sec){
+  if(!confirmLeave()) return;
+  stopTimer(); stopAudio();
+  if(!WD){ alert("Chưa có dữ liệu Writing"); return; }
+  setNav("nav-whome", ["Writing"], "Trang chủ", "goRoot()");
+  // ---- cấu trúc bài thi ----
+  let sh = `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · 50 phút)</h2><div class="grid">`;
+  WD.structure.forEach(p=>{
+    sh += `<div class="card"><span class="tag sim">${escapeHtml(p.part)}</span>
+      <h3>${escapeHtml(p.task)}</h3>
+      <div class="meta"><b>${escapeHtml(p.words)}</b> · ${escapeHtml(p.time)}</div>
+      <div class="meta">${escapeHtml(p.note)}</div></div>`;
+  });
+  sh += `</div>`;
+  $("wsec-structure").innerHTML = sh;
+  // ---- khung xương ----
+  let fh = `<h2 style="margin:26px 0 6px">🧩 Bộ khung xương chung — học thuộc 1 lần, dùng cho MỌI đề</h2>
+    <div class="note">Nguồn: ${escapeHtml(WD.src)}</div>
+    <div class="note" style="background:#f1f5f9">Cách đọc: chữ thường = phần <b>CỐ ĐỊNH</b> (học thuộc y nguyên) ·
+      <span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">khung vàng</span> = chỗ <b>ĐIỀN THEO ĐỀ</b> (tên bạn, tên club, nội dung thông báo…)</div>`;
+  // Part 1
+  fh += `<div class="kitem"><div class="qline"><b>Part 1 — 12 câu hỏi tủ (trả lời 1–5 từ; đề chỉ lấy trong số này)</b></div>`;
+  WD.part1.forEach((x,i)=>{
+    fh += `<div class="qline" style="margin-top:8px"><span class="num">${i+1}.</span>${escapeHtml(x.q)}
+        <span class="qvn" style="display:inline"> · ${escapeHtml(x.vn)}</span></div>
+      <div class="ansblock blur" onclick="this.classList.toggle('blur')">${escapeHtml(x.a)}</div>`;
+  });
+  fh += `<div class="note">Bấm vào ô mờ để hiện câu trả lời gợi ý — trả lời NGẮN (1–5 từ), không viết cả câu dài.</div></div>`;
+  // Templates P2-P4
+  WD.templates.forEach(t=>{
+    fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(t.title)}</b></div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin:8px 0;line-height:1.9">${wSegsHtml(t.segments)}</div>
+      <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Xem nghĩa tiếng Việt</summary>
+        <div class="qvn" style="display:block;margin-top:6px">${escapeHtml(t.vn)}</div></details></div>`;
+  });
+  // đề xuất tủ
+  fh += `<div class="kitem"><div class="qline"><b>💡 Đề xuất TỦ cho Email 2 (Part 4) — "học tủ mấy cái đề xuất này để đối phó"</b></div>`;
+  WD.suggestions.forEach((s,i)=>{
+    fh += `<div class="qline" style="margin-top:8px"><span class="num">${i+1}.</span>${escapeHtml(s.en)}
+      <span class="qvn" style="display:inline"> · ${escapeHtml(s.vn)}</span></div>`;
+  });
+  fh += `</div>`;
+  $("wsec-frame").innerHTML = fh;
+  showScreen("scr-whome");
+  if(sec && $(sec)) $(sec).scrollIntoView({behavior:"smooth"});
 }
 
 /* ================= GRAMMAR & VOCABULARY (8 đề tủ) ================= */

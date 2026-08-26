@@ -15423,11 +15423,21 @@ window.APTIS.writing = {
      "fix": false
     },
     {
-     "t": " BẢN HIỆN TẠI (đa số đề): I really enjoy it because it helps me relax after a long day. Moreover, it is a great way to make my life more colorful.",
+     "t": " BẢN HIỆN TẠI (đa số đề): ",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "I really enjoy it because it helps me relax after a long day. Moreover, it is a great way to make my life more colorful.",
      "fix": true
     },
     {
-     "t": "\nBẢN QUÁ KHỨ (đề “the last time…”): I really enjoyed it because it helped me relax after a long day. It was a great way to make my life more colorful.",
+     "t": "\nBẢN QUÁ KHỨ (đề “the last time…”): ",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "I really enjoyed it because it helped me relax after a long day. It was a great way to make my life more colorful.",
      "fix": true
     }
    ],
@@ -15727,11 +15737,21 @@ window.APTIS.writing = {
      "fix": false
     },
     {
-     "t": " ĐUÔI A: From my point of view, it is a wonderful choice for anyone in our club.",
+     "t": " ĐUÔI A: ",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "From my point of view, it is a wonderful choice for anyone in our club.",
      "fix": true
     },
     {
-     "t": "\nĐUÔI B: Besides, it has helped ",
+     "t": "\nĐUÔI B: ",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "Besides, it has helped ",
      "fix": true
     },
     {
@@ -15743,7 +15763,12 @@ window.APTIS.writing = {
      "fix": true
     },
     {
-     "t": "\nĐUÔI C: How do you feel about it? Drop me a message when you are free!",
+     "t": "\nĐUÔI C: ",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "How do you feel about it? Drop me a message when you are free!",
      "fix": true
     }
    ],
@@ -17815,7 +17840,9 @@ function bankRevealAll(show){
 /* ================= WRITING (khung xương chung) ================= */
 const WD = (window.APTIS && window.APTIS.writing) || null;
 function wSegsHtml(segs){
-  return segs.map(s => s.fix
+  return segs.map(s => s.lbl
+    ? `<b style="color:#475569">${escapeHtml(s.t).replace(/\n/g, "<br>")}</b>`
+    : s.fix
     ? escapeHtml(s.t).replace(/\n/g, "<br>")
     : `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">${escapeHtml(s.t)}</span>`
   ).join("");
@@ -17949,6 +17976,7 @@ function wClozeGapHtml(t){
     if(!seg.fix){ tokens.push({type:"slot", txt: seg.t}); return; }
     seg.t.split(/(\n)/).forEach(part=>{
       if(part==="\n"){ tokens.push({type:"br"}); return; }
+      if(seg.lbl){ if(part.trim()) tokens.push({type:"lbl", txt: part.trim()}); return; }
       part.split(/\s+/).filter(Boolean).forEach(w=>tokens.push({type:"w", txt:w}));
     });
   });
@@ -17959,6 +17987,7 @@ function wClozeGapHtml(t){
   let html = `<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;line-height:2.2">`;
   tokens.forEach((tk,i)=>{
     if(tk.type==="br"){ html += "<br>"; return; }
+    if(tk.type==="lbl"){ html += `<b style="color:#475569">${escapeHtml(tk.txt)}</b> `; return; }
     if(tk.type==="slot"){ html += `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic">${escapeHtml(tk.txt)}</span> `; return; }
     if(hideSet.has(i)){
       const bare = wNorm(tk.txt);
@@ -18032,7 +18061,7 @@ function wClozeLv3Html(t){
 }
 function wCompare(){
   const t = WD.templates.find(x=>x.id===wcl.tpl);
-  const refWords = t.segments.filter(s=>s.fix).flatMap(s=>s.t.split(/\s+/)).filter(w=>wNorm(w));
+  const refWords = t.segments.filter(s=>s.fix && !s.lbl).flatMap(s=>s.t.split(/\s+/)).filter(w=>wNorm(w));
   const typedRaw = ($("wcl-typed").value||"").split(/\s+/).filter(w=>wNorm(w));
   const ref = refWords.map(wNorm), typed = typedRaw.map(wNorm);
   // LCS so khớp từ

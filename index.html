@@ -16207,6 +16207,23 @@ window.APTIS.writing = {
   }
  ],
  "part2Note": "Ngoại lệ: College club hỏi lịch học + môn muốn học (trả lời riêng theo bài mẫu); Movie club bài mẫu là đoạn tự giới thiệu (dùng khung giới thiệu); Sports club nguồn ghi 'bị thiếu, bổ sung sau'; Car club bài mẫu dùng luôn khung giới thiệu → dạng nào bí cứ về khung giới thiệu là an toàn.",
+ "p4Scenarios": [
+  {
+   "name": "Kịch bản 1 — CLB cần HỖ TRỢ SỰ KIỆN sắp tới (mời ai, tổ chức như nào…)",
+   "en": "To make this event successful, I suggest we **hold a group meeting** to share ideas and divide tasks equally. Besides, **setting up a small team** for easy collaboration. Finally, **everyone should be encouraged to contribute** any useful resources or contacts they have.",
+   "vn": "Để sự kiện thành công: họp nhóm chia sẻ ý tưởng + chia việc đều; lập nhóm nhỏ để dễ phối hợp; khuyến khích mọi người đóng góp nguồn lực/mối quan hệ."
+  },
+  {
+   "name": "Kịch bản 2 — CLB THAY ĐỔI LỊCH đột xuất (hoãn, huỷ, sớm hơn)",
+   "en": "I hope you will **keep the plan occurring as usual**. We need to prepare a clear **timeline** and have a **backup solution** in case there are further changes. If necessary, we can **hold an online meeting** to handle any urgent issues. Additionally, it would be good to send **regular updates via email or the group chat** so everyone stays informed.",
+   "vn": "Mong vẫn giữ kế hoạch như cũ; chuẩn bị mốc thời gian rõ ràng + phương án dự phòng; cần thì họp online; cập nhật thường xuyên qua email/nhóm chat."
+  },
+  {
+   "name": "Kịch bản 3 — CLB XIN Ý KIẾN về 1 vấn đề (thu/tăng phí, chọn giữa 2 phương án…) → xác định vấn đề TÍCH CỰC hay TIÊU CỰC trước (để chọn cảm xúc pleased/concerned)",
+   "en": "To deal with this issue, I think we should **collect all members' opinions through an online survey**. Then, we can **arrange a meeting to discuss the pros and cons** of each option. It may also be useful to **invite senior members** to share their views.",
+   "vn": "Thu thập ý kiến thành viên qua khảo sát online; sắp xếp buổi họp bàn ưu/nhược điểm từng phương án; mời thành viên kỳ cựu chia sẻ quan điểm."
+  }
+ ],
  "suggestions": [
   {
    "en": "I suggest we invite Mr. John, who inspires talent. I believe he will convince the audience.",
@@ -17858,8 +17875,19 @@ function goWriting(sec){
     });
     if(WD.part2Note) fh += `<div class="note">⚠ ${escapeHtml(WD.part2Note)}</div>`;
   }
+  // 3 kịch bản Part 4
+  if(WD.p4Scenarios){
+    fh += `<h2 style="margin:26px 0 6px">📬 Part 4 — thông báo của club chỉ có 3 KỊCH BẢN (bảng tủ "3 vấn đề thường gặp")</h2>
+      <div class="note">Cách dùng với khung email quản lý: đọc thông báo → nhận diện kịch bản → lấy ý khối đó điền vào 2 ô đề xuất của khung ("From my point of view, it would be better if we… Another idea is to…"). Cụm <b>in đậm</b> là chìa khóa cần thuộc. ⚠ Khối tiếng Anh là nguyên văn tài liệu trung tâm (nhiều người dùng) — nên giữ Ý nhưng diễn đạt lại vài chỗ theo lời khung bản riêng của bạn.</div>`;
+    WD.p4Scenarios.forEach(sc=>{
+      const en = escapeHtml(sc.en).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+      fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(sc.name)}</b></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px 15px;margin:8px 0;line-height:1.8">${en}</div>
+        <div class="qvn" style="display:block">🇻🇳 ${escapeHtml(sc.vn)}</div></div>`;
+    });
+  }
   // đề xuất tủ
-  fh += `<div class="kitem"><div class="qline"><b>💡 Đề xuất TỦ cho Email 2 (Part 4) — "học tủ mấy cái đề xuất này để đối phó"</b></div>`;
+  fh += `<div class="kitem"><div class="qline"><b>💡 Đề xuất TỦ lẻ dùng kèm (từ bài mẫu các club)</b></div>`;
   WD.suggestions.forEach((s,i)=>{
     fh += `<div class="qline" style="margin-top:8px"><span class="num">${i+1}.</span>${escapeHtml(s.en)}
       <span class="qvn" style="display:inline"> · ${escapeHtml(s.vn)}</span></div>`;

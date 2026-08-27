@@ -18167,12 +18167,15 @@ function wClozeGapHtml(t){
 }
 function wGapCheck(el){
   if(wNorm(el.value)===wNorm(el.dataset.w)){
+    const gaps = [...document.querySelectorAll(".wgap")];
+    const next = gaps[gaps.indexOf(el) + 1];   // ô kế tiếp (trước khi ô này biến mất)
     const ok = document.createElement("span");
     ok.style.cssText = "color:#15803d;font-weight:600";
     ok.textContent = el.dataset.w + " ";
     el.replaceWith(ok);
     wcl.ok++;
     wClozeProgress();
+    if(next) next.focus();
   }
 }
 function wGapNext(el){

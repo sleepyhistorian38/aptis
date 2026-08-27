@@ -18206,19 +18206,34 @@ function renderWClozePillsOnly(){
   }).join("");
 }
 function wClozeLv3Html(t){
-  const slots = t.segments.filter(s=>!s.fix).map(s=>s.t);
-  return `<div class="note">Gõ lại CẢ BÀI từ trí nhớ (các chỗ điền-theo-đề cứ gõ đại nội dung bất kỳ — app chỉ chấm phần khung cố định). Gợi ý duy nhất: nghĩa tiếng Việt bên dưới.</div>
+  const slots = t.segments.filter(s=>!s.fix).map(s=>s.t.split(":")[0].trim());
+  return `<div class="note">Gõ lại CẢ BÀI từ trí nhớ. Đến chỗ điền-theo-đề thì <b>bấm (hoặc kéo) thẻ vàng</b> bên dưới thả vào bài — app chỉ chấm phần khung cố định, thẻ không bị chấm.</div>
     <details style="margin:8px 0"><summary class="qvn" style="cursor:pointer">🇻🇳 Nghĩa tiếng Việt (gợi ý)</summary>
       <div class="qvn" style="display:block;margin-top:6px">${escapeHtml(t.vn)}</div></details>
-    <div class="qvn" style="display:block;margin:4px 0">Các chỗ điền theo đề trong khung: ${slots.map(s=>`<span style="background:#fef3c7;border-radius:6px;padding:0 6px">${escapeHtml(s)}</span>`).join(" ")}</div>
-    <textarea id="wcl-typed" rows="10" spellcheck="false" style="width:100%;font:inherit;font-size:15px;border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-top:6px" placeholder="Gõ toàn bộ khung ${wTplLabel(t.id)} tại đây..."></textarea>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0" id="wcl-chips">${slots.map(s=>
+      `<span class="wchip" draggable="true" data-slot="${escapeHtml(s)}" onclick="wInsertChip(this)" ondragstart="wChipDrag(event,this)"
+        style="background:#fef3c7;border:1px dashed #d97706;border-radius:8px;padding:3px 12px;color:#92400e;font-style:italic;cursor:grab;user-select:none">${escapeHtml(s)}</span>`).join("")}</div>
+    <textarea id="wcl-typed" rows="10" spellcheck="false" style="width:100%;font:inherit;font-size:15px;border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-top:6px" placeholder="Gõ toàn bộ khung ${wTplLabel(t.id)} tại đây... (bấm thẻ vàng để chèn chỗ điền)"></textarea>
     <div style="margin-top:10px"><button class="btn" onclick="wCompare()">📊 So với bản gốc</button></div>
     <div id="wcl-cmp" style="margin-top:12px"></div>`;
+}
+function wInsertChip(el){
+  const ta = $("wcl-typed");
+  if(!ta) return;
+  const tok = " 【" + el.dataset.slot + "】 ";
+  const s = ta.selectionStart ?? ta.value.length, e = ta.selectionEnd ?? s;
+  ta.value = ta.value.slice(0, s) + tok + ta.value.slice(e);
+  ta.focus();
+  ta.selectionStart = ta.selectionEnd = s + tok.length;
+}
+function wChipDrag(ev, el){
+  ev.dataTransfer.setData("text/plain", " 【" + el.dataset.slot + "】 ");
 }
 function wCompare(){
   const t = WD.templates.find(x=>x.id===wcl.tpl);
   const refWords = t.segments.filter(s=>s.fix && !s.lbl).flatMap(s=>s.t.split(/\s+/)).filter(w=>wNorm(w));
-  const typedRaw = ($("wcl-typed").value||"").split(/\s+/).filter(w=>wNorm(w));
+  // bỏ các thẻ 【...】 (chỗ điền theo đề) khỏi bài gõ trước khi so
+  const typedRaw = ($("wcl-typed").value||"").replace(/【[^】]*】/g, " ").split(/\s+/).filter(w=>wNorm(w));
   const ref = refWords.map(wNorm), typed = typedRaw.map(wNorm);
   // LCS so khớp từ
   const m = ref.length, n = typed.length;
@@ -18236,11 +18251,20 @@ function wCompare(){
   const pct = Math.round(hit/Math.max(1,m)*100);
   wSaveBest(pct);
   let html = `<div class="note"><b>Khớp ${pct}%</b> phần khung cố định (${hit}/${m} từ, thứ tự đúng)${pct>=90?" — 🎉 coi như THUỘC khung này!":pct>=60?" — khá rồi, xem chỗ đỏ bên dưới rồi gõ lại.":" — chưa thuộc, quay lại mức 2 luyện thêm nhé."}</div>
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;line-height:2">`;
-  refWords.forEach((w,k)=>{
-    html += inLcs[k] ? escapeHtml(w)+" " : `<span style="color:#b91c1c;font-weight:600;text-decoration:underline dotted">${escapeHtml(w)}</span> `;
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;line-height:2.1">`;
+  // hiện bản gốc ĐÚNG CẤU TRÚC: từ cố định tô theo kết quả, thẻ vàng nằm đúng vị trí
+  let k = 0;
+  t.segments.forEach(s=>{
+    if(s.lbl){ html += `<div style="margin:10px -4px 6px;padding:4px 10px;background:#f1f5f9;border-left:3px solid var(--purple);border-radius:6px;font-weight:700;color:#334155;font-size:13px">${escapeHtml(s.t.replace(/^\n+/, ""))}</div>`; return; }
+    if(!s.fix){ html += `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:8px;padding:1px 10px;color:#92400e;font-style:italic">${escapeHtml(s.t.split(":")[0].trim())}</span> `; return; }
+    s.t.split(/(\n)/).forEach(part=>{
+      if(part==="\n"){ html += "<br>"; return; }
+      part.split(/\s+/).filter(w=>wNorm(w)).forEach(w=>{
+        html += inLcs[k++] ? escapeHtml(w)+" " : `<span style="color:#b91c1c;font-weight:600;text-decoration:underline dotted">${escapeHtml(w)}</span> `;
+      });
+    });
   });
-  html += `</div><div class="qvn" style="display:block;margin-top:6px">Từ <span style="color:#b91c1c">đỏ gạch chấm</span> = bạn gõ thiếu/sai vị trí. (Chỗ điền-theo-đề không chấm.)</div>`;
+  html += `</div><div class="qvn" style="display:block;margin-top:6px">Từ <span style="color:#b91c1c">đỏ gạch chấm</span> = bạn gõ thiếu/sai vị trí. Thẻ vàng = chỗ điền theo đề (không chấm).</div>`;
   $("wcl-cmp").innerHTML = html;
   renderWClozePillsOnly();
 }

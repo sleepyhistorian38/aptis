@@ -18158,7 +18158,8 @@ function wClozeGapHtml(t){
       part.split(/\s+/).filter(Boolean).forEach(w=>tokens.push({type:"w", txt:w}));
     });
   });
-  const idxCandidates = tokens.map((tk,i)=>tk.type==="w" && wNorm(tk.txt).length>=3 ? i : -1).filter(i=>i>=0);
+  const minLen = lv.hide >= 1 ? 1 : 3;   // mức khoét 100%: khoét MỌI từ, kể cả từ ngắn
+  const idxCandidates = tokens.map((tk,i)=>tk.type==="w" && wNorm(tk.txt).length>=minLen ? i : -1).filter(i=>i>=0);
   const nHide = Math.max(3, Math.round(idxCandidates.length * lv.hide));
   const hideSet = new Set(sample(idxCandidates, Math.min(nHide, idxCandidates.length)));
   wcl.total = hideSet.size; wcl.ok = 0; wcl.revealed = 0;

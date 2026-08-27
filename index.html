@@ -18130,12 +18130,32 @@ function wClozeGo(tpl, lv){
   if(lv) wcl.lv = lv;
   renderWCloze();
 }
+function wPartOf(id){ return id.startsWith("p2") ? "P2" : id.startsWith("p3") ? "P3" : "P4"; }
+function wTplShort(id){ return wTplLabel(id).replace(/^P\d\s*(⭐|·)?\s*/, ""); }
 function renderWCloze(){
   setNav("nav-wcloze", ["Writing", "Luyện thuộc khung"], "Writing", "goWriting()");
   const best = wBest();
-  let ph = `<div class="pillbar" style="flex-wrap:wrap">` + WD.templates.map(t=>
-      `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')">${wTplLabel(t.id)}</button>`
+  const curPart = wPartOf(wcl.tpl);
+  const PART_META = {
+    P2: {first: "p2u",  label: "Part 2 · form 20–30 từ"},
+    P3: {first: "p3u",  label: "Part 3 · chat 30–40 từ"},
+    P4: {first: "p4ua", label: "Part 4 · 2 email"},
+  };
+  let ph = `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
+      `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`
     ).join("") + `</div>`;
+  const inPart = WD.templates.filter(t=>wPartOf(t.id)===curPart);
+  const stars  = inPart.filter(t=>t.title.includes("⭐"));
+  const others = inPart.filter(t=>!t.title.includes("⭐"));
+  const chip = t => `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')" style="font-size:13.5px;padding:6px 14px">${wTplShort(t.id)}</button>`;
+  ph += `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-bottom:12px">`;
+  if(stars.length) ph += `<div style="background:#f5f3ff;border:1.5px solid var(--purple);border-radius:12px;padding:9px 13px">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--purple);margin-bottom:7px">⭐ KHUNG VẠN NĂNG — HỌC THUỘC</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${stars.map(chip).join("")}</div></div>`;
+  if(others.length) ph += `<div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:9px 13px">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:#64748b;margin-bottom:7px">MẪU THEO DẠNG / BẢN TỦ — THAM KHẢO</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${others.map(chip).join("")}</div></div>`;
+  ph += `</div>`;
   ph += `<div class="pillbar" style="flex-wrap:wrap">` + WCL_LVS.map(l=>{
       const b = best[wcl.tpl+"|"+l];
       return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
@@ -18231,7 +18251,8 @@ function wClozeProgress(){
 }
 function renderWClozePillsOnly(){
   const best = wBest();
-  const bar2 = $("wcl-pills").querySelectorAll(".pillbar")[1];
+  const bars = $("wcl-pills").querySelectorAll(".pillbar");
+  const bar2 = bars[bars.length - 1];
   if(bar2) bar2.innerHTML = WCL_LVS.map(l=>{
     const b = best[wcl.tpl+"|"+l];
     return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;

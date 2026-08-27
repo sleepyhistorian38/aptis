@@ -484,7 +484,7 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
 <div id="scr-wcloze" class="page">
   <div class="backbar" id="nav-wcloze"></div>
   <h1>⌨️ Luyện thuộc khung Writing</h1>
-  <p class="sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét 25% + gợi ý chữ đầu → mức 2 khoét 60% → mức 3 khoét 80% → mức 4 gõ lại cả bài từ trí nhớ. Đạt ≥90% ở mức 4 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
+  <p class="sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét 25% + gợi ý → mức 2 khoét 60% → mức 3 khoét 80% → mức 4 khoét 100% (mọi từ là ô điền, thẻ vàng giữ vị trí) → mức 5 gõ trắng cả bài. Đạt ≥90% ở mức 5 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
   <div id="wcl-pills"></div>
   <div id="wcl-body"></div>
 </div>
@@ -18088,9 +18088,11 @@ const WCL_LV = {
   1: {hide: 0.25, hint: true,  name: "Mức 1 · khoét 25% + gợi ý"},
   2: {hide: 0.60, hint: false, name: "Mức 2 · khoét 60%"},
   3: {hide: 0.80, hint: false, name: "Mức 3 · khoét 80%"},
-  4: {name: "Mức 4 · gõ cả bài"},
+  4: {hide: 1.00, hint: false, name: "Mức 4 · khoét 100% từng ô"},
+  5: {name: "Mức 5 · gõ cả bài"},
 };
-const WCL_TYPE_LV = 4;   // mức gõ cả bài
+const WCL_TYPE_LV = 5;   // mức gõ cả bài
+const WCL_LVS = [1, 2, 3, 4, 5];
 function wNorm(s){ return (s||"").toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9']+/g,""); }
 function wBest(){
   try{
@@ -18102,6 +18104,14 @@ function wBest(){
       b = nb;
       localStorage.aptisWBest = JSON.stringify(b);
       localStorage.aptisWBestMig4 = "1";
+    }
+    if(!localStorage.aptisWBestMig5){
+      // mức "gõ cả bài" đổi số 4→5 (chen mức khoét 100% từng ô): chuyển kỷ lục theo
+      const nb = {};
+      for(const k in b) nb[k.endsWith("|4") ? k.slice(0, -2) + "|5" : k] = b[k];
+      b = nb;
+      localStorage.aptisWBest = JSON.stringify(b);
+      localStorage.aptisWBestMig5 = "1";
     }
     return b;
   }catch(e){ return {}; }
@@ -18126,7 +18136,7 @@ function renderWCloze(){
   let ph = `<div class="pillbar" style="flex-wrap:wrap">` + WD.templates.map(t=>
       `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')">${wTplLabel(t.id)}</button>`
     ).join("") + `</div>`;
-  ph += `<div class="pillbar" style="flex-wrap:wrap">` + [1,2,3,4].map(l=>{
+  ph += `<div class="pillbar" style="flex-wrap:wrap">` + WCL_LVS.map(l=>{
       const b = best[wcl.tpl+"|"+l];
       return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
     }).join("") + `</div>`;
@@ -18215,13 +18225,13 @@ function wClozeProgress(){
   if(left>0){ el.innerHTML = `Đã điền đúng <b>${wcl.ok}/${wcl.total}</b> chỗ khoét${wcl.revealed?` · đã "hiện hết" ${wcl.revealed} chỗ`:""}.`; return; }
   const pct = Math.round(wcl.ok / Math.max(1,wcl.total) * 100);
   wSaveBest(pct);
-  el.innerHTML = `🎉 Xong! Tự điền đúng <b>${pct}%</b> chỗ khoét${pct===100?` — quá chuẩn, lên mức ${Math.min(4,wcl.lv+1)} thôi!`:` — bấm "Khoét chỗ khác" luyện lại những từ vừa lộ.`}`;
+  el.innerHTML = `🎉 Xong! Tự điền đúng <b>${pct}%</b> chỗ khoét${pct===100?` — quá chuẩn, lên mức ${Math.min(5,wcl.lv+1)} thôi!`:` — bấm "Khoét chỗ khác" luyện lại những từ vừa lộ.`}`;
   renderWClozePillsOnly();
 }
 function renderWClozePillsOnly(){
   const best = wBest();
   const bar2 = $("wcl-pills").querySelectorAll(".pillbar")[1];
-  if(bar2) bar2.innerHTML = [1,2,3,4].map(l=>{
+  if(bar2) bar2.innerHTML = WCL_LVS.map(l=>{
     const b = best[wcl.tpl+"|"+l];
     return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
   }).join("");
@@ -18234,27 +18244,75 @@ function wClozeLv3Html(t){
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0" id="wcl-chips">${slots.map(s=>
       `<span class="wchip" draggable="true" data-slot="${escapeHtml(s)}" onclick="wInsertChip(this)" ondragstart="wChipDrag(event,this)"
         style="background:#fef3c7;border:1px dashed #d97706;border-radius:8px;padding:3px 12px;color:#92400e;font-style:italic;cursor:grab;user-select:none">${escapeHtml(s)}</span>`).join("")}</div>
-    <textarea id="wcl-typed" rows="10" spellcheck="false" style="width:100%;font:inherit;font-size:15px;border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-top:6px" placeholder="Gõ toàn bộ khung ${wTplLabel(t.id)} tại đây... (bấm thẻ vàng để chèn chỗ điền)"></textarea>
+    <div id="wcl-typed" contenteditable="true" spellcheck="false"
+      ondrop="wEditorDrop(event)" ondragover="event.preventDefault()"
+      style="width:100%;min-height:190px;background:#fff;font:inherit;font-size:15px;line-height:2;border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-top:6px;outline:none"></div>
+    <div class="qvn" style="display:block;margin-top:4px">Gõ bài vào khung trắng; đến chỗ điền thì bấm/kéo thẻ vàng — thẻ thả vào là KHỐI CỨNG: không sửa được chữ bên trong, xóa thì Backspace bay nguyên thẻ.</div>
     <div style="margin-top:10px"><button class="btn" onclick="wCompare()">📊 So với bản gốc</button></div>
     <div id="wcl-cmp" style="margin-top:12px"></div>`;
 }
+function wMakeTok(name){
+  // thẻ CỨNG trong bài gõ: contentEditable=false → không sửa được chữ, Backspace xóa nguyên thẻ
+  const s = document.createElement("span");
+  s.className = "wtok";
+  s.contentEditable = "false";
+  s.textContent = name;
+  s.style.cssText = "background:#fef3c7;border:1px dashed #d97706;border-radius:8px;padding:1px 10px;color:#92400e;font-style:italic;margin:0 3px;user-select:none;white-space:nowrap";
+  return s;
+}
+function wInsertTokAt(range, name){
+  const ed = $("wcl-typed");
+  const span = wMakeTok(name);
+  range.deleteContents();
+  range.insertNode(span);
+  const sp = document.createTextNode(" ");
+  span.after(sp);
+  const sel = window.getSelection();
+  const r = document.createRange();
+  r.setStartAfter(sp); r.collapse(true);
+  sel.removeAllRanges(); sel.addRange(r);
+  ed.focus();
+}
 function wInsertChip(el){
-  const ta = $("wcl-typed");
-  if(!ta) return;
-  const tok = " 【" + el.dataset.slot + "】 ";
-  const s = ta.selectionStart ?? ta.value.length, e = ta.selectionEnd ?? s;
-  ta.value = ta.value.slice(0, s) + tok + ta.value.slice(e);
-  ta.focus();
-  ta.selectionStart = ta.selectionEnd = s + tok.length;
+  const ed = $("wcl-typed");
+  if(!ed) return;
+  ed.focus();
+  const sel = window.getSelection();
+  let range;
+  if(sel.rangeCount && ed.contains(sel.getRangeAt(0).startContainer)) range = sel.getRangeAt(0);
+  else { range = document.createRange(); range.selectNodeContents(ed); range.collapse(false); }
+  wInsertTokAt(range, el.dataset.slot);
 }
 function wChipDrag(ev, el){
-  ev.dataTransfer.setData("text/plain", " 【" + el.dataset.slot + "】 ");
+  ev.dataTransfer.setData("text/plain", el.dataset.slot);
+  ev.dataTransfer.setData("application/x-wchip", "1");
+}
+function wEditorDrop(ev){
+  ev.preventDefault();
+  const name = ev.dataTransfer.getData("text/plain");
+  if(!name) return;
+  let range = null;
+  if(document.caretRangeFromPoint) range = document.caretRangeFromPoint(ev.clientX, ev.clientY);
+  else if(document.caretPositionFromPoint){
+    const pos = document.caretPositionFromPoint(ev.clientX, ev.clientY);
+    if(pos){ range = document.createRange(); range.setStart(pos.offsetNode, pos.offset); range.collapse(true); }
+  }
+  if(!range){ range = document.createRange(); range.selectNodeContents($("wcl-typed")); range.collapse(false); }
+  wInsertTokAt(range, name);
 }
 function wCompare(){
   const t = WD.templates.find(x=>x.id===wcl.tpl);
   const refWords = t.segments.filter(s=>s.fix && !s.lbl).flatMap(s=>s.t.split(/\s+/)).filter(w=>wNorm(w));
-  // bỏ các thẻ 【...】 (chỗ điền theo đề) khỏi bài gõ trước khi so
-  const typedRaw = ($("wcl-typed").value||"").replace(/【[^】]*】/g, " ").split(/\s+/).filter(w=>wNorm(w));
+  // lấy bài gõ: bỏ các thẻ cứng (chỗ điền theo đề) trước khi so
+  const ed = $("wcl-typed");
+  let rawTyped;
+  if(ed.tagName === "TEXTAREA") rawTyped = ed.value || "";
+  else {
+    const c = ed.cloneNode(true);
+    c.querySelectorAll(".wtok").forEach(x=>x.remove());
+    rawTyped = c.innerText || "";
+  }
+  const typedRaw = rawTyped.replace(/【[^】]*】/g, " ").split(/\s+/).filter(w=>wNorm(w));
   const ref = refWords.map(wNorm), typed = typedRaw.map(wNorm);
   // LCS so khớp từ
   const m = ref.length, n = typed.length;

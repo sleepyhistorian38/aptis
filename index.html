@@ -484,7 +484,7 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
 <div id="scr-wcloze" class="page">
   <div class="backbar" id="nav-wcloze"></div>
   <h1>⌨️ Luyện thuộc khung Writing</h1>
-  <p class="sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét ít + gợi ý chữ đầu → mức 2 khoét quá nửa → mức 3 gõ lại cả bài từ trí nhớ. Đạt ≥90% ở mức 3 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
+  <p class="sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét 25% + gợi ý chữ đầu → mức 2 khoét 60% → mức 3 khoét 80% → mức 4 gõ lại cả bài từ trí nhớ. Đạt ≥90% ở mức 4 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
   <div id="wcl-pills"></div>
   <div id="wcl-body"></div>
 </div>
@@ -18087,10 +18087,25 @@ let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0};
 const WCL_LV = {
   1: {hide: 0.25, hint: true,  name: "Mức 1 · khoét 25% + gợi ý"},
   2: {hide: 0.60, hint: false, name: "Mức 2 · khoét 60%"},
-  3: {name: "Mức 3 · gõ cả bài"},
+  3: {hide: 0.80, hint: false, name: "Mức 3 · khoét 80%"},
+  4: {name: "Mức 4 · gõ cả bài"},
 };
+const WCL_TYPE_LV = 4;   // mức gõ cả bài
 function wNorm(s){ return (s||"").toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9']+/g,""); }
-function wBest(){ try{ return JSON.parse(localStorage.aptisWBest || "{}"); }catch(e){ return {}; } }
+function wBest(){
+  try{
+    let b = JSON.parse(localStorage.aptisWBest || "{}");
+    if(!localStorage.aptisWBestMig4){
+      // mức "gõ cả bài" đổi số 3→4 (chen mức khoét 80%): chuyển kỷ lục cũ theo
+      const nb = {};
+      for(const k in b) nb[k.endsWith("|3") ? k.slice(0, -2) + "|4" : k] = b[k];
+      b = nb;
+      localStorage.aptisWBest = JSON.stringify(b);
+      localStorage.aptisWBestMig4 = "1";
+    }
+    return b;
+  }catch(e){ return {}; }
+}
 function wSaveBest(pct){
   try{
     const b = wBest(), k = wcl.tpl + "|" + wcl.lv;
@@ -18111,14 +18126,14 @@ function renderWCloze(){
   let ph = `<div class="pillbar" style="flex-wrap:wrap">` + WD.templates.map(t=>
       `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')">${wTplLabel(t.id)}</button>`
     ).join("") + `</div>`;
-  ph += `<div class="pillbar" style="flex-wrap:wrap">` + [1,2,3].map(l=>{
+  ph += `<div class="pillbar" style="flex-wrap:wrap">` + [1,2,3,4].map(l=>{
       const b = best[wcl.tpl+"|"+l];
       return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
     }).join("") + `</div>`;
   $("wcl-pills").innerHTML = ph;
   const t = WD.templates.find(x=>x.id===wcl.tpl);
-  $("wcl-body").innerHTML = wcl.lv===3 ? wClozeLv3Html(t) : wClozeGapHtml(t);
-  if(wcl.lv!==3) wClozeProgress();
+  $("wcl-body").innerHTML = wcl.lv===WCL_TYPE_LV ? wClozeLv3Html(t) : wClozeGapHtml(t);
+  if(wcl.lv!==WCL_TYPE_LV) wClozeProgress();
   showScreen("scr-wcloze");
 }
 function wClozeGapHtml(t){
@@ -18200,13 +18215,13 @@ function wClozeProgress(){
   if(left>0){ el.innerHTML = `Đã điền đúng <b>${wcl.ok}/${wcl.total}</b> chỗ khoét${wcl.revealed?` · đã "hiện hết" ${wcl.revealed} chỗ`:""}.`; return; }
   const pct = Math.round(wcl.ok / Math.max(1,wcl.total) * 100);
   wSaveBest(pct);
-  el.innerHTML = `🎉 Xong! Tự điền đúng <b>${pct}%</b> chỗ khoét${pct===100?` — quá chuẩn, lên mức ${Math.min(3,wcl.lv+1)} thôi!`:` — bấm "Khoét chỗ khác" luyện lại những từ vừa lộ.`}`;
+  el.innerHTML = `🎉 Xong! Tự điền đúng <b>${pct}%</b> chỗ khoét${pct===100?` — quá chuẩn, lên mức ${Math.min(4,wcl.lv+1)} thôi!`:` — bấm "Khoét chỗ khác" luyện lại những từ vừa lộ.`}`;
   renderWClozePillsOnly();
 }
 function renderWClozePillsOnly(){
   const best = wBest();
   const bar2 = $("wcl-pills").querySelectorAll(".pillbar")[1];
-  if(bar2) bar2.innerHTML = [1,2,3].map(l=>{
+  if(bar2) bar2.innerHTML = [1,2,3,4].map(l=>{
     const b = best[wcl.tpl+"|"+l];
     return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
   }).join("");

@@ -18142,9 +18142,12 @@ function wClozeGapHtml(t){
     if(tk.type==="br"){ html += "<br>"; return; }
     if(tk.type==="lbl"){ html += `<div style="margin:14px -6px 8px;padding:5px 12px;background:#f1f5f9;border-left:3px solid var(--purple);border-radius:6px;font-weight:700;color:#334155;font-size:13.5px">${escapeHtml(tk.txt)}</div>`; return; }
     if(tk.type==="slot"){
-      // khi LUYỆN chỉ hiện tên ô (bỏ phần ví dụ sau dấu ":") cho đỡ rối — bản đầy đủ xem ở trang khung
-      const short = tk.txt.split(":")[0].trim();
-      html += `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic" title="${escapeHtml(tk.txt)}">[${escapeHtml(short)}]</span> `; return; }
+      // khi LUYỆN hiện tên ô + 1 ví dụ đầu cho dễ hiểu (bản đầy đủ: di chuột / trang khung)
+      const parts = tk.txt.split(":");
+      const name = parts[0].trim();
+      const ex = parts[1] ? parts[1].split(/[\/·]/)[0].trim() : "";
+      const disp = ex ? `${name} — vd: ${ex}` : name;
+      html += `<span style="background:#fef3c7;border:1px dashed #d97706;border-radius:6px;padding:1px 7px;color:#92400e;font-style:italic" title="${escapeHtml(tk.txt)}">[${escapeHtml(disp)}]</span> `; return; }
     if(hideSet.has(i)){
       const bare = wNorm(tk.txt);
       const hint = lv.hint ? tk.txt.replace(/[A-Za-z0-9’']+/, m=>m[0]+"…") : "";

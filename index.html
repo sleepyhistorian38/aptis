@@ -18800,8 +18800,8 @@ function wResolve(t){
 }
 function wVerBarHtml(){
   return `<div class="pillbar" style="flex-wrap:wrap;align-items:center">
-    <span class="qvn" style="display:inline;margin-right:2px">👤 Bản khung ⭐ (mỗi người 1 bản, tránh 3 bài giống nhau):</span>` +
-    [1,2,3].map(v=>`<button class="pill ${v===wVer()?"active":""}" onclick="wSetVer(${v})">${v===1?"V1 · của tôi":"V"+v+" · bạn cùng ôn"}</button>`).join("") + `</div>`;
+    <span class="qvn" style="display:inline;margin-right:2px">👤 Bản khung ⭐:</span>` +
+    [1,2,3].map(v=>`<button class="pill ${v===wVer()?"active":""}" onclick="wSetVer(${v})">V${v}</button>`).join("") + `</div>`;
 }
 function wTplShort(id){ return wTplLabel(id).replace(/^P\d\s*(⭐|·)?\s*/, ""); }
 function renderWCloze(){

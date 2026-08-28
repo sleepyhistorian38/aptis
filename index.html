@@ -17385,8 +17385,7 @@ window.APTIS.speaking = {
    "timer": 45,
    "parts": [
     "P2",
-    "P3",
-    "P4"
+    "P3"
    ],
    "title": "SPK ⭐ Khung TRẢ LỜI CÂU HỎI (2 câu hỏi của Part 2/3 · ~45 giây)",
    "segments": [
@@ -19505,7 +19504,7 @@ function renderWCloze(){
     stars  = inPart.filter(t=>t.id !== "sq");
     others = inPart.filter(t=>t.id === "sq");
     starLabel  = "⭐ KHUNG CHÍNH CỦA " + wcl.spkPart;
-    otherLabel = "DÙNG CHUNG · TRẢ LỜI 2 CÂU HỎI SAU TRANH";
+    otherLabel = "DÙNG CHUNG P2 & P3 · TRẢ LỜI 2 CÂU HỎI SAU TRANH";
   } else {
     ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
         `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`

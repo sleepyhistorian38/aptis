@@ -202,10 +202,11 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
       <div class="meta">8 đề tủ · 200 câu ngữ pháp + ~195 ý từ vựng · 25 phút</div>
       <div class="meta">Điểm G&V quyết định khi điểm kỹ năng sát biên CEFR</div>
     </div>
-    <div class="card" style="opacity:.65">
-      <span class="tag key">SẮP CÓ</span>
+    <div class="card" style="cursor:pointer" onclick="goSpeaking()">
+      <span class="tag sim">SẴN SÀNG</span>
       <h3>🗣️ Speaking</h3>
-      <div class="meta">Tài liệu đã có: 36 bài mẫu + mẹo thi</div>
+      <div class="meta">4 phần · ~12 phút · 4 khung vạn năng + bank Part 1</div>
+      <div class="meta">Đã backtest 36 đề tranh; khung 2 phút tái dùng khung Writing</div>
     </div>
     <div class="card" style="cursor:pointer" onclick="goWriting()">
       <span class="tag sim">SẴN SÀNG</span>
@@ -478,6 +479,15 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
   <p class="sub">Bước 1: thuộc CẤU TRÚC ĐỀ và BỘ KHUNG XƯƠNG dùng chung cho mọi chủ đề — tài liệu khẳng định thuộc bộ khung này là đủ đạt B1. Đề từng club sẽ thêm ở bước sau.</p>
   <div id="wsec-structure"></div>
   <div id="wsec-frame"></div>
+</div>
+
+<!-- ============ SPEAKING HOME ============ -->
+<div id="scr-sphome" class="page">
+  <div class="backbar" id="nav-sphome"></div>
+  <h1>🗣️ Aptis Speaking</h1>
+  <p class="sub">Bộ khung vạn năng nói (đã backtest với 36 đề tranh của tủ) + bank Part 1. Ý 1 và Ý 3 của khung 2 phút dùng lại nguyên khung ①b và ③ của Writing — thuộc Writing là gần xong Speaking.</p>
+  <div id="spsec-structure"></div>
+  <div id="spsec-frame"></div>
 </div>
 
 <!-- ============ WRITING CLOZE ============ -->
@@ -17047,10 +17057,526 @@ window.APTIS.writing = {
 
 </script>
 <script>
+window.APTIS = window.APTIS || {};
+window.APTIS.speaking = {
+ "src": "Thư mục Speaking: file 0 (Part 1) + file 00 (mẹo) + 36 file tranh",
+ "structure": [
+  {
+   "part": "Part 1",
+   "task": "3 câu hỏi cá nhân (thi 3 trong ~22 câu tủ bên dưới)",
+   "words": "30 giây / câu",
+   "time": "~2 phút",
+   "note": "Tủ đóng — học bank là trúng. Trả lời 3–4 câu, đừng chỉ 1 câu."
+  },
+  {
+   "part": "Part 2",
+   "task": "Tả 1 bức tranh + trả lời 2 câu hỏi liên quan",
+   "words": "45 giây / phần",
+   "time": "~3 phút",
+   "note": "Tả tranh dùng khung ⭐ TẢ TRANH (6 ý của tủ: ai / làm gì / ở đâu / tuổi / biểu cảm / khung cảnh). 2 câu hỏi dùng khung ⭐ TRẢ LỜI."
+  },
+  {
+   "part": "Part 3",
+   "task": "So sánh 2 bức tranh + trả lời 2 câu hỏi",
+   "words": "45 giây / phần",
+   "time": "~3 phút",
+   "note": "Dùng khung ⭐ SO SÁNH (Both… / While the second picture is a far cry from…). 2 câu hỏi dùng khung ⭐ TRẢ LỜI."
+  },
+  {
+   "part": "Part 4",
+   "task": "1 chủ đề 3 ý — chuẩn bị 1 phút, nói liền 2 phút",
+   "words": "2 phút",
+   "time": "~3 phút",
+   "note": "Backtest 36 đề tủ: ~100% theo mẫu 'kể 1 lần + cảm xúc + suy nghĩ' → khung ⭐ NÓI 2 PHÚT ghép từ khung ①b và ③ của Writing — thuộc Writing rồi thì phần này gần như miễn phí. Dùng 1 phút chuẩn bị để điền nháp các ô."
+  }
+ ],
+ "part1": [
+  {
+   "q": "Describe your home",
+   "vn": "Miêu tả nhà bạn",
+   "a": "I live in a big house. It is about 80 square meters. There are 4 rooms. My favorite room is my bedroom, because it is blue — my favorite color."
+  },
+  {
+   "q": "Please describe this room",
+   "vn": "Miêu tả phòng thi",
+   "a": "This room is about 40 square meters. There are many people here, both men and women. I can see many computers and tables."
+  },
+  {
+   "q": "Please tell me about the last time you went to the cinema",
+   "vn": "Lần cuối tới rạp phim",
+   "a": "The last time I went to the cinema was last week. It was CGV cinema, and the film I chose was Batman. It was a special night because it was the first time I went to the cinema alone."
+  },
+  {
+   "q": "What are you wearing today?",
+   "vn": "Hôm nay bạn mặc gì",
+   "a": "To prepare for the exam today, I chose a polite and simple outfit — a white shirt, dark jeans, and my favorite shoes. I usually wear this for my important exams."
+  },
+  {
+   "q": "What will you do for the rest of today?",
+   "vn": "Hôm nay rảnh làm gì",
+   "a": "Today I decided to stay on my bed till the afternoon. A long and good sleep is really needed for me after many busy hours. It is an amazing way to boost my power for the next day."
+  },
+  {
+   "q": "Tell me about your typical day",
+   "vn": "Một ngày thường của bạn",
+   "a": "I wake up at 6 a.m. At 8 o'clock I go to school. In the afternoon I study and play sports. I have dinner at 7 p.m. and go to bed at 11 p.m."
+  },
+  {
+   "q": "What sports do people play in your country?",
+   "vn": "Thể thao ở nước bạn",
+   "a": "In my country people like playing football and badminton. Football is the most popular sport. Sport has lots of benefits for health."
+  },
+  {
+   "q": "Tell me about your favorite place",
+   "vn": "Địa điểm yêu thích",
+   "a": "My favorite place is Ha Long Bay. I go to this place every holiday. It is famous for the beautiful beach."
+  },
+  {
+   "q": "Tell me about your first school",
+   "vn": "Trường học đầu tiên",
+   "a": "My first school was a small kindergarten near my house. There were 3 buildings and a small pool. I still remember my first teacher there."
+  },
+  {
+   "q": "Tell me about the last time you met a friend",
+   "vn": "Lần gần nhất gặp bạn",
+   "a": "Last month, I met my best friend at her sister's birthday. We spent time preparing for the party and enjoyed talking with friends."
+  },
+  {
+   "q": "Who is your favorite singer?",
+   "vn": "Ca sĩ yêu thích",
+   "a": "Taylor Swift is my idol. She is called the Princess of Country Music. The blonde hair, the blue eyes and the red lips are her iconic image. She is a talented singer with a lot of hits."
+  },
+  {
+   "q": "Describe a typical meal in your country",
+   "vn": "Bữa ăn điển hình",
+   "a": "I live in Vietnam, so a typical meal has rice with some kinds of meat, especially pork and chicken. We also eat fish, eggs and many vegetables such as cabbage."
+  },
+  {
+   "q": "What do people in your country like to read?",
+   "vn": "Người dân thích đọc gì",
+   "a": "Children like reading comics and fairy tales. Teenagers are excited about sport and fashion magazines. Old people like reading newspapers and world news."
+  },
+  {
+   "q": "Tell me about a film star",
+   "vn": "Một ngôi sao điện ảnh",
+   "a": "Johnny Depp is definitely my favorite actor. He is awesome and so talented! He has played in great movies like Pirates of the Caribbean and Alice in Wonderland. I love watching his movies again and again."
+  },
+  {
+   "q": "Tell me about your friends",
+   "vn": "Kể về bạn bè",
+   "a": "Jane is my best friend from my childhood. In my opinion, she is a kind girl with long black hair and a shining smile, and she is always ready to help everyone."
+  },
+  {
+   "q": "What did you do yesterday?",
+   "vn": "Hôm qua làm gì",
+   "a": "Yesterday my friend and I went to a coffee shop. We enjoyed several types of coffee, and the owner told us a lot of stories about this field. Such an amazing experience!"
+  },
+  {
+   "q": "Please tell me the best way to travel around your country",
+   "vn": "Cách di chuyển thuận tiện nhất",
+   "a": "There are a lot of ways to travel around my country. Public transportation is very convenient, so you can choose bus, train, taxi, or walk if the distance is not too long."
+  },
+  {
+   "q": "What do you like to do with your friends?",
+   "vn": "Thích làm gì cùng bạn bè",
+   "a": "We love shopping together. If we have free time, we go to a shopping centre to find new items. We have the same hobby, so it is easy to decide what to buy."
+  },
+  {
+   "q": "Tell me about a famous place in your country",
+   "vn": "Địa điểm nổi tiếng",
+   "a": "Today I want to tell you about Ha Noi, the capital of Vietnam. You will fall in love with its cuisine, historic places and friendly people. Although it is noisy and busy, Ha Noi has a special attraction."
+  },
+  {
+   "q": "What was the last thing you saw on TV?",
+   "vn": "Gần đây xem gì trên TV",
+   "a": "It was a film by DC named Batman. I did not have any impression of this film — it was too dark, and I slept most of the time."
+  },
+  {
+   "q": "Tell me about a favorite film",
+   "vn": "Bộ phim yêu thích",
+   "a": "The Mummy series is my favorite film that I can watch again and again. The best attraction is the mystery of Egyptian civilization, recreated by a lot of excellent scenes."
+  },
+  {
+   "q": "Please describe your journey here today",
+   "vn": "Hôm nay đến đây thế nào",
+   "a": "Today is an important day for me because I have the Aptis examination. I got up earlier than usual and wore a simple, polite outfit. My father drove me here, and on the way I practiced some structures again."
+  }
+ ],
+ "templates": [
+  {
+   "id": "s2",
+   "timer": 45,
+   "title": "SPK ⭐ Khung TẢ TRANH (Part 2 · nói ~45 giây)",
+   "segments": [
+    {
+     "t": "Wow, it is an interesting picture. When I first look at it, I can see ",
+     "fix": true
+    },
+    {
+     "t": "ai: a couple / a group of friends / a young man",
+     "fix": false
+    },
+    {
+     "t": " ",
+     "fix": true
+    },
+    {
+     "t": "đang làm gì: shopping on the street / having a meal together",
+     "fix": false
+    },
+    {
+     "t": " ",
+     "fix": true
+    },
+    {
+     "t": "ở đâu: in a shopping mall / in a park",
+     "fix": false
+    },
+    {
+     "t": ". They are about ",
+     "fix": true
+    },
+    {
+     "t": "tuổi: twenty / thirty",
+     "fix": false
+    },
+    {
+     "t": " years old, and they look ",
+     "fix": true
+    },
+    {
+     "t": "biểu cảm: really happy and relaxed",
+     "fix": false
+    },
+    {
+     "t": ". Besides, it is not difficult to see ",
+     "fix": true
+    },
+    {
+     "t": "khung cảnh xung quanh: many shops and trees behind them",
+     "fix": false
+    },
+    {
+     "t": ". They seem to be on top of the world, and I guess ",
+     "fix": true
+    },
+    {
+     "t": "phỏng đoán: they are close friends / the weather is very nice",
+     "fix": false
+    },
+    {
+     "t": ". This picture reminds me of ",
+     "fix": true
+    },
+    {
+     "t": "liên hệ bản thân: happy times with my friends",
+     "fix": false
+    },
+    {
+     "t": ".",
+     "fix": true
+    }
+   ],
+   "vn": "Chuẩn hóa từ 6 gạch đầu dòng của tủ (ai / làm gì / ở đâu / tuổi / biểu cảm / khung cảnh) + thành ngữ tủ on top of the world. Tranh chỉ có 1 người thì đổi They→He/She, look→looks. Tranh đồ vật/phong cảnh (hiếm): bỏ các ô người, tả khung cảnh 2 lần. Nói hết khung ≈ 35–40 giây — vừa khít 45s."
+  },
+  {
+   "id": "s3",
+   "timer": 45,
+   "title": "SPK ⭐ Khung SO SÁNH 2 TRANH (Part 3 · nói ~45 giây)",
+   "segments": [
+    {
+     "t": "Well, actually the two pictures are really interesting. Both of them are about ",
+     "fix": true
+    },
+    {
+     "t": "điểm chung: ways of travelling / free-time activities",
+     "fix": false
+    },
+    {
+     "t": ". Looking at the first picture, I can see ",
+     "fix": true
+    },
+    {
+     "t": "tranh 1: ai + làm gì + ở đâu",
+     "fix": false
+    },
+    {
+     "t": ", and they look ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc 1: quite busy and tired",
+     "fix": false
+    },
+    {
+     "t": ". While the second picture is a far cry from the first one — I can see ",
+     "fix": true
+    },
+    {
+     "t": "tranh 2: ai + làm gì + ở đâu",
+     "fix": false
+    },
+    {
+     "t": ", and they seem ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc 2: much more relaxed",
+     "fix": false
+    },
+    {
+     "t": ". Personally, I am more interested in the ",
+     "fix": true
+    },
+    {
+     "t": "first / second",
+     "fix": false
+    },
+    {
+     "t": " picture.",
+     "fix": true
+    }
+   ],
+   "vn": "Khung + thành ngữ a far cry from lấy nguyên từ mẹo tủ. So sánh bám 6 ý của khung tả tranh. Câu chốt Personally… trả lời luôn kiểu câu hỏi Which do you prefer hay đi kèm Part 3."
+  },
+  {
+   "id": "sq",
+   "timer": 45,
+   "title": "SPK ⭐ Khung TRẢ LỜI CÂU HỎI (mọi câu hỏi Part 2/3/4 · ~45 giây)",
+   "segments": [
+    {
+     "t": "Câu GIỮ GIỜ — nói ngay trong lúc nghĩ (mẹo tủ):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "That is an interesting question. Let me think about it for a moment.",
+     "fix": true
+    },
+    {
+     "t": "MỞ theo kiểu câu hỏi (backtest 153 câu → 5 kiểu):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "· Ý KIẾN / WHY (Why do people…? Do you think…? What should we do…?):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "Personally, I think ",
+     "fix": true
+    },
+    {
+     "t": "đáp ngắn: shopping with friends is really enjoyable",
+     "fix": false
+    },
+    {
+     "t": "· PREFER (Which do you prefer?):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "I would definitely choose ",
+     "fix": true
+    },
+    {
+     "t": "lựa chọn: the beach",
+     "fix": false
+    },
+    {
+     "t": "· CẢM XÚC (How did you feel?):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "To be honest, I felt really ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc: nervous at first, then very proud",
+     "fix": false
+    },
+    {
+     "t": "· KINH NGHIỆM / THÓI QUEN (last time…? usually…?): trả lời như khung ① / ①b của Writing.",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "Sau câu mở → LÝ DO (bí thì chọn 1 hướng H-R-K-F của tủ) + VÍ DỤ:",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": ", because it ",
+     "fix": true
+    },
+    {
+     "t": "lý do HRKF: is good for my health / helps me connect with people / broadens my knowledge / always makes me feel great",
+     "fix": false
+    },
+    {
+     "t": ". For example, ",
+     "fix": true
+    },
+    {
+     "t": "ví dụ thật ngắn: I often go shopping with my best friend at the weekend",
+     "fix": false
+    },
+    {
+     "t": ". That is why I feel this way.",
+     "fix": true
+    }
+   ],
+   "vn": "HRKF = 4 hướng lý do của tủ: Health (sức khỏe) / Relationship (mối quan hệ) / Knowledge (kiến thức) / Feelings (cảm xúc) — chủ đề nào cũng bám được ít nhất 1 hướng. Câu giữ giờ mua ~5 giây suy nghĩ, dùng tối đa 1 lần mỗi part. Cấu trúc câu trả lời = mở đúng kiểu + because + ví dụ ≈ 30–40 giây."
+  },
+  {
+   "id": "s4",
+   "timer": 120,
+   "title": "SPK ⭐ Khung NÓI 2 PHÚT (Part 4 · 1 phút chuẩn bị + 2 phút nói)",
+   "segments": [
+    {
+     "t": "Today I would like to talk about ",
+     "fix": true
+    },
+    {
+     "t": "chủ đề của đề: a time I made an important choice",
+     "fix": false
+    },
+    {
+     "t": ". ",
+     "fix": true
+    },
+    {
+     "t": "Ý 1 — KỂ MỘT LẦN (chính là khung ①b Writing):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "The most memorable time was ",
+     "fix": true
+    },
+    {
+     "t": "khi nào: last year",
+     "fix": false
+    },
+    {
+     "t": ", when I ",
+     "fix": true
+    },
+    {
+     "t": "chuyện gì xảy ra: had to choose my university",
+     "fix": false
+    },
+    {
+     "t": ". I still remember it clearly, because it made me feel ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc lúc đó: quite worried",
+     "fix": false
+    },
+    {
+     "t": ". ",
+     "fix": true
+    },
+    {
+     "t": "kể thêm 2–3 câu chi tiết thật: ai đi cùng, điều gì khó, kết quả ra sao",
+     "fix": false
+    },
+    {
+     "t": "Ý 2 — CẢM XÚC (đề hay hỏi How did you feel?):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "At that moment I felt really ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc: nervous",
+     "fix": false
+    },
+    {
+     "t": ", but looking back, it was a valuable experience for me, because it helped me ",
+     "fix": true
+    },
+    {
+     "t": "bài học: become more confident",
+     "fix": false
+    },
+    {
+     "t": ".",
+     "fix": true
+    },
+    {
+     "t": "Ý 3 — SUY NGHĨ / Ý KIẾN (chính là khung ③ Writing):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "About the last question, personally, I think ",
+     "fix": true
+    },
+    {
+     "t": "ý kiến ngắn theo đề",
+     "fix": false
+    },
+    {
+     "t": ", because it helps us ",
+     "fix": true
+    },
+    {
+     "t": "lợi ích: understand each other better",
+     "fix": false
+    },
+    {
+     "t": ". Of course, everyone sees it differently, but that is my honest view.",
+     "fix": true
+    },
+    {
+     "t": "KẾT (câu thoát bài an toàn):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "That is all I want to share about this topic. Thank you for listening.",
+     "fix": true
+    }
+   ],
+   "vn": "BACKTEST 27/08: quét Part 4 của cả 36 file tranh — ~100% đề theo mẫu 3 ý 'kể 1 lần + cảm xúc + suy nghĩ về vấn đề' (a time you failed / were in a hurry / made a choice / received news…) → khung này phủ hết. Ý 1 và Ý 3 dùng lại nguyên khung ①b + ③ của Writing — thuộc Writing rồi thì Part 4 Speaking gần như không phải thuộc thêm. 1 phút chuẩn bị = điền nháp các ô ra giấy. Nói hết khung + chi tiết ≈ 1 phút 40 — vừa 2 phút."
+  }
+ ],
+ "hrkf": [
+  {
+   "k": "H — Health",
+   "en": "improve my mental and physical health · be good for my health",
+   "vn": "chủ đề có lợi cho sức khỏe không?"
+  },
+  {
+   "k": "R — Relationship",
+   "en": "expand my social connections · build friendships with many people",
+   "vn": "có giúp mở rộng mối quan hệ không?"
+  },
+  {
+   "k": "K — Knowledge",
+   "en": "gain more knowledge about it · develop a deeper understanding",
+   "vn": "có mở mang kiến thức không?"
+  },
+  {
+   "k": "F — Feelings",
+   "en": "vui: on cloud nine, over the moon, on top of the world · buồn: feel blue, down in the dumps",
+   "vn": "cảm xúc khi nói về chủ đề đó"
+  }
+ ]
+};
+
+</script>
+<script>
 "use strict";
 const D = window.APTIS.listening;
 const $ = id => document.getElementById(id);
-const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview","scr-whome","scr-wcloze"];
+const SCREENS = ["scr-root","scr-home","scr-preview","scr-instr","scr-exam","scr-results","scr-deck","scr-cau15","scr-bank","scr-quiz","scr-quizres","scr-stats","scr-admin","scr-rhome","scr-rview","scr-ghome","scr-gview","scr-whome","scr-wcloze","scr-sphome"];
 
 let test = null;          // current full test
 let practice = false;
@@ -18737,6 +19263,58 @@ function goWriting(sec){
   if(sec && $(sec)) $(sec).scrollIntoView({behavior:"smooth"});
 }
 
+/* ================= SPEAKING (khung vạn năng nói) ================= */
+function goSpeaking(sec){
+  if(!confirmLeave()) return;
+  wclOpen = false;
+  stopTimer(); stopAudio();
+  if(!SD){ alert("Chưa có dữ liệu Speaking"); return; }
+  setNav("nav-sphome", ["Speaking"], "Trang chủ", "goRoot()");
+  let sh = `<div class="grid" style="margin-top:14px">
+    <div class="card" style="cursor:pointer;border-color:var(--purple)" onclick="wClozeGo('s2',1)">
+      <span class="tag sim">LUYỆN THUỘC</span>
+      <h3>⌨️ Đục lỗ 4 khung nói + bấm giờ</h3>
+      <div class="meta">Luyện chung màn Đục lỗ (tab 🗣 Speaking) — mỗi khung có nút ⏱ 45s / 2 phút để tập nói TO đúng nhịp thi.</div>
+    </div>
+  </div>`;
+  sh += `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · ~12 phút)</h2><div class="grid">`;
+  SD.structure.forEach(p=>{
+    sh += `<div class="card"><span class="tag sim">${escapeHtml(p.part)}</span>
+      <h3>${escapeHtml(p.task)}</h3>
+      <div class="meta"><b>${escapeHtml(p.words)}</b> · ${escapeHtml(p.time)}</div>
+      <div class="meta">${escapeHtml(p.note)}</div></div>`;
+  });
+  sh += `</div>`;
+  $("spsec-structure").innerHTML = sh;
+  let fh = `<h2 style="margin:26px 0 6px">🧩 4 khung vạn năng nói (✅ backtest 36 đề tranh + 153 câu hỏi tủ)</h2>`;
+  SD.templates.forEach(t=>{
+    const nWords = t.segments.filter(x=>x.fix && !x.lbl).flatMap(x=>x.t.split(/\s+/)).filter(w=>/[A-Za-z]/.test(w)).length;
+    fh += `<div class="kitem" style="border:1.5px solid var(--purple);border-radius:12px">
+      <div class="qline" style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap">
+        <b>${escapeHtml(t.title)}</b>
+        <span class="qvn" style="display:inline;white-space:nowrap">📚 thuộc lòng ≈ ${nWords} từ · ⏱ ${t.timer>=120?"2 phút":t.timer+"s"}</span></div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;margin:8px 0;line-height:2.05">${wSegsHtml(t.segments)}</div>
+      <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Cách dùng & ví dụ (bấm mở)</summary>
+        <div class="qvn" style="display:block;margin-top:6px;line-height:1.8">${wVnHtml(t.vn)}</div></details></div>`;
+  });
+  fh += `<div class="kitem"><div class="qline"><b>🧭 HRKF — 4 hướng lý do vạn năng của tủ (bí lý do là bám vào đây)</b></div>`;
+  SD.hrkf.forEach(h=>{
+    fh += `<div class="qline" style="margin-top:8px"><span class="num">·</span><b>${escapeHtml(h.k)}</b>:
+      ${escapeHtml(h.en)} <span class="qvn" style="display:inline">· ${escapeHtml(h.vn)}</span></div>`;
+  });
+  fh += `</div>`;
+  fh += `<h2 style="margin:26px 0 6px">🎤 Part 1 — bank ~22 câu tủ (thi 3 câu, 30 giây/câu)</h2>
+    <div class="note">Bấm ô mờ để hiện trả lời mẫu của tủ. Trả lời 3–4 câu cho đủ 30 giây; thay chi tiết bằng đời thật của bạn.</div>`;
+  SD.part1.forEach((x,i)=>{
+    fh += `<div class="kitem"><div class="qline"><span class="num">${i+1}.</span>${escapeHtml(x.q)}
+        <span class="qvn" style="display:inline"> · ${escapeHtml(x.vn)}</span></div>
+      <div class="ansblock blur" onclick="this.classList.toggle('blur')">${escapeHtml(x.a)}</div></div>`;
+  });
+  $("spsec-frame").innerHTML = fh;
+  showScreen("scr-sphome");
+  if(sec && $(sec)) $(sec).scrollIntoView({behavior:"smooth"});
+}
+
 /* ---------------- Writing: luyện thuộc khung (đục lỗ 3 mức) ---------------- */
 let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0};
 const WCL_LV = {
@@ -18773,20 +19351,22 @@ function wBest(){
 }
 function wSaveBest(pct){
   try{
-    const rid = wResolve(WD.templates.find(x=>x.id===wcl.tpl)).id;
+    const rid = wResolve(wTplAll().find(x=>x.id===wcl.tpl)).id;
     const b = wBest(), k = rid + "|" + wcl.lv;
     if(!(k in b) || pct > b[k]){ b[k] = pct; localStorage.aptisWBest = JSON.stringify(b); }
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq:"SPK ⭐ trả lời câu hỏi", s4:"SPK ⭐ nói 2 phút"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;
   if(lv) wcl.lv = lv;
   renderWCloze();
 }
-function wPartOf(id){ return id.startsWith("p2") ? "P2" : id.startsWith("p3") ? "P3" : "P4"; }
+const SD = (window.APTIS && window.APTIS.speaking) || null;
+function wTplAll(){ return SD ? WD.templates.concat(SD.templates) : WD.templates; }
+function wPartOf(id){ return !id.startsWith("p") ? "SPK" : id.startsWith("p2") ? "P2" : id.startsWith("p3") ? "P3" : "P4"; }
 let wclOpen = false;
 function wVer(){ try{ return +(localStorage.aptisWVer || 1) || 1; }catch(e){ return 1; } }
 function wSetVer(v){
@@ -18796,14 +19376,14 @@ function wSetVer(v){
 function wResolve(t){
   // khung ⭐ đổi theo bản đã chọn (V1 = bản gốc của chủ app, V2/V3 cho bạn cùng ôn)
   if(!t || wVer() === 1 || t.base || !t.title.includes("⭐")) return t;
-  return WD.templates.find(x=>x.base === t.id && x.ver === wVer()) || t;
+  return wTplAll().find(x=>x.base === t.id && x.ver === wVer()) || t;
 }
 function wVerBarHtml(){
   return `<div class="pillbar" style="flex-wrap:wrap;align-items:center">
     <span class="qvn" style="display:inline;margin-right:2px">👤 Bản khung ⭐:</span>` +
     [1,2,3].map(v=>`<button class="pill ${v===wVer()?"active":""}" onclick="wSetVer(${v})">V${v}</button>`).join("") + `</div>`;
 }
-function wTplShort(id){ return wTplLabel(id).replace(/^P\d\s*(⭐|·)?\s*/, ""); }
+function wTplShort(id){ return wTplLabel(id).replace(/^(P\d|SPK)\s*(⭐|·)?\s*/, ""); }
 function renderWCloze(){
   wclOpen = true;
   setNav("nav-wcloze", ["Writing", "Luyện thuộc khung"], "Writing", "goWriting()");
@@ -18813,12 +19393,13 @@ function renderWCloze(){
     P2: {first: "p2u",  label: "Part 2 · form 20–30 từ"},
     P3: {first: "p3u",  label: "Part 3 · chat 30–40 từ"},
     P4: {first: "p4ua", label: "Part 4 · 2 email"},
+    SPK: {first: "s2", label: "🗣 Speaking · khung nói"},
   };
   let ph = wVerBarHtml();
-  ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
+  ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4","SPK"].map(p=>
       `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`
     ).join("") + `</div>`;
-  const inPart = WD.templates.filter(t=>wPartOf(t.id)===curPart && !t.base);
+  const inPart = wTplAll().filter(t=>wPartOf(t.id)===curPart && !t.base);
   const stars  = inPart.filter(t=>t.title.includes("⭐"));
   const others = inPart.filter(t=>!t.title.includes("⭐"));
   const chip = t => `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')" style="font-size:13.5px;padding:6px 14px">${wTplShort(t.id)}</button>`;
@@ -18830,14 +19411,20 @@ function renderWCloze(){
       <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:#64748b;margin-bottom:7px">MẪU THEO DẠNG / BẢN TỦ — THAM KHẢO</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${others.map(chip).join("")}</div></div>`;
   ph += `</div>`;
-  const activeId = wResolve(WD.templates.find(x=>x.id===wcl.tpl)).id;
+  const activeId = wResolve(wTplAll().find(x=>x.id===wcl.tpl)).id;
   ph += `<div class="pillbar" style="flex-wrap:wrap">` + WCL_LVS.map(l=>{
       const b = best[activeId+"|"+l];
       return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
     }).join("") + `</div>`;
   $("wcl-pills").innerHTML = ph;
-  const t = wResolve(WD.templates.find(x=>x.id===wcl.tpl));
+  const t = wResolve(wTplAll().find(x=>x.id===wcl.tpl));
   $("wcl-body").innerHTML = wcl.lv===WCL_TYPE_LV ? wClozeLv3Html(t) : wClozeGapHtml(t);
+  if(t.timer){
+    const tm = document.createElement("div");
+    tm.style.cssText = "margin:0 0 10px";
+    tm.innerHTML = `<button class="btn secondary" onclick="wTimerStart(${t.timer})">⏱ Bấm giờ ${t.timer>=120?"2 phút":t.timer+" giây"} — nói TO theo khung</button> <span id="wcl-timer-d" style="font-weight:700;font-size:19px;margin-left:10px;color:var(--purple)"></span>`;
+    $("wcl-body").prepend(tm);
+  }
   if(wcl.lv!==WCL_TYPE_LV) wClozeProgress();
   showScreen("scr-wcloze");
 }
@@ -18928,7 +19515,7 @@ function renderWClozePillsOnly(){
   const best = wBest();
   const bars = $("wcl-pills").querySelectorAll(".pillbar");
   const bar2 = bars[bars.length - 1];
-  const activeId = wResolve(WD.templates.find(x=>x.id===wcl.tpl)).id;
+  const activeId = wResolve(wTplAll().find(x=>x.id===wcl.tpl)).id;
   if(bar2) bar2.innerHTML = WCL_LVS.map(l=>{
     const b = best[activeId+"|"+l];
     return `<button class="pill ${l===wcl.lv?"active":""}" onclick="wClozeGo(null,${l})">${WCL_LV[l].name}${b!=null?` · 🏆${b}%`:""}</button>`;
@@ -18948,6 +19535,19 @@ function wClozeLv3Html(t){
     <div class="qvn" style="display:block;margin-top:4px">Gõ bài vào khung trắng; đến chỗ điền thì bấm/kéo thẻ vàng — thẻ thả vào là KHỐI CỨNG: không sửa được chữ bên trong, xóa thì Backspace bay nguyên thẻ.</div>
     <div style="margin-top:10px"><button class="btn" onclick="wCompare()">📊 So với bản gốc</button></div>
     <div id="wcl-cmp" style="margin-top:12px"></div>`;
+}
+let wclTimerInt = null;
+function wTimerStart(sec){
+  clearInterval(wclTimerInt);
+  let left = sec;
+  const d = $("wcl-timer-d");
+  const show = ()=>{ if(d) d.textContent = Math.floor(left/60) + ":" + String(left%60).padStart(2,"0"); };
+  show();
+  wclTimerInt = setInterval(()=>{
+    left--;
+    if(left < 0){ clearInterval(wclTimerInt); if(d) d.textContent = "⏰ HẾT GIỜ!"; }
+    else show();
+  }, 1000);
 }
 function wMakeTok(name){
   // thẻ CỨNG trong bài gõ: contentEditable=false → không sửa được chữ, Backspace xóa nguyên thẻ
@@ -18999,7 +19599,7 @@ function wEditorDrop(ev){
   wInsertTokAt(range, name);
 }
 function wCompare(){
-  const t = wResolve(WD.templates.find(x=>x.id===wcl.tpl));
+  const t = wResolve(wTplAll().find(x=>x.id===wcl.tpl));
   const refWords = t.segments.filter(s=>s.fix && !s.lbl).flatMap(s=>s.t.split(/\s+/)).filter(w=>wNorm(w));
   // lấy bài gõ: bỏ các thẻ cứng (chỗ điền theo đề) trước khi so
   const ed = $("wcl-typed");

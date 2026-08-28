@@ -17197,6 +17197,26 @@ window.APTIS.speaking = {
    "a": "The Mummy series is my favorite film that I can watch again and again. The best attraction is the mystery of Egyptian civilization, recreated by a lot of excellent scenes."
   },
   {
+   "q": "Tell me about your family",
+   "vn": "Kể về gia đình bạn",
+   "a": "I am happy to tell you about my family. I live in a nuclear family which has four members: my father, my mother, my brother and me. My parents are both workers, and they are very kind and supportive. I love my family and I hope I can spend more time with them."
+  },
+  {
+   "q": "Please tell me about yourself",
+   "vn": "Giới thiệu bản thân",
+   "a": "I am glad to introduce myself. My name is Thu, I am 25 years old and I am living in Ha Noi. Currently, I am working in an office. My hobby is planting trees, because I love nature and it helps me relax after a long working day."
+  },
+  {
+   "q": "What did you do last night?",
+   "vn": "Tối qua bạn làm gì",
+   "a": "Last night I stayed at home and watched a Korean film with my sister. After that, I read a few pages of my book before going to bed. It was a quiet evening, but I felt really relaxed."
+  },
+  {
+   "q": "Tell me about a time you feel relaxed",
+   "vn": "Lúc nào bạn thấy thư giãn",
+   "a": "I find listening to music really relaxing. I usually lie on my bed and listen to some soft songs after a long working day, because it helps me reduce stress and sleep better."
+  },
+  {
    "q": "Please describe your journey here today",
    "vn": "Hôm nay đến đây thế nào",
    "a": "Today is an important day for me because I have the Aptis examination. I got up earlier than usual and wore a simple, polite outfit. My father drove me here, and on the way I practiced some structures again."
@@ -17593,6 +17613,54 @@ window.APTIS.speaking = {
     }
    ],
    "vn": "BACKTEST 27/08: quét Part 4 của cả 36 file tranh — ~100% đề theo mẫu 3 ý 'kể 1 lần + cảm xúc + suy nghĩ về vấn đề' (a time you failed / were in a hurry / made a choice / received news…) → khung này phủ hết. Ý 1 và Ý 3 dùng lại nguyên khung ①b + ③ của Writing — thuộc Writing rồi thì Part 4 Speaking gần như không phải thuộc thêm. 1 phút chuẩn bị = điền nháp các ô ra giấy. Nói hết khung + chi tiết ≈ 1 phút 40 — vừa 2 phút."
+  }
+ ],
+ "p1types": [
+  {
+   "k": "① KỂ VỀ 1 NGƯỜI (family / friend / singer / film star)",
+   "en": "I am happy to tell you about [tên], [tuổi]. He/She is very kind, patient and supportive, and always gives me valuable advice when I face difficult problems. I love him/her and I hope we can spend more time together."
+  },
+  {
+   "k": "② TẢ NƠI CHỐN (your home / famous place / first school)",
+   "en": "I am happy to tell you about [nơi]. It is a [beautiful coastal / bustling] city, and it is famous for [món ăn / địa danh]. I really love it, and I hope one day I could [ước muốn: settle there]."
+  },
+  {
+   "k": "③ THÍCH LÀM GÌ (free time / with friends / sport)",
+   "en": "I enjoy [V-ing]. Every [thời gian], I [hành động cụ thể] with [ai]. I love this because it helps me relax and reduce stress after a long working day."
+  },
+  {
+   "k": "④ VÌ SAO / LÝ DO (why do you like…?)",
+   "en": "There are some reasons why I [làm X]. First, it is really interesting and it helps me [lợi ích 1]. Second, [lý do 2]. Besides, I can [lợi ích thêm]."
+  },
+  {
+   "k": "⑤ CẢM XÚC / THƯ GIÃN (a time you feel relaxed / stressed)",
+   "en": "I find [hoạt động] really relaxing. I usually [làm gì] after a long working day, because it helps me [lợi ích: reduce stress and sleep better]."
+  },
+  {
+   "k": "⑥ THÓI QUEN / HÀNH TRÌNH (typical day / journey here today / rest of today)",
+   "en": "My typical day starts at [giờ]. I [việc 1], then I [việc 2]. I go to bed at around [giờ]. This routine helps me stay healthy and happy."
+  },
+  {
+   "k": "⑦ LẦN CUỐI CÙNG (last time you… / what you did yesterday)",
+   "en": "The last time I [làm gì] was [thời gian]. I [chi tiết: đi với ai, ở đâu], and I felt [cảm xúc] about it."
+  }
+ ],
+ "examTips": [
+  {
+   "t": "NÓI CÀNG TO, ĐIỂM CÀNG CAO",
+   "vn": "máy ghi âm — nói nhỏ là mất điểm oan; ngồi gần mic, nói rõ ràng."
+  },
+  {
+   "t": "Nói Ý CHÍNH, không cần hoàn hảo ngữ pháp",
+   "vn": "sai vài chỗ nhỏ vẫn có điểm; im lặng hoặc nói thiếu ý mới mất điểm nặng."
+  },
+  {
+   "t": "MỞ RỘNG vấn đề — càng nhiều ý càng tốt",
+   "vn": "đã hết khung mà còn giờ thì thêm chi tiết thật (ai, ở đâu, cảm xúc), đừng dừng sớm."
+  },
+  {
+   "t": "Nói hết thời lượng của từng câu",
+   "vn": "P1 30 giây ≈ 3 câu · P2/P3 45 giây ≈ 4-5 câu · P4 2 phút ≈ đủ 3 ý."
   }
  ],
  "wordbank": [
@@ -19456,6 +19524,21 @@ function goSpeaking(sec){
       ${escapeHtml(h.en)} <span class="qvn" style="display:inline">· ${escapeHtml(h.vn)}</span></div>`;
   });
   fh += `</div>`;
+  if(SD.p1types){
+    fh += `<h2 style="margin:26px 0 6px">🎯 Part 1 — 7 DẠNG câu hỏi & khung mini (mỗi câu 30 giây)</h2>
+      <div class="note">Khung ⭐ trả lời Part 1 dùng được cho mọi câu; 7 khung mini dưới đây là bản "đo ni" theo từng dạng — nhận dạng câu hỏi rồi ốp khung tương ứng, nói đủ 3 câu là vừa 30 giây.</div>`;
+    SD.p1types.forEach(t=>{
+      fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(t.k)}</b></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:12px 15px;margin:7px 0;line-height:1.9">${escapeHtml(t.en)}</div></div>`;
+    });
+  }
+  if(SD.examTips){
+    fh += `<h2 style="margin:26px 0 6px">🔊 4 mẹo phòng thi (tài liệu tủ)</h2>`;
+    SD.examTips.forEach(t=>{
+      fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(t.t)}</b>
+        <span class="qvn" style="display:inline"> — ${escapeHtml(t.vn)}</span></div></div>`;
+    });
+  }
   if(SD.wordbank){
     fh += `<h2 style="margin:26px 0 6px">🎨 Kho từ điền vào ô vàng (tả tranh · cảm xúc · nơi chốn · hoạt động)</h2>
       <div class="note">Đây là thứ quyết định điểm TỪ VỰNG: khung đã cố định, chỉ cần điền ô bằng từ "đắt" thay vì nice/good/like.</div>`;

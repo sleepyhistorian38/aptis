@@ -493,8 +493,8 @@ img.ref{max-width:100%;border:1px solid var(--border);border-radius:10px}
 <!-- ============ WRITING CLOZE ============ -->
 <div id="scr-wcloze" class="page">
   <div class="backbar" id="nav-wcloze"></div>
-  <h1>⌨️ Luyện thuộc khung Writing</h1>
-  <p class="sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét 25% + gợi ý → mức 2 khoét 60% → mức 3 khoét 80% → mức 4 khoét 100% (mọi từ là ô điền, thẻ vàng giữ vị trí) → mức 5 gõ trắng cả bài. Đạt ≥90% ở mức 5 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
+  <h1 id="wcl-h1">⌨️ Luyện thuộc khung Writing</h1>
+  <p class="sub" id="wcl-sub">Phương pháp "đục lỗ tăng dần" (active recall): mức 1 khoét 25% + gợi ý → mức 2 khoét 60% → mức 3 khoét 80% → mức 4 khoét 100% (mọi từ là ô điền, thẻ vàng giữ vị trí) → mức 5 gõ trắng cả bài. Đạt ≥90% ở mức 5 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.</p>
   <div id="wcl-pills"></div>
   <div id="wcl-body"></div>
 </div>
@@ -19165,7 +19165,7 @@ function goWriting(sec){
   setNav("nav-whome", ["Writing"], "Trang chủ", "goRoot()");
   // ---- luyện thuộc ----
   let sh = `<div class="grid" style="margin-top:14px">
-    <div class="card" style="cursor:pointer;border-color:var(--purple)" onclick="wClozeGo()">
+    <div class="card" style="cursor:pointer;border-color:var(--purple)" onclick="wClozeSkill('W')">
       <span class="tag sim">LUYỆN THUỘC</span>
       <h3>⌨️ Đục lỗ khung — 3 mức</h3>
       <div class="meta">Cách thuộc nhanh nhất: mức 1 khoét 25% có gợi ý → mức 2 khoét 60% → mức 3 gõ lại cả bài, app chấm % khớp từng từ. Lưu kỷ lục 🏆 theo từng khung.</div>
@@ -19271,10 +19271,10 @@ function goSpeaking(sec){
   if(!SD){ alert("Chưa có dữ liệu Speaking"); return; }
   setNav("nav-sphome", ["Speaking"], "Trang chủ", "goRoot()");
   let sh = `<div class="grid" style="margin-top:14px">
-    <div class="card" style="cursor:pointer;border-color:var(--purple)" onclick="wClozeGo('s2',1)">
+    <div class="card" style="cursor:pointer;border-color:var(--purple)" onclick="wClozeSkill('SPK')">
       <span class="tag sim">LUYỆN THUỘC</span>
       <h3>⌨️ Đục lỗ 4 khung nói + bấm giờ</h3>
-      <div class="meta">Luyện chung màn Đục lỗ (tab 🗣 Speaking) — mỗi khung có nút ⏱ 45s / 2 phút để tập nói TO đúng nhịp thi.</div>
+      <div class="meta">Màn luyện riêng của Speaking: đục lỗ 5 mức cho 4 khung nói, mỗi khung có nút ⏱ 45 giây / 2 phút để tập nói TO đúng nhịp thi.</div>
     </div>
   </div>`;
   sh += `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · ~12 phút)</h2><div class="grid">`;
@@ -19316,7 +19316,8 @@ function goSpeaking(sec){
 }
 
 /* ---------------- Writing: luyện thuộc khung (đục lỗ 3 mức) ---------------- */
-let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0};
+let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0, last: {W: "p2u", SPK: "s2"}};
+function wClozeSkill(sk){ wClozeGo(wcl.last[sk] || (sk==="SPK" ? "s2" : "p2u"), 1); }
 const WCL_LV = {
   1: {hide: 0.25, hint: true,  name: "Mức 1 · khoét 25% + gợi ý"},
   2: {hide: 0.60, hint: false, name: "Mức 2 · khoét 60%"},
@@ -19386,17 +19387,26 @@ function wVerBarHtml(){
 function wTplShort(id){ return wTplLabel(id).replace(/^(P\d|SPK)\s*(⭐|·)?\s*/, ""); }
 function renderWCloze(){
   wclOpen = true;
-  setNav("nav-wcloze", ["Writing", "Luyện thuộc khung"], "Writing", "goWriting()");
-  const best = wBest();
   const curPart = wPartOf(wcl.tpl);
+  const isSpk = curPart === "SPK";
+  wcl.last[isSpk ? "SPK" : "W"] = wcl.tpl;
+  if(isSpk){
+    setNav("nav-wcloze", ["Speaking", "Luyện khung nói"], "Speaking", "goSpeaking()");
+    $("wcl-h1").textContent = "🗣️ Luyện khung nói Speaking";
+    $("wcl-sub").textContent = "Thuộc khung bằng đục lỗ tăng dần (mức 1 khoét 25% → mức 5 gõ trắng cả bài), rồi bấm ⏱ ĐỒNG HỒ và NÓI TO theo khung đúng nhịp thi (45 giây / 2 phút). Ô vàng là chỗ điền theo tranh/đề — thi mới phải nghĩ.";
+  } else {
+    setNav("nav-wcloze", ["Writing", "Luyện thuộc khung"], "Writing", "goWriting()");
+    $("wcl-h1").textContent = "⌨️ Luyện thuộc khung Writing";
+    $("wcl-sub").textContent = "Phương pháp \"đục lỗ tăng dần\" (active recall): mức 1 khoét 25% + gợi ý → mức 2 khoét 60% → mức 3 khoét 80% → mức 4 khoét 100% (mọi từ là ô điền, thẻ vàng giữ vị trí) → mức 5 gõ trắng cả bài. Đạt ≥90% ở mức 5 tức là đã thuộc khung. Chỉ khoét phần CỐ ĐỊNH — ô vàng là chỗ điền theo đề, thi mới phải chế.";
+  }
+  const best = wBest();
   const PART_META = {
     P2: {first: "p2u",  label: "Part 2 · form 20–30 từ"},
     P3: {first: "p3u",  label: "Part 3 · chat 30–40 từ"},
     P4: {first: "p4ua", label: "Part 4 · 2 email"},
-    SPK: {first: "s2", label: "🗣 Speaking · khung nói"},
   };
-  let ph = wVerBarHtml();
-  ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4","SPK"].map(p=>
+  let ph = isSpk ? "" : wVerBarHtml();
+  if(!isSpk) ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
       `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`
     ).join("") + `</div>`;
   const inPart = wTplAll().filter(t=>wPartOf(t.id)===curPart && !t.base);
@@ -19405,7 +19415,7 @@ function renderWCloze(){
   const chip = t => `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')" style="font-size:13.5px;padding:6px 14px">${wTplShort(t.id)}</button>`;
   ph += `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-bottom:12px">`;
   if(stars.length) ph += `<div style="background:#f5f3ff;border:1.5px solid var(--purple);border-radius:12px;padding:9px 13px">
-      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--purple);margin-bottom:7px">⭐ KHUNG VẠN NĂNG — HỌC THUỘC</div>
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--purple);margin-bottom:7px">${isSpk ? "⭐ 4 KHUNG NÓI — HỌC THUỘC" : "⭐ KHUNG VẠN NĂNG — HỌC THUỘC"}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${stars.map(chip).join("")}</div></div>`;
   if(others.length) ph += `<div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:9px 13px">
       <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:#64748b;margin-bottom:7px">MẪU THEO DẠNG / BẢN TỦ — THAM KHẢO</div>

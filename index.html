@@ -17595,6 +17595,80 @@ window.APTIS.speaking = {
    "vn": "BACKTEST 27/08: quét Part 4 của cả 36 file tranh — ~100% đề theo mẫu 3 ý 'kể 1 lần + cảm xúc + suy nghĩ về vấn đề' (a time you failed / were in a hurry / made a choice / received news…) → khung này phủ hết. Ý 1 và Ý 3 dùng lại nguyên khung ①b + ③ của Writing — thuộc Writing rồi thì Part 4 Speaking gần như không phải thuộc thêm. 1 phút chuẩn bị = điền nháp các ô ra giấy. Nói hết khung + chi tiết ≈ 1 phút 40 — vừa 2 phút."
   }
  ],
+ "wordbank": [
+  {
+   "k": "🧍 Tả NGƯỜI / tính cách",
+   "en": "kind · patient · supportive · reliable · enthusiastic · passionate · hospitable · friendly",
+   "vn": "điền vào ô 'ai' và 'biểu cảm' của khung tả tranh"
+  },
+  {
+   "k": "😊 CẢM XÚC",
+   "en": "happy · relaxed · excited · satisfied · stressed · exhausted · disappointed · nervous",
+   "vn": "ô 'biểu cảm' (P2/P3) và ô 'cảm xúc' (P4) — thành ngữ tủ: on top of the world, over the moon"
+  },
+  {
+   "k": "🏙 Tả NƠI CHỐN",
+   "en": "bustling · peaceful · scenic · crowded · vibrant · spacious · modern · quiet",
+   "vn": "ô 'ở đâu' và 'khung cảnh xung quanh' — vd: a bustling shopping street, a peaceful park"
+  },
+  {
+   "k": "🎯 Tả HOẠT ĐỘNG",
+   "en": "engaging · interactive · practical · beneficial · entertaining · educational · relaxing",
+   "vn": "ô 'đang làm gì' và các ô lý do — vd: it is a beneficial activity for young people"
+  }
+ ],
+ "linkers": [
+  {
+   "k": "Nêu ý kiến",
+   "en": "From my perspective · In my view · I believe that · It seems to me"
+  },
+  {
+   "k": "Thêm ý",
+   "en": "Besides · In addition · Furthermore · Moreover · What is more"
+  },
+  {
+   "k": "Đối lập",
+   "en": "However · On the other hand · Although · Even though · While"
+  },
+  {
+   "k": "Kết luận",
+   "en": "As a result · Therefore · That is why · To sum up"
+  },
+  {
+   "k": "Giải thích / ví dụ",
+   "en": "because · since · as · For instance · For example"
+  },
+  {
+   "k": "Nhấn mạnh",
+   "en": "Certainly · Definitely · Clearly · Actually · To be honest"
+  }
+ ],
+ "mistakes": [
+  {
+   "t": "Trả lời quá ngắn rồi im (\"Yes, I like it.\")",
+   "fix": "Bám khung: luôn đủ 3 câu — đáp án + chi tiết + lý do/cảm nghĩ."
+  },
+  {
+   "t": "Im lặng lâu khi bí",
+   "fix": "Nói câu giữ giờ của khung: \"That is an interesting question. Let me think about it for a moment.\" rồi bám 1 hướng HRKF."
+  },
+  {
+   "t": "Lặp đi lặp lại một từ (nice, good, like)",
+   "fix": "Thay bằng từ trong kho: bustling, vibrant, beneficial, enthusiastic…"
+  },
+  {
+   "t": "Không có lý do / ví dụ",
+   "fix": "Khung đã cài sẵn because + For example — đừng bỏ 2 chỗ này."
+  },
+  {
+   "t": "Nói quá nhanh hoặc quá chậm, phát âm không rõ",
+   "fix": "Luyện với nút ⏱ bấm giờ: nói TO, hết khung vừa khít 45 giây là nhịp chuẩn."
+  },
+  {
+   "t": "Quên từ giữa chừng rồi dừng hẳn",
+   "fix": "Bỏ qua từ đó, nói tiếp câu sau của khung — giám khảo chấm độ trôi chảy, không chấm 1 từ."
+  }
+ ],
  "hrkf": [
   {
    "k": "H — Health",
@@ -19382,6 +19456,30 @@ function goSpeaking(sec){
       ${escapeHtml(h.en)} <span class="qvn" style="display:inline">· ${escapeHtml(h.vn)}</span></div>`;
   });
   fh += `</div>`;
+  if(SD.wordbank){
+    fh += `<h2 style="margin:26px 0 6px">🎨 Kho từ điền vào ô vàng (tả tranh · cảm xúc · nơi chốn · hoạt động)</h2>
+      <div class="note">Đây là thứ quyết định điểm TỪ VỰNG: khung đã cố định, chỉ cần điền ô bằng từ "đắt" thay vì nice/good/like.</div>`;
+    SD.wordbank.forEach(w=>{
+      fh += `<div class="kitem"><div class="qline"><b>${escapeHtml(w.k)}</b></div>
+        <div style="margin:6px 0;font-size:15.5px">${escapeHtml(w.en)}</div>
+        <div class="qvn" style="display:block">${escapeHtml(w.vn)}</div></div>`;
+    });
+  }
+  if(SD.linkers){
+    fh += `<div class="kitem"><div class="qline"><b>🔗 Từ nối nên rải đều khi nói (mỗi câu trả lời dùng 2–3 cái)</b></div>`;
+    SD.linkers.forEach(l=>{
+      fh += `<div class="qline" style="margin-top:7px"><span class="num">·</span><b>${escapeHtml(l.k)}</b>:
+        <span style="font-size:15px">${escapeHtml(l.en)}</span></div>`;
+    });
+    fh += `</div>`;
+  }
+  if(SD.mistakes){
+    fh += `<h2 style="margin:26px 0 6px">⚠️ 6 lỗi khiến mất điểm nói — và cách khung xử lý</h2>`;
+    SD.mistakes.forEach((m,i)=>{
+      fh += `<div class="kitem"><div class="qline"><span class="num">${i+1}.</span><b>${escapeHtml(m.t)}</b></div>
+        <div class="qvn" style="display:block;margin-top:4px">✅ ${escapeHtml(m.fix)}</div></div>`;
+    });
+  }
   fh += `<h2 style="margin:26px 0 6px">🎤 Part 1 — bank ~22 câu tủ (thi 3 câu, 30 giây/câu)</h2>
     <div class="note">Bấm ô mờ để hiện trả lời mẫu của tủ. Trả lời 3–4 câu cho đủ 30 giây; thay chi tiết bằng đời thật của bạn.</div>`;
   SD.part1.forEach((x,i)=>{

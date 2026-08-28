@@ -17066,7 +17066,7 @@ window.APTIS.speaking = {
    "task": "3 câu hỏi cá nhân (thi 3 trong ~22 câu tủ bên dưới)",
    "words": "30 giây / câu",
    "time": "~2 phút",
-   "note": "Tủ đóng — học bank là trúng. Trả lời 3–4 câu, đừng chỉ 1 câu."
+   "note": "Tủ đóng — học bank là trúng. Dùng ⭐ khung Part 1: trả lời thẳng + 1 chi tiết thật + 1 câu cảm nghĩ = vừa 30 giây."
   },
   {
    "part": "Part 2",
@@ -17204,8 +17204,46 @@ window.APTIS.speaking = {
  ],
  "templates": [
   {
+   "id": "s1",
+   "timer": 30,
+   "parts": [
+    "P1"
+   ],
+   "title": "SPK ⭐ Khung TRẢ LỜI PART 1 (3 câu · nói ~30 giây/câu)",
+   "segments": [
+    {
+     "t": "CÂU 1 — trả lời thẳng câu hỏi (chép cụm của đề): I live in a small house near the city centre",
+     "fix": false
+    },
+    {
+     "t": ". In fact, ",
+     "fix": true
+    },
+    {
+     "t": "1 chi tiết thật: it has three rooms and a small garden",
+     "fix": false
+    },
+    {
+     "t": ". To be honest, I really like it, because it makes me feel ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc: comfortable and relaxed",
+     "fix": false
+    },
+    {
+     "t": ".",
+     "fix": true
+    }
+   ],
+   "vn": "Part 1 hỏi 3 câu cá nhân, mỗi câu 30 giây — trả lời ĐỦ 3 CÂU mới hết giờ, đừng nói 1 câu rồi im. Câu 1 chép cụm của đề + đáp án · câu 2 thêm 1 chi tiết thật (số phòng, tên, thời gian) · câu 3 cảm nghĩ (cố định). Nội dung 22 câu hỏi tủ + trả lời mẫu xem ở trang Speaking, mục 🎤 Part 1."
+  },
+  {
    "id": "s2",
    "timer": 45,
+   "parts": [
+    "P2"
+   ],
    "title": "SPK ⭐ Khung TẢ TRANH (Part 2 · nói ~45 giây)",
    "segments": [
     {
@@ -17282,6 +17320,9 @@ window.APTIS.speaking = {
   {
    "id": "s3",
    "timer": 45,
+   "parts": [
+    "P3"
+   ],
    "title": "SPK ⭐ Khung SO SÁNH 2 TRANH (Part 3 · nói ~45 giây)",
    "segments": [
     {
@@ -17342,7 +17383,12 @@ window.APTIS.speaking = {
   {
    "id": "sq",
    "timer": 45,
-   "title": "SPK ⭐ Khung TRẢ LỜI CÂU HỎI (mọi câu hỏi Part 2/3/4 · ~45 giây)",
+   "parts": [
+    "P2",
+    "P3",
+    "P4"
+   ],
+   "title": "SPK ⭐ Khung TRẢ LỜI CÂU HỎI (2 câu hỏi của Part 2/3 · ~45 giây)",
    "segments": [
     {
      "t": "Câu GIỮ GIỜ — nói ngay trong lúc nghĩ (mẹo tủ):",
@@ -17433,6 +17479,9 @@ window.APTIS.speaking = {
   {
    "id": "s4",
    "timer": 120,
+   "parts": [
+    "P4"
+   ],
    "title": "SPK ⭐ Khung NÓI 2 PHÚT (Part 4 · 1 phút chuẩn bị + 2 phút nói)",
    "segments": [
     {
@@ -19264,6 +19313,17 @@ function goWriting(sec){
 }
 
 /* ================= SPEAKING (khung vạn năng nói) ================= */
+function spkTplCard(t, dup){
+  const nWords = t.segments.filter(x=>x.fix && !x.lbl).flatMap(x=>x.t.split(/\s+/)).filter(w=>/[A-Za-z]/.test(w)).length;
+  return `<div class="kitem" style="border:1.5px solid var(--purple);border-radius:12px">
+    <div class="qline" style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap">
+      <b>${escapeHtml(t.title)}${dup ? ' <span class="qvn" style="display:inline">(dùng lại — đã hiện ở part trên)</span>' : ""}</b>
+      <span class="qvn" style="display:inline;white-space:nowrap">📚 thuộc lòng ≈ ${nWords} từ · ⏱ ${t.timer>=120?"2 phút":t.timer+"s"}</span></div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;margin:8px 0;line-height:2.05">${wSegsHtml(t.segments)}</div>
+    <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Cách dùng & ví dụ (bấm mở)</summary>
+      <div class="qvn" style="display:block;margin-top:6px;line-height:1.8">${wVnHtml(t.vn)}</div></details>
+    <button class="btn secondary" style="padding:5px 14px;font-size:13px" onclick="wClozeGo('${t.id}',1)">⌨️ Luyện khung này</button></div>`;
+}
 function goSpeaking(sec){
   if(!confirmLeave()) return;
   wclOpen = false;
@@ -19278,16 +19338,35 @@ function goSpeaking(sec){
     </div>
   </div>`;
   sh += `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · ~12 phút)</h2><div class="grid">`;
-  SD.structure.forEach(p=>{
-    sh += `<div class="card"><span class="tag sim">${escapeHtml(p.part)}</span>
+  SD.structure.forEach((p,i)=>{
+    const k = "P" + (i+1);
+    sh += `<div class="card" style="cursor:pointer" onclick="wClozeSpkPart('${k}')"><span class="tag sim">${escapeHtml(p.part)}</span>
       <h3>${escapeHtml(p.task)}</h3>
       <div class="meta"><b>${escapeHtml(p.words)}</b> · ${escapeHtml(p.time)}</div>
-      <div class="meta">${escapeHtml(p.note)}</div></div>`;
+      <div class="meta">${escapeHtml(p.note)}</div>
+      <div class="meta" style="color:var(--purple);font-weight:600">⌨️ Bấm để luyện khung của ${k} →</div></div>`;
   });
   sh += `</div>`;
   $("spsec-structure").innerHTML = sh;
-  let fh = `<h2 style="margin:26px 0 6px">🧩 4 khung vạn năng nói (✅ backtest 36 đề tranh + 153 câu hỏi tủ)</h2>`;
-  SD.templates.forEach(t=>{
+  let fh = `<h2 style="margin:26px 0 6px">🧩 Khung vạn năng nói theo từng PART (✅ backtest 36 đề tranh + 153 câu hỏi tủ)</h2>`;
+  const SPK_ORDER = [
+    {k:"P1", h:"PART 1 — 3 câu hỏi cá nhân, 30 giây/câu"},
+    {k:"P2", h:"PART 2 — tả 1 bức tranh + 2 câu hỏi (45 giây/phần)"},
+    {k:"P3", h:"PART 3 — so sánh 2 bức tranh + 2 câu hỏi (45 giây/phần)"},
+    {k:"P4", h:"PART 4 — 1 phút chuẩn bị, nói liền 2 phút"},
+  ];
+  const spkSeen = new Set();
+  SPK_ORDER.forEach(g=>{
+    const list = SD.templates.filter(t=>spkPartsOf(t).includes(g.k));
+    if(!list.length) return;
+    fh += `<div style="margin:18px -4px 8px;padding:6px 14px;background:#f1f5f9;border-left:4px solid var(--purple);border-radius:8px;font-weight:800;color:#334155">${g.h}</div>`;
+    list.forEach(t=>{
+      const dup = spkSeen.has(t.id); spkSeen.add(t.id);
+      fh += spkTplCard(t, dup);
+    });
+  });
+  fh += `<div style="display:none">`;
+  [].forEach(t=>{
     const nWords = t.segments.filter(x=>x.fix && !x.lbl).flatMap(x=>x.t.split(/\s+/)).filter(w=>/[A-Za-z]/.test(w)).length;
     fh += `<div class="kitem" style="border:1.5px solid var(--purple);border-radius:12px">
       <div class="qline" style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap">
@@ -19297,6 +19376,7 @@ function goSpeaking(sec){
       <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Cách dùng & ví dụ (bấm mở)</summary>
         <div class="qvn" style="display:block;margin-top:6px;line-height:1.8">${wVnHtml(t.vn)}</div></details></div>`;
   });
+  fh += `</div>`;
   fh += `<div class="kitem"><div class="qline"><b>🧭 HRKF — 4 hướng lý do vạn năng của tủ (bí lý do là bám vào đây)</b></div>`;
   SD.hrkf.forEach(h=>{
     fh += `<div class="qline" style="margin-top:8px"><span class="num">·</span><b>${escapeHtml(h.k)}</b>:
@@ -19316,8 +19396,16 @@ function goSpeaking(sec){
 }
 
 /* ---------------- Writing: luyện thuộc khung (đục lỗ 3 mức) ---------------- */
-let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0, last: {W: "p2u", SPK: "s2"}};
+let wcl = {tpl: "p2", lv: 1, total: 0, ok: 0, revealed: 0, last: {W: "p2u", SPK: "s2"}, spkPart: "P2"};
 function wClozeSkill(sk){ wClozeGo(wcl.last[sk] || (sk==="SPK" ? "s2" : "p2u"), 1); }
+const SPK_PARTS = [
+  {k: "P1", first: "s1", label: "Part 1 · 3 câu × 30 giây"},
+  {k: "P2", first: "s2", label: "Part 2 · tả tranh + 2 câu hỏi"},
+  {k: "P3", first: "s3", label: "Part 3 · so sánh + 2 câu hỏi"},
+  {k: "P4", first: "s4", label: "Part 4 · nói 2 phút"},
+];
+function spkPartsOf(t){ return (t && t.parts) || ["P2"]; }
+function wClozeSpkPart(k){ wcl.spkPart = k; const p = SPK_PARTS.find(x=>x.k===k); wClozeGo(p ? p.first : "s2", 1); }
 const WCL_LV = {
   1: {hide: 0.25, hint: true,  name: "Mức 1 · khoét 25% + gợi ý"},
   2: {hide: 0.60, hint: false, name: "Mức 2 · khoét 60%"},
@@ -19358,7 +19446,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq:"SPK ⭐ trả lời câu hỏi", s4:"SPK ⭐ nói 2 phút"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq:"SPK ⭐ trả lời câu hỏi", s4:"SPK ⭐ nói 2 phút"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;
@@ -19406,19 +19494,35 @@ function renderWCloze(){
     P4: {first: "p4ua", label: "Part 4 · 2 email"},
   };
   let ph = isSpk ? "" : wVerBarHtml();
-  if(!isSpk) ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
-      `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`
-    ).join("") + `</div>`;
-  const inPart = wTplAll().filter(t=>wPartOf(t.id)===curPart && !t.base);
-  const stars  = inPart.filter(t=>t.title.includes("⭐"));
-  const others = inPart.filter(t=>!t.title.includes("⭐"));
+  let inPart, stars, others, starLabel, otherLabel;
+  if(isSpk){
+    const cur = wTplAll().find(x=>x.id===wcl.tpl);
+    if(!spkPartsOf(cur).includes(wcl.spkPart)) wcl.spkPart = spkPartsOf(cur)[0];
+    ph += `<div class="pillbar" style="flex-wrap:wrap">` + SPK_PARTS.map(p=>
+        `<button class="pill ${p.k===wcl.spkPart?"active":""}" onclick="wClozeSpkPart('${p.k}')">${p.label}</button>`
+      ).join("") + `</div>`;
+    inPart = SD.templates.filter(t=>spkPartsOf(t).includes(wcl.spkPart));
+    stars  = inPart.filter(t=>t.id !== "sq");
+    others = inPart.filter(t=>t.id === "sq");
+    starLabel  = "⭐ KHUNG CHÍNH CỦA " + wcl.spkPart;
+    otherLabel = "DÙNG CHUNG · TRẢ LỜI 2 CÂU HỎI SAU TRANH";
+  } else {
+    ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
+        `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`
+      ).join("") + `</div>`;
+    inPart = wTplAll().filter(t=>wPartOf(t.id)===curPart && !t.base);
+    stars  = inPart.filter(t=>t.title.includes("⭐"));
+    others = inPart.filter(t=>!t.title.includes("⭐"));
+    starLabel  = "⭐ KHUNG VẠN NĂNG — HỌC THUỘC";
+    otherLabel = "MẪU THEO DẠNG / BẢN TỦ — THAM KHẢO";
+  }
   const chip = t => `<button class="pill ${t.id===wcl.tpl?"active":""}" onclick="wClozeGo('${t.id}')" style="font-size:13.5px;padding:6px 14px">${wTplShort(t.id)}</button>`;
   ph += `<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-bottom:12px">`;
   if(stars.length) ph += `<div style="background:#f5f3ff;border:1.5px solid var(--purple);border-radius:12px;padding:9px 13px">
-      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--purple);margin-bottom:7px">${isSpk ? "⭐ 4 KHUNG NÓI — HỌC THUỘC" : "⭐ KHUNG VẠN NĂNG — HỌC THUỘC"}</div>
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:var(--purple);margin-bottom:7px">${starLabel}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${stars.map(chip).join("")}</div></div>`;
   if(others.length) ph += `<div style="background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:9px 13px">
-      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:#64748b;margin-bottom:7px">MẪU THEO DẠNG / BẢN TỦ — THAM KHẢO</div>
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.4px;color:#64748b;margin-bottom:7px">${otherLabel}</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap">${others.map(chip).join("")}</div></div>`;
   ph += `</div>`;
   const activeId = wResolve(wTplAll().find(x=>x.id===wcl.tpl)).id;

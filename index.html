@@ -17232,6 +17232,11 @@ window.APTIS.speaking = {
    "title": "SPK ⭐ Khung TRẢ LỜI PART 1 (dùng cho CẢ 3 CÂU của Part 1 · 30 giây/câu)",
    "segments": [
     {
+     "t": "LÕI — 3 câu, nói ~30 giây:",
+     "fix": true,
+     "lbl": true
+    },
+    {
      "t": "CÂU 1 — trả lời thẳng câu hỏi (chép cụm của đề): I live in a small house near the city centre",
      "fix": false
     },
@@ -17256,7 +17261,7 @@ window.APTIS.speaking = {
      "fix": true
     },
     {
-     "t": "BẢN QUÁ KHỨ — câu hỏi về chuyện ĐÃ QUA (first school / yesterday / last night / last time…): đổi 2 từ",
+     "t": "➕ BẢN QUÁ KHỨ — chuyện ĐÃ QUA (first school / yesterday / last time…): chỉ đổi 2 từ",
      "fix": true,
      "lbl": true
     },
@@ -17284,6 +17289,11 @@ window.APTIS.speaking = {
    ],
    "title": "SPK ⭐ Khung TẢ TRANH (Part 2 · nói ~45 giây)",
    "segments": [
+    {
+     "t": "LÕI — nói ~35 giây (còn giờ thì thêm câu ➕ ở dưới):",
+     "fix": true,
+     "lbl": true
+    },
     {
      "t": "Wow, it is an interesting picture. When I first look at it, I can see ",
      "fix": true
@@ -17373,6 +17383,11 @@ window.APTIS.speaking = {
    "title": "SPK ⭐ Khung SO SÁNH 2 TRANH (Part 3 · nói ~45 giây)",
    "segments": [
     {
+     "t": "LÕI — nói ~35 giây:",
+     "fix": true,
+     "lbl": true
+    },
+    {
      "t": "Well, actually the two pictures are really interesting. Both of them are about ",
      "fix": true
     },
@@ -17455,7 +17470,7 @@ window.APTIS.speaking = {
      "fix": true
     },
     {
-     "t": "2 câu giữ giờ DỰ PHÒNG — xoay vòng để không lặp (cả bài có 4-5 câu hỏi):",
+     "t": "➕ 2 câu giữ giờ dự phòng — xoay vòng khi trả lời nhiều câu:",
      "fix": true,
      "lbl": true
     },
@@ -17561,6 +17576,11 @@ window.APTIS.speaking = {
    ],
    "title": "SPK ⭐ Khung NÓI 2 PHÚT (Part 4 · trả lời CẢ 3 Ý trong 1 lượt · 1 phút chuẩn bị + 2 phút nói)",
    "segments": [
+    {
+     "t": "LÕI — 3 ý, nói ~1 phút 40:",
+     "fix": true,
+     "lbl": true
+    },
     {
      "t": "Today I would like to talk about ",
      "fix": true
@@ -19521,12 +19541,23 @@ function goWriting(sec){
 }
 
 /* ================= SPEAKING (khung vạn năng nói) ================= */
+function spkSplitWords(t){
+  // đếm từ cố định: LÕI (trước nhãn ➕) vs TÙY CHỌN (sau nhãn ➕)
+  let opt = false, core = 0, extra = 0;
+  t.segments.forEach(sg=>{
+    if(sg.lbl){ opt = sg.t.trim().startsWith("➕"); return; }
+    if(!sg.fix) return;
+    const n = sg.t.split(/\s+/).filter(w=>/[A-Za-z]/.test(w)).length;
+    if(opt) extra += n; else core += n;
+  });
+  return {core, extra};
+}
 function spkTplCard(t, dup){
-  const nWords = t.segments.filter(x=>x.fix && !x.lbl).flatMap(x=>x.t.split(/\s+/)).filter(w=>/[A-Za-z]/.test(w)).length;
+  const w = spkSplitWords(t);
   return `<div class="kitem" style="border:1.5px solid var(--purple);border-radius:12px">
     <div class="qline" style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap">
       <b>${escapeHtml(t.title)}${dup ? ' <span class="qvn" style="display:inline">(dùng lại — đã hiện ở part trên)</span>' : ""}</b>
-      <span class="qvn" style="display:inline;white-space:nowrap">📚 thuộc lòng ≈ ${nWords} từ · ⏱ ${t.timer>=120?"2 phút":t.timer+"s"}</span></div>
+      <span class="qvn" style="display:inline;white-space:nowrap">📚 LÕI ≈ <b>${w.core} từ</b>${w.extra?` · ➕ tùy chọn ${w.extra} từ`:""} · ⏱ ${t.timer>=120?"2 phút":t.timer+"s"}</span></div>
     <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;margin:8px 0;line-height:2.05">${wSegsHtml(t.segments)}</div>
     <details style="margin:4px 0"><summary style="cursor:pointer" class="qvn">🇻🇳 Cách dùng & ví dụ (bấm mở)</summary>
       <div class="qvn" style="display:block;margin-top:6px;line-height:1.8">${wVnHtml(t.vn)}</div></details>
@@ -19545,9 +19576,9 @@ function goSpeaking(sec){
       <div class="meta">Màn luyện riêng của Speaking: đục lỗ 5 mức cho 4 khung nói, mỗi khung có nút ⏱ 45 giây / 2 phút để tập nói TO đúng nhịp thi.</div>
     </div>
   </div>`;
-  const nw = id => { const t = SD.templates.find(x=>x.id===id); return t ? t.segments.filter(x=>x.fix && !x.lbl).flatMap(x=>x.t.split(/\s+/)).filter(w=>/[A-Za-z]/.test(w)).length : 0; };
+  const nw = id => { const t = SD.templates.find(x=>x.id===id); return t ? spkSplitWords(t).core : 0; };
   sh += `<div class="note" style="background:#f5f3ff;border:1.5px solid var(--purple);border-radius:12px;padding:14px 18px;margin-top:16px">
-    <div style="font-weight:800;color:var(--purple);margin-bottom:6px">🎯 CHỈ CẦN THUỘC 5 KHUNG NÀY — mọi mục khác trên trang là BẢNG TRA, không phải học</div>
+    <div style="font-weight:800;color:var(--purple);margin-bottom:6px">🎯 MỖI PART 1 KHUNG — chỉ thuộc phần LÕI (số từ bên dưới); dòng có dấu ➕ là tùy chọn, mục khác trên trang là bảng tra</div>
     <div>1️⃣ <b>Khung Part 1</b> (~${nw("s1")} từ) → dùng cho cả 3 câu Part 1<br>
     2️⃣ <b>Khung trả lời câu hỏi</b> (~${nw("sq")} từ) → dùng cho 4 câu (câu 2-3 của P2 và P3) — <i>học cái này lãi nhất</i><br>
     3️⃣ <b>Khung tả tranh</b> (~${nw("s2")} từ) → 1 câu ở P2<br>

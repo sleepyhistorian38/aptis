@@ -17527,6 +17527,60 @@ window.APTIS.speaking = {
    "vn": "Khung + thành ngữ a far cry from lấy nguyên từ mẹo tủ. So sánh bám 6 ý của khung tả tranh. Câu chốt Personally… trả lời luôn kiểu câu hỏi Which do you prefer hay đi kèm Part 3."
   },
   {
+   "id": "sq0",
+   "timer": 45,
+   "parts": [
+    "P2",
+    "P3"
+   ],
+   "title": "SPK ⭐ Khung TRẢ LỜI CÂU HỎI — BẢN GỌN (1 mẫu cho CẢ câu 2 và câu 3 của P2 & P3)",
+   "segments": [
+    {
+     "t": "LÕI — 4 câu, nói ~40 giây. Dùng cho MỌI kiểu câu hỏi, không phải chọn mẫu:",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "Well, in fact, ",
+     "fix": true
+    },
+    {
+     "t": "CHÉP cụm của câu hỏi, đổi ngôi + đáp án ngắn",
+     "fix": false
+    },
+    {
+     "t": ". The main reason is that it ",
+     "fix": true
+    },
+    {
+     "t": "lý do (bí thì bám H-R-K-F): helps me relax after a long week",
+     "fix": false
+    },
+    {
+     "t": ". For example, ",
+     "fix": true
+    },
+    {
+     "t": "ví dụ thật rất ngắn: I often go shopping with my best friend at the weekend",
+     "fix": false
+    },
+    {
+     "t": ". That is why I feel this way.",
+     "fix": true
+    },
+    {
+     "t": "➕ Nếu bí, nói câu này TRƯỚC khi bắt đầu (mua ~5 giây):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "That is an interesting question. Let me think about it for a moment.",
+     "fix": true
+    }
+   ],
+   "vn": "CHỈ 18 TỪ CỐ ĐỊNH, dùng cho mọi câu hỏi — mẹo nằm ở chỗ CHÉP LẠI cụm của câu hỏi vào ô đầu: · Why do many people like shopping with friends? → 'Well, in fact, many people like shopping with their friends…' · Which place do you prefer? → 'Well, in fact, I would prefer the beach…' · How did you feel about it? → 'Well, in fact, I felt really excited at that moment…' · Tell me about the last time you went shopping? → 'Well, in fact, the last time I went shopping was last week…' ⚠ Câu hỏi về QUÁ KHỨ thì đổi 'The main reason is' → 'The main reason was', 'helps' → 'helped'. Khung ĐẦY ĐỦ bên dưới (4 kiểu mở + nhắc lại câu hỏi) chỉ để tham khảo khi muốn nói đa dạng — CHỌN 1 trong 2, đừng học cả hai."
+  },
+  {
    "id": "sq",
    "timer": 45,
    "parts": [
@@ -19962,7 +20016,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq:"SPK ⭐ trả lời câu hỏi", s4:"SPK ⭐ nói 2 phút"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq0:"SPK ⭐ trả lời (gọn)", sq:"SPK ⭐ trả lời (đầy đủ)", s4:"SPK ⭐ nói 2 phút"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;

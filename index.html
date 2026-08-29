@@ -17583,6 +17583,7 @@ window.APTIS.speaking = {
   {
    "id": "sq",
    "timer": 45,
+   "alt": true,
    "parts": [
     "P2",
     "P3"
@@ -17859,6 +17860,7 @@ window.APTIS.speaking = {
   {
    "id": "s4b",
    "timer": 120,
+   "alt": true,
    "parts": [
     "P4"
    ],
@@ -19863,7 +19865,7 @@ function goSpeaking(sec){
   sh += `<div class="note" style="background:#f5f3ff;border:1.5px solid var(--purple);border-radius:12px;padding:14px 18px;margin-top:16px">
     <div style="font-weight:800;color:var(--purple);margin-bottom:6px">🎯 MỖI PART 1 KHUNG — chỉ thuộc phần LÕI (số từ bên dưới); dòng có dấu ➕ là tùy chọn, mục khác trên trang là bảng tra</div>
     <div>1️⃣ <b>Khung Part 1</b> (~${nw("s1")} từ) → dùng cho cả 3 câu Part 1<br>
-    2️⃣ <b>Khung trả lời câu hỏi</b> (~${nw("sq")} từ) → dùng cho 4 câu (câu 2-3 của P2 và P3) — <i>học cái này lãi nhất</i><br>
+    2️⃣ <b>Khung trả lời câu hỏi (bản gọn)</b> (~${nw("sq0")} từ) → dùng cho 4 câu (câu 2-3 của P2 và P3) — <i>học cái này lãi nhất</i><br>
     3️⃣ <b>Khung tả tranh</b> (~${nw("s2")} từ) → 1 câu ở P2<br>
     4️⃣ <b>Khung so sánh</b> (~${nw("s3")} từ) → 1 câu ở P3 (gần giống khung tả tranh, chỉ khác câu mở)<br>
     5️⃣ <b>Khung nói 2 phút</b> (~${nw("s4")} từ) → P4, trong đó phần lớn bạn đã thuộc từ Writing (khung ①b + ③)</div>
@@ -19891,10 +19893,16 @@ function goSpeaking(sec){
     const list = SD.templates.filter(t=>spkPartsOf(t).includes(g.k));
     if(!list.length) return;
     fh += `<div style="margin:18px -4px 8px;padding:6px 14px;background:#f1f5f9;border-left:4px solid var(--purple);border-radius:8px;font-weight:800;color:#334155">${g.h}</div>`;
-    list.forEach(t=>{
+    list.filter(t=>!t.alt).forEach(t=>{
       const dup = spkSeen.has(t.id); spkSeen.add(t.id);
       fh += spkTplCard(t, dup);
     });
+    const alts = list.filter(t=>t.alt);
+    if(alts.length){
+      fh += `<details style="margin:4px 0 14px"><summary class="qvn" style="cursor:pointer">📦 Mẫu cũ / bản thay thế của ${g.k} — tham khảo, KHÔNG học kèm bản chính (${alts.map(t=>wTplShort(t.id)).join(" · ")})</summary>`
+        + alts.map(t=>{ const dup = spkSeen.has(t.id); spkSeen.add(t.id); return spkTplCard(t, dup); }).join("")
+        + `</details>`;
+    }
   });
   fh += `<div style="display:none">`;
   [].forEach(t=>{
@@ -20016,7 +20024,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq0:"SPK ⭐ trả lời (gọn)", sq:"SPK ⭐ trả lời (đầy đủ)", s4:"SPK ⭐ nói 2 phút"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2:"SPK ⭐ tả tranh", s3:"SPK ⭐ so sánh 2 tranh", sq0:"SPK ⭐ trả lời (gọn)", sq:"SPK ⭐ trả lời (đầy đủ)", s4:"SPK ⭐ nói 2 phút", s4b:"SPK · nói 2 phút (bản tủ)"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;
@@ -20072,10 +20080,10 @@ function renderWCloze(){
         `<button class="pill ${p.k===wcl.spkPart?"active":""}" onclick="wClozeSpkPart('${p.k}')">${p.label}</button>`
       ).join("") + `</div>`;
     inPart = SD.templates.filter(t=>spkPartsOf(t).includes(wcl.spkPart));
-    stars  = inPart.filter(t=>t.id !== "sq");
-    others = inPart.filter(t=>t.id === "sq");
+    stars  = inPart.filter(t=>!t.alt);
+    others = inPart.filter(t=>t.alt);
     starLabel  = "⭐ KHUNG CHÍNH CỦA " + wcl.spkPart;
-    otherLabel = "DÙNG CHUNG · CÂU 2 & CÂU 3 CỦA P2/P3";
+    otherLabel = "📦 MẪU CŨ / BẢN THAY THẾ — THAM KHẢO";
   } else {
     ph += `<div class="pillbar" style="flex-wrap:wrap">` + ["P2","P3","P4"].map(p=>
         `<button class="pill ${p===curPart?"active":""}" onclick="wClozeGo('${PART_META[p].first}')">${PART_META[p].label}</button>`

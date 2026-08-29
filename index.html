@@ -17819,8 +17819,103 @@ window.APTIS.speaking = {
    "vn": "HRKF = 4 hướng lý do của tủ: Health (sức khỏe) / Relationship (mối quan hệ) / Knowledge (kiến thức) / Feelings (cảm xúc) — chủ đề nào cũng bám được ít nhất 1 hướng. Câu giữ giờ mua ~5 giây suy nghĩ, dùng tối đa 1 lần mỗi part. Cấu trúc câu trả lời = mở đúng kiểu + because + ví dụ ≈ 30–40 giây."
   },
   {
+   "id": "s4c",
+   "timer": 120,
+   "parts": [
+    "P4"
+   ],
+   "title": "SPK ⭐ Khung NÓI 2 PHÚT — BẢN DỄ NHỚ (đầu + cuối cố định, giữa trả lời thẳng 3 câu)",
+   "segments": [
+    {
+     "t": "ĐOẠN ĐẦU — cố định, giới thiệu bản thân + vào đề (~20 giây):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "Hello, my name is ",
+     "fix": true
+    },
+    {
+     "t": "tên bạn",
+     "fix": false
+    },
+    {
+     "t": ". I am ",
+     "fix": true
+    },
+    {
+     "t": "tuổi",
+     "fix": false
+    },
+    {
+     "t": " years old, and I am living in ",
+     "fix": true
+    },
+    {
+     "t": "thành phố: Ha Noi",
+     "fix": false
+    },
+    {
+     "t": ". Today, I am very happy to share with you about ",
+     "fix": true
+    },
+    {
+     "t": "chép chủ đề của đề: a time I made an important choice",
+     "fix": false
+    },
+    {
+     "t": ".",
+     "fix": true
+    },
+    {
+     "t": "ĐOẠN GIỮA — trả lời THẲNG lần lượt 3 câu của đề. Câu 1 kể chuyện nói DÀI NHẤT (~1 phút, chia thì quá khứ, bám When–Where–Who–What); câu 2 cảm xúc; câu 3 ý kiến. Mở mỗi câu bằng từ nối có sẵn:",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "First, ",
+     "fix": true
+    },
+    {
+     "t": "kể chuyện: It was two months ago. I was at… with… We…",
+     "fix": false
+    },
+    {
+     "t": ". About my feelings, I felt really ",
+     "fix": true
+    },
+    {
+     "t": "cảm xúc: nervous at first, then very proud",
+     "fix": false
+    },
+    {
+     "t": ". Finally, I think ",
+     "fix": true
+    },
+    {
+     "t": "ý kiến cho câu 3 + because + lý do",
+     "fix": false
+    },
+    {
+     "t": ".",
+     "fix": true
+    },
+    {
+     "t": "ĐOẠN CUỐI — cố định (~15 giây):",
+     "fix": true,
+     "lbl": true
+    },
+    {
+     "t": "That is all I want to share about this topic. I know my English is not perfect, but I will try my best every day. Thank you so much for listening. Have a good day!",
+     "fix": true
+    }
+   ],
+   "vn": "Bản thiết kế theo yêu cầu: KHÔNG phải ghép gì — thuộc đúng 2 đoạn cố định (toàn từ dễ, ~55 từ), vào thi chỉ đọc đoạn đầu → trả lời thẳng 3 câu → đọc đoạn cuối. Đầu + cuối đã ăn ~35-40 giây, nên đoạn giữa chỉ cần nói ~1 phút 20 — trong đó câu 1 (kể chuyện) chiếm phần lớn. Bí đoạn giữa → dùng quy trình 🆘 trong bản gọn (câu chuyện dự phòng + When–Where–Who–What). 3 từ nối First / About my feelings / Finally giúp giám khảo thấy rõ bạn trả lời đủ 3 ý."
+  },
+  {
    "id": "s4",
    "timer": 120,
+   "alt": true,
    "parts": [
     "P4"
    ],
@@ -19962,7 +20057,7 @@ function goSpeaking(sec){
     2️⃣ <b>Khung trả lời câu hỏi (bản gọn)</b> (~${nw("sq0")} từ) → dùng cho 4 câu (câu 2-3 của P2 và P3) — <i>học cái này lãi nhất</i><br>
     3️⃣ <b>Khung tả tranh (bản gọn)</b> (~${nw("s2g")} từ) → 1 câu ở P2<br>
     4️⃣ <b>Khung so sánh</b> (~${nw("s3")} từ) → 1 câu ở P3 (gần giống khung tả tranh, chỉ khác câu mở)<br>
-    5️⃣ <b>Khung nói 2 phút</b> (~${nw("s4")} từ) → P4, trong đó phần lớn bạn đã thuộc từ Writing (khung ①b + ③)</div>
+    5️⃣ <b>Khung nói 2 phút (bản dễ nhớ)</b> (~${nw("s4c")} từ) → P4: đầu + cuối cố định, giữa trả lời thẳng 3 câu</div>
     <div style="margin-top:8px">👉 Các Ô VÀNG cứ điền bằng từ BẠN ĐÃ BIẾT (a small school, happy, my friend…) — không cần từ hay. Kho từ bên dưới chỉ để tra khi muốn thay từ cho đỡ lặp.</div></div>`;
   sh += `<h2 style="margin:18px 0 10px">📋 Cấu trúc bài thi (4 phần · ~12 phút)</h2><div class="grid">`;
   SD.structure.forEach((p,i)=>{
@@ -20074,7 +20169,7 @@ const SPK_PARTS = [
   {k: "P1", first: "s1", label: "Part 1 · 3 câu × 30 giây"},
   {k: "P2", first: "s2g", label: "Part 2 · 3 câu × 45 giây (tả tranh + 2 hỏi)"},
   {k: "P3", first: "s3", label: "Part 3 · 3 câu × 45 giây (so sánh + 2 hỏi)"},
-  {k: "P4", first: "s4", label: "Part 4 · 3 ý trong 1 lượt 2 phút"},
+  {k: "P4", first: "s4c", label: "Part 4 · 3 ý trong 1 lượt 2 phút"},
 ];
 function spkPartsOf(t){ return (t && t.parts) || ["P2"]; }
 function wClozeSpkPart(k){ wcl.spkPart = k; const p = SPK_PARTS.find(x=>x.k===k); wClozeGo(p ? p.first : "s2", 1); }
@@ -20118,7 +20213,7 @@ function wSaveBest(pct){
   }catch(e){}
 }
 function wTplLabel(id){
-  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2g:"SPK ⭐ tả tranh (gọn)", s2:"SPK · tả tranh (đầy đủ)", s3:"SPK ⭐ so sánh 2 tranh", sq0:"SPK ⭐ trả lời (gọn)", sq:"SPK ⭐ trả lời (đầy đủ)", s4:"SPK ⭐ nói 2 phút", s4b:"SPK · nói 2 phút (bản tủ)"}[id] || id;
+  return {p2u:"P2 ⭐ VẠN NĂNG", p2b:"P2 · thứ bạn thích", p2c:"P2 · khi nào & ở đâu", p2d:"P2 · lần cuối cùng", p2e:"P2 · tại sao", p2f:"P2 · rảnh & sở thích", p2g:"P2 · dùng để làm gì", p2:"P2 · giới thiệu chủ đề", p3u:"P3 ⭐ ① thói quen", p3ub:"P3 ⭐ ①b quá khứ", p3u2:"P3 ⭐ ② lời khuyên", p3u3:"P3 ⭐ ③ ý kiến", p3a:"P3 · mẫu 1 (tủ)", p3b:"P3 · mẫu 2 (tủ)", p4ua:"P4 ⭐ email bạn (riêng)", p4ub:"P4 ⭐ email quản lý (riêng)", p4a:"P4 · email bạn (tủ)", p4b:"P4 · email quản lý (tủ)", s1:"SPK ⭐ trả lời Part 1", s2g:"SPK ⭐ tả tranh (gọn)", s2:"SPK · tả tranh (đầy đủ)", s3:"SPK ⭐ so sánh 2 tranh", sq0:"SPK ⭐ trả lời (gọn)", sq:"SPK ⭐ trả lời (đầy đủ)", s4c:"SPK ⭐ nói 2 phút (dễ nhớ)", s4:"SPK · nói 2 phút (bản gọn cũ)", s4b:"SPK · nói 2 phút (bản tủ)"}[id] || id;
 }
 function wClozeGo(tpl, lv){
   if(tpl) wcl.tpl = tpl;
